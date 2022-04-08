@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 
-@Controller
+@RestController
 @RequestMapping("/cliente")
 public class ClienteController {
 
@@ -42,6 +42,7 @@ public class ClienteController {
     @GetMapping(value = "/{cpf}")
     @ResponseBody
     public ResponseEntity<Cliente> consultarDadosCliente(@PathVariable String cpf){
+        System.out.println("OK");
         return ResponseEntity.ok(clienteRepository.consultarDadosCliente(cpf));
     }
 }

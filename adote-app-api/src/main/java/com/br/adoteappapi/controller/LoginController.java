@@ -5,10 +5,9 @@ import com.br.adoteappapi.model.UserLogin;
 import com.br.adoteappapi.repositories.LoginRepository;
 import com.br.adoteappapi.repositories.LoginRepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.ReturnedType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -24,7 +23,7 @@ public class LoginController {
     @Autowired
     LoginRepositoryImpl loginRepository;
 
-    @GetMapping
+    @PostMapping
     public ResponseEntity<LoginResponse> loginCliente(@RequestBody UserLogin userLogin) throws UnsupportedEncodingException, NoSuchAlgorithmException {
         LoginResponse response = new LoginResponse();
         var user = loginRepository.ValidarUsuarioESenha(userLogin);
@@ -32,7 +31,8 @@ public class LoginController {
         MessageDigest algoritimo = MessageDigest.getInstance("MD5");
         byte messageDigest[] = algoritimo.digest(userLogin.getSenha().getBytes("UTF-8"));
         String senha = new String(messageDigest,"UTF-8");
-
+        System.out.println("CPF: "+userLogin.getCpf());
+        System.out.println("SENHA: "+userLogin.getSenha());
         if(user.getCpf() == null){
             response.setCodigo(2l);
             response.setMensagem("Usuario não existe");
@@ -45,7 +45,6 @@ public class LoginController {
                 response.setMensagem("Usuario ou senha inválida");
             }
         }
-
         return ResponseEntity.ok(response);
     }
 }
