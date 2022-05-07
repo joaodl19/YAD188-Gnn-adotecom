@@ -13,4 +13,5 @@ public interface ClienteRepository {
     void deletarCliente(String cpf);
 
     Cliente consultarDadosCliente(String cpf);
+
 }

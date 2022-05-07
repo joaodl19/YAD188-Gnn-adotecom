@@ -1,5 +1,4 @@
-import { setStatusBarNetworkActivityIndicatorVisible } from 'expo-status-bar';
-import React, {useState} from 'react';
+import React from 'react';
 import {
     StyleSheet,
     View,
@@ -58,7 +57,7 @@ import {
                     <Text style={styles.fontdados}>Raça: {ds_raca}</Text>
                     <Text style={styles.fontdados}>Nome ONG: LOVEPET</Text>
                     <TouchableWithoutFeedback style={{marginTop: 100}}
-                        onPress={() => adotar( tx_foto)}>
+                        onPress={() => adotar(tx_foto)}>
                     <View style={styles.botaoAdotar}>
                         <Text style={styles.adotarText}>Adotar</Text>
                     </View> 
@@ -72,9 +71,10 @@ import {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#1C1C11',
+        backgroundColor: 'black',
         borderRadius: 50,
-        marginBottom: 10
+        marginBottom: 10,
+        marginTop: 10
     },  
     item:{
         alignItems: 'center',
@@ -84,7 +84,8 @@ const styles = StyleSheet.create({
         width: 370,
         marginLeft: 10,
         marginTop: 10,
-        flexDirection: 'row'
+        flexDirection: 'row',
+        backgroundColor: 'black'
     },
     foto:{
         marginLeft: 15,
@@ -94,12 +95,14 @@ const styles = StyleSheet.create({
     },
     fontdados:{
         fontSize: 16,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        color: 'white'
     },
     dados:{
         marginLeft: 15,
-        fontSize: 18
-        },
+        fontSize: 18,
+        backgroundColor: 'black'
+    },
     botaoAdotar:{
         marginTop: 10,
         alignItems: "center",

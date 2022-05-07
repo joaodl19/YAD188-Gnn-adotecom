@@ -1,4 +1,3 @@
-import { setStatusBarNetworkActivityIndicatorVisible } from 'expo-status-bar';
 import React, {useState} from 'react';
 import {
     StyleSheet,
@@ -8,8 +7,9 @@ import {
     Button,
     Alert,
   } from 'react-native';
+import apiAdoteApp from '../../routes/apiAdoteHttp';  
 
-  export default function Login({navigation}) {
+export default function Login({navigation}) {
     
     const [email, setEmail] = useState('')
     const [senha, setSenha] = useState('')

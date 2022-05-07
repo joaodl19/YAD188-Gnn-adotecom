@@ -1,6 +1,6 @@
 import React from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {Alert,StyleSheet,FlatList, TouchableWithoutFeedback, TextInput, View} from 'react-native';
+import {Alert,StyleSheet, TouchableWithoutFeedback, TextInput, View} from 'react-native';
 
 
 export default function TextInputComIcone() {  
