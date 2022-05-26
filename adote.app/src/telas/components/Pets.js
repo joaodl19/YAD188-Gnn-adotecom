@@ -7,51 +7,24 @@ import {
     Alert,
     TouchableWithoutFeedback
   } from 'react-native';
+  import { API_URL } from '@env';
 
-  export default function Pets({ds_nome, ds_raca, tx_foto}){
-    const DATA = [
-        {
-            image: require('../../../assets/imagens/1.png')
-        },
-        {
-            image: require('../../../assets/imagens/1.png')
-        },
-        {
-            image: require('../../../assets/imagens/2.png')
-        },
-        {
-            image: require('../../../assets/imagens/3.png')
-        },
-        {
-            image: require('../../../assets/imagens/4.png')
-        },
-        {
-            image: require('../../../assets/imagens/5.png')
-        },
-        {
-            image: require('../../../assets/imagens/6.png')
-        }
-    ]
+  export default function Pets({navigation, id_cliente, ds_nome, ds_raca, tx_foto,id_pet, id_ong}){
+    const getImageSource = () => {
+        return `data:image/jpeg;base64,${tx_foto}`
+      }
     
-    const adotar = async (id_pet) =>{
-        fetch('http://192.168.0.142:8081/adocao',{
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ "id_pet": id_pet,
-                                   "id_cliente": '48' })
-                                  }
-            )
-             .then(response => response.json())
-             .then(Alert.alert("Pedido de Adocao Criado")
-             .catch(error => console.log(error))
-            
-        )
-    }
+    const telaPerfilPet = () => navigation.navigate('PerfilPet', {id_pet: id_pet, id_cliente: id_cliente, id_ong: id_ong})
+
+    
 
     return(
         <View style={styles.container}>
             <View style={styles.item}>
-                <Image style={styles.foto} source={DATA[tx_foto].image}></Image>
+                <TouchableWithoutFeedback style={{marginTop: 100}}
+                        onPress={() => telaPerfilPet()}>
+                    <Image style={styles.foto} source={{uri: getImageSource()}}></Image>
+                </TouchableWithoutFeedback>
                 <View style={styles.dados}>
                     <Text style={styles.fontdados}>Nome: {ds_nome}</Text>
                     <Text style={styles.fontdados}>Raça: {ds_raca}</Text>

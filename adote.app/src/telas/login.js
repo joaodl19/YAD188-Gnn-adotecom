@@ -7,19 +7,27 @@ import {
     Button,
     Alert,
   } from 'react-native';
-import apiAdoteApp from '../../routes/apiAdoteHttp';  
+import { AsyncStorage } from 'react-native';
+import { API_URL } from '@env';
 
 export default function Login({navigation}) {
     
     const [email, setEmail] = useState('')
     const [senha, setSenha] = useState('')
 
-    const telaHome = (cpf) => navigation.navigate('Home', {
-      cpf
-    });
-    
+    const telaHome = () => navigation.navigate('Home', { cpf: email});
+    const telaCadastro = () => navigation.navigate('Cadastro');
+
+    const _storeData = async () => {
+      try {
+        await AsyncStorage.setItem('@session', email)
+      } catch (e) {
+        // saving error
+      }
+    }
+
     const login = ( email, senha )=>{
-      fetch('http://192.168.0.142:8081/login',{
+      fetch(API_URL + '/login',{
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({ "cpf": email,
@@ -27,8 +35,8 @@ export default function Login({navigation}) {
                                     }
               )
               .then(response => response.json())
-              .then(json => {if(json.codigo == 1){
-                telaHome(email)
+              .then(json => {if(json.codigo == 1){telaHome(email);
+                _storeData();
               }else{
                 Alert.alert('LOGIN ERRO \n' + json.mensagem)
               }})
@@ -51,22 +59,23 @@ export default function Login({navigation}) {
                 value={senha}
                 onChangeText={(senha) => {setSenha(senha)}}
                 placeholder='Digite sua Senha'
+                secureTextEntry={true}
                 style={styles.input}
             ></TextInput>
-          <View style={{ flexDirection: 'row' }}>
-            <View style={{ marginTop: 10, width: 80, marginRight: 22 }}>
-              <Button
-                title="ENTRAR"
-                color="#008000"
-                onPress={() => {login( email, senha ),setSenha('')}}
-                //onPress={() => {adotar()}}
-              />
-            </View>
+            <View style={{ flexDirection: 'row' }}>
+              <View style={{ marginTop: 10, width: 80, marginRight: 22 }}>
+                <Button
+                  title="ENTRAR"
+                  color="#008000"
+                  onPress={() => {login( email, senha ),setSenha('')}}
+                  //onPress={() => {adotar()}}
+                />
+              </View>
             <View style={{ marginTop: 10, width: 120 }}>
               <Button
                 title="Cadastre-se"
                 color="#0080FF"
-                onPress={() => Alert.alert(email)}
+                onPress={telaCadastro}
               />
             </View>
           </View>
@@ -78,7 +87,6 @@ export default function Login({navigation}) {
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: '#fff',
       alignItems: 'center',
       justifyContent: 'center',
       backgroundColor: '#F0E68C',

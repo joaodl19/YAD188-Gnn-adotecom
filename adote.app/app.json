@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "adote.app",
-    "slug": "adote.app",
+    "name": "adoteapp",
+    "slug": "adoteapp",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",

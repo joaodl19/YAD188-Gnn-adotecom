@@ -4,7 +4,18 @@ import {Alert,StyleSheet, TouchableWithoutFeedback, TextInput, View} from 'react
 
 
 export default function TextInputComIcone() {  
+  const getData = async () => {
+    try {
+      const value = await AsyncStorage.getItem('@session')
+      Alert.alert("CPF: ")
 
+      if(value !== null) {
+        Alert.alert("CPF: " + value)
+      }
+    } catch(e) {
+      Alert.alert(e)
+    }
+  }
     return (
         <View style={styles.inputContainer}>
             <TextInput style={styles.input}
@@ -13,7 +24,7 @@ export default function TextInputComIcone() {
                 >
             </TextInput>
             <TouchableWithoutFeedback
-                onPress={()=>{Alert.alert("pesquisar")}}>
+                onPress={getData}>
                 <Icon name="md-search" size={20} color="#666" style={styles.icon}/>
             </TouchableWithoutFeedback>
             
