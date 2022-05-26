@@ -1,4 +1,3 @@
-#Back-Srping
 HELP.md
 target/
 !.mvn/wrapper/maven-wrapper.jar
@@ -32,19 +31,3 @@ build/
 
 ### VS Code ###
 .vscode/
-
-#Front-React
-node_modules/
-.expo/
-dist/
-npm-debug.*
-*.jks
-*.p8
-*.p12
-*.key
-*.mobileprovision
-*.orig.*
-web-build/
-
-# macOS
-.DS_Store
