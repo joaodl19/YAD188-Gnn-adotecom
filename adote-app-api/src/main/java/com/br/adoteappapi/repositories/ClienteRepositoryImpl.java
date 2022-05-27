@@ -21,14 +21,14 @@ public class ClienteRepositoryImpl implements ClienteRepository{
     public ClienteRepositoryImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
         this.QUERY_CADASTRAR_CLIENTE = "INSERT INTO public.cliente(ds_nome, nr_cpf_cnpj, dt_nascimento_fundacao," +
-                "ds_genero, nr_telefone, nr_cep, ds_logradouro, ds_cidade, ds_deficiencia, ds_obs, ds_email, ds_senha, tx_foto)" +
-                " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                "ds_genero, nr_telefone, nr_cep, ds_logradouro, ds_bairro, nr_numero, ds_cidade, ds_uf, ds_deficiencia, ds_obs, ds_email, ds_senha, tx_foto, ds_tipo_cliente)" +
+                " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         this.QUERY_ATUALIZAR_DADOS_CLIENTE = "UPDATE public.cliente " +
                 "SET ds_nome=?, dt_nascimento_fundacao=?, ds_genero=?, nr_telefone=?, nr_cep=?, ds_logradouro=?, ds_cidade=?, ds_deficiencia=?, ds_obs=?, ds_email=?, ds_senha=?, tx_foto=?" +
                 " WHERE nr_cpf_cnpj = ?";
         this.QUERY_DELETAR_CLIENTE = "DELETE FROM public.cliente WHERE nr_cpf_cnpj = ?";
         this.QUERY_CONSULTAR_DADOS_CLIENTE = "SELECT id_cliente, ds_nome, nr_cpf_cnpj, dt_nascimento_fundacao," +
-                " ds_genero, nr_telefone, nr_cep, ds_logradouro, ds_cidade, ds_deficiencia, ds_obs, ds_email, tx_foto" +
+                " ds_genero, nr_telefone, nr_cep, ds_logradouro, ds_bairro, nr_numero, ds_cidade, ds_uf, ds_deficiencia, ds_obs, ds_email, tx_foto, ds_tipo_cliente" +
                 " FROM public.cliente WHERE nr_cpf_cnpj = ?";
 
     }
@@ -49,12 +49,16 @@ public class ClienteRepositoryImpl implements ClienteRepository{
                     ps.setBigDecimal(5, cliente.getNr_telefone());
                     ps.setString(6, cliente.getNr_cep());
                     ps.setString(7, cliente.getDs_logradouro());
-                    ps.setString(8, cliente.getDs_cidade());
-                    ps.setString(9, String.valueOf(cliente.getDs_deficiencia()));
-                    ps.setString(10,cliente.getDs_obs());
-                    ps.setString(11,cliente.getDs_email());
-                    ps.setString(12, senha);
-                    ps.setBytes(13, cliente.getTx_foto());
+                    ps.setString(8,cliente.getDs_bairro());
+                    ps.setInt(9, cliente.getNr_numero());
+                    ps.setString(10, cliente.getDs_cidade());
+                    ps.setString(11,cliente.getDs_uf());
+                    ps.setString(12, String.valueOf(cliente.getDs_deficiencia()));
+                    ps.setString(13,cliente.getDs_obs());
+                    ps.setString(14,cliente.getDs_email());
+                    ps.setString(15, senha);
+                    ps.setBytes(16, cliente.getTx_foto());
+                    ps.setString(17, cliente.getDs_tipo_cliente());
                     return ps;
         });
     }
@@ -98,11 +102,15 @@ public class ClienteRepositoryImpl implements ClienteRepository{
             cliente.setNr_telefone(rs.getBigDecimal("nr_telefone"));
             cliente.setNr_cep(rs.getString("nr_cep"));
             cliente.setDs_logradouro(rs.getString("ds_logradouro"));
+            cliente.setDs_bairro(rs.getString("ds_bairro"));
+            cliente.setNr_numero(rs.getInt("nr_numero"));
             cliente.setDs_cidade(rs.getString("ds_cidade"));
+            cliente.setDs_uf(rs.getString("ds_uf"));
             cliente.setDs_deficiencia(rs.getString("ds_deficiencia"));
             cliente.setDs_obs(rs.getString("ds_obs"));
             cliente.setDs_email(rs.getString("ds_email"));
             cliente.setTx_foto(rs.getBytes("tx_foto"));
+            cliente.setDs_tipo_cliente(rs.getString("ds_tipo_cliente"));
             cliente.setDs_senha("*******");
         },cpf);
         return cliente;

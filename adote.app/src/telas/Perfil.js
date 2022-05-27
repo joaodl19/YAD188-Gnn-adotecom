@@ -3,7 +3,6 @@ import {StyleSheet,Text, SafeAreaView, View,Image} from 'react-native';
 import {TouchableOpacity} from 'react-native';
 
 export default function Perfil1({route, navigation}){
-  const cpf = '42169875466'
   const {cliente} = route.params;
   const telaHome = () => navigation.navigate('Home')
   const telaCadastroPet = () => navigation.navigate('CadastroPet',cliente.id_cliente)
@@ -21,10 +20,11 @@ export default function Perfil1({route, navigation}){
       <Image style={styles.logo} source={require('../../assets/LogoT.png')}/>
     
       <Image style={styles.perfil} source={{uri: getImageSource()}}/>
-
-      <TouchableOpacity style={styles.botao2}  onPress={()=>telaCadastroPet()}>
-           <Text style={{color:'white',textAlign:'center'}}>CADASTRAR PET</Text>
-      </TouchableOpacity>      
+      {(cliente.ds_tipo_cliente == 'ONG') &&
+        <TouchableOpacity style={styles.botao2}  onPress={()=>telaCadastroPet()}>
+            <Text style={{color:'white',textAlign:'center'}}>CADASTRAR PET</Text>
+        </TouchableOpacity>      
+      }
       <TouchableOpacity style={styles.botao3}  onPress={()=>telaAgendamentos()}>
            <Text style={{color:'white',textAlign:'center'}}>MEUS PET</Text>
       </TouchableOpacity>    

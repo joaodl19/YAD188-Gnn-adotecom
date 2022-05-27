@@ -13,7 +13,7 @@ export default function Questionario({navigation, route}) {
      id_pet: id_pet,
       id_ong: id_ong})
   const buscaQuestionario = async () =>{
-    await fetch('http://192.168.80.103:8081/questionario')
+    await fetch(API_URL + '/questionario')
          .then(response => response.json())
          .then(json => setQuetionario(json))
          .catch(error => console.log(error))

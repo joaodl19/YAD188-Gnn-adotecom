@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 @Setter
 public class Cliente {
     private Long id_cliente;
+    private String ds_tipo_cliente;
     private String ds_nome;
     private String nr_cpf_cnpj;
     private String dt_nascimento_fundacao;
@@ -16,7 +17,10 @@ public class Cliente {
     private BigDecimal nr_telefone;
     private String nr_cep;
     private String ds_logradouro;
+    private String ds_bairro;
+    private int nr_numero;
     private String ds_cidade;
+    private String ds_uf;
     private String ds_deficiencia;
     private String ds_obs;
     private String ds_email;

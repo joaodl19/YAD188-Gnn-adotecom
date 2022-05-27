@@ -4,7 +4,8 @@ import {StyleSheet,
         TextInput,
         ScrollView,
         SafeAreaView, 
-        View, 
+        View,
+        Alert, 
         TouchableWithoutFeedback
 } from 'react-native';
 import { API_URL } from '@env';
@@ -19,15 +20,21 @@ export default function Cadastro({navigation}) {
     const [telefone, setTelefone] = useState('')
     const [cep, setCep] = useState('')
     const [logradouro, setLogradouro] = useState('')
+    const [numero, setNumero] = useState('')
+    const [bairro, setBairro] = useState('')
     const [cidade, setCidade] = useState('')
-    const [tipoInstituicao, setTipoInstituicao] = useState('')
+    const [uf, setUf] = useState('')
+    const [tipoCliente, setTipoCliente] = useState('PF')
     const [observacoes, setObservacoes] = useState('')
     const [email, setEmail] = useState('')
     const [senha, setSenha] = useState('')
-    const [txFoto, setTxFoto] = useState([])
-    const telaHome = () => navigation.navigate('Home');
+    const [txFoto, setTxFoto] = useState([]);
+    const [endereco, setEndereco] = useState([]);
     const telaLogin = () => navigation.navigate('Login');
 
+    const [botaoPfOpacity,setBotaoPfOpacity] = useState(0.3);   
+    const [botaoOngOpacity,setBotaoOngOpacity] = useState(1);   
+    
     const cadastrar = ()=>{
         fetch(API_URL + '/cliente',{
                 method: 'POST',
@@ -39,11 +46,15 @@ export default function Cadastro({navigation}) {
                                         "nr_telefone": telefone,
                                         "nr_cep": cep,
                                         "ds_logradouro": logradouro,
+                                        "nr_numero": numero,
+                                        "ds_bairro": bairro,
                                         "ds_cidade": cidade,
+                                        "ds_uf": uf,
                                         "ds_deficiencia":"N",
                                         "ds_obs": observacoes,
                                         "ds_email": email,
                                         "ds_senha": senha,
+                                        "ds_tipo_cliente": tipoCliente,
                                         "tx_foto": txFoto})
                                       }
                 )
@@ -53,86 +64,136 @@ export default function Cadastro({navigation}) {
                 .catch(error => console.log(error))
       }
 
-  useEffect(() => {
-  },[]);
+      const buscaEndereco = async ()=>{
+        fetch('https://viacep.com.br/ws/' + cep +'/json/')
+                .then(response => response.json())
+                .then(json => {
+                        setLogradouro(json.logradouro);
+                        setBairro(json.bairro);
+                        setUf(json.uf);
+                        setCidade(json.localidade);
+                })
+                .catch(error => {
+                        Alert.alert("Digite um cep válido");
+                        setLogradouro('');
+                        setBairro('');
+                        setUf('');
+                        setCidade('');
+                        setNumero('');
+                        console.log(error)})
+        }
+useEffect(() => {
+},[]);
+
   return (
       <SafeAreaView style={styles.container}>
         <Text style={{fontSize:25, fontWeight:'bold', marginTop: 10, marginStart: -210}}>Cadastre-se</Text>
-        <View style={{width:430, height:750}}>
+        <View style={{flexDirection:'row', marginTop:10}}>        
+                <TouchableWithoutFeedback 
+                        style={{marginBottom: 1}}
+                        onPress={() => {setBotaoPfOpacity(0.3);setBotaoOngOpacity(1);setTipoCliente('PF')}}>
+                        <View style={{marginRight:50, opacity: botaoOngOpacity ,backgroundColor:'white', borderRadius:5, height:40, width:150}}>
+                                <Text style={{color:'black', fontSize:20, padding:5, marginStart:5}}>Pessoa Fisica</Text>
+                        </View> 
+                </TouchableWithoutFeedback>
+                <TouchableWithoutFeedback 
+                        style={{marginBottom: 1}}
+                        onPress={() => {setBotaoPfOpacity(1);setBotaoOngOpacity(0.3);setTipoCliente('ONG')}}>
+                        <View style={{marginRight:30, opacity: botaoPfOpacity ,backgroundColor:'white', borderRadius:5, height:40, width:120}}>
+                                <Text style={{color:'black', fontSize:20, padding:5, marginStart:35}}>ONG</Text>
+                        </View> 
+                </TouchableWithoutFeedback>
+        </View>
+        <View style={{width:430, height:750,marginTop:15}}>
         <ScrollView>
                 <TextInput
                         value={nome}
                         onChangeText={(nome) => {setNome(nome)}}
                         style={styles.input}
-                        placeholder='Nome completo'
-                ></TextInput>
+                        placeholder={(tipoCliente == 'ONG') ? 'Razão Social' : 'Nome completo'}
+                />
                 <TextInput
                         value={cpfCnpj}
                         onChangeText={(cpfCnpj) => {setCpfCnpj(cpfCnpj)}}
                         style={styles.input}
-                        placeholder='CPF'
-                ></TextInput>
+                        placeholder={(tipoCliente == 'ONG') ? 'CNPJ' : 'CPF'}
+                />
                 <TextInput
                         value={dtNascimento}
                         onChangeText={(dtNascimento) => {setDtNascimento(dtNascimento)}}
                         style={styles.input}
-                        placeholder='Data Nascimento'
-                ></TextInput>
+                        placeholder={(tipoCliente == 'ONG') ? 'Data Fundação' : 'Data Nascimento'}
+                />
+                {tipoCliente == 'PF' &&
                 <TextInput
                         value={genero}
                         onChangeText={(genero) => {setGenero(genero)}}
                         style={styles.input}
                         placeholder='Sexo'
-                ></TextInput>
+                />}
+                              
                 <TextInput 
                         value={telefone}
                         onChangeText={(telefone) => {setTelefone(telefone)}}
                         style={styles.input}
                         placeholder='Telefone'
-                ></TextInput>
+                />
                 <TextInput
                         value={cep}
                         onChangeText={(cep) => {setCep(cep)}}
+                        onEndEditing={()=>buscaEndereco()}
                         style={styles.input}
                         placeholder='CEP'
-                ></TextInput>
+                />
                 <TextInput
                         value={logradouro}
                         onChangeText={(logradouro) => {setLogradouro(logradouro)}}
                         style={styles.input}
                         placeholder='Logradouro'
-                ></TextInput>
+                />
+                <TextInput
+                        value={numero}
+                        onChangeText={(numero) => {setNumero(numero)}}
+                        style={styles.input}
+                        placeholder='Numero'
+                />
+                <TextInput
+                        value={bairro}
+                        onChangeText={(bairro) => {setBairro(bairro)}}
+                        style={styles.input}
+                        placeholder='Bairro'
+                />
                 <TextInput
                         value={cidade}
                         onChangeText={(cidade) => {setCidade(cidade)}}
                         style={styles.input}
                         placeholder='Cidade'
-                ></TextInput>
+                />
                 <TextInput
-                        value={tipoInstituicao}
-                        onChangeText={(tipoInstituicao) => {setTipoInstituicao(tipoInstituicao)}}
+                        value={uf}
+                        onChangeText={(uf) => {setCidade(uf)}}
                         style={styles.input}
-                        placeholder='Tipo Instituição'
-                ></TextInput>
+                        placeholder='UF'
+                />
                 <TextInput
                         value={observacoes}
                         onChangeText={(observacoes) => {setObservacoes(observacoes)}}
                         style={styles.input}
                         placeholder='Observações'
-                ></TextInput>
+                />
                 <TextInput
                         value={email}
                         onChangeText={(email) => {setEmail(email)}}
                         style={styles.input}
                         placeholder='Email'
-                ></TextInput>
+                />
                 <TextInput
                         value={senha}
                         onChangeText={(senha) => {setSenha(senha)}}
                         style={styles.input}
                         placeholder='Senha'
                         secureTextEntry={true}
-                ></TextInput>
+                />
                 <UploadImage setProps={setTxFoto}></UploadImage>
                 <TouchableWithoutFeedback 
                         style={{marginBottom: 1}}

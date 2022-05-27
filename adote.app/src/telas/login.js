@@ -12,30 +12,30 @@ import { API_URL } from '@env';
 
 export default function Login({navigation}) {
     
-    const [email, setEmail] = useState('')
+    const [cpf, setCpf] = useState('')
     const [senha, setSenha] = useState('')
 
-    const telaHome = () => navigation.navigate('Home', { cpf: email});
+    const telaHome = () => navigation.navigate('Home', { cpf: cpf});
     const telaCadastro = () => navigation.navigate('Cadastro');
 
     const _storeData = async () => {
       try {
-        await AsyncStorage.setItem('@session', email)
+        await AsyncStorage.setItem('@session', cpf)
       } catch (e) {
         // saving error
       }
     }
 
-    const login = ( email, senha )=>{
+    const login = ( cpf, senha )=>{
       fetch(API_URL + '/login',{
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ "cpf": email,
+              body: JSON.stringify({ "cpf": cpf,
                                      "senha": senha })
                                     }
               )
               .then(response => response.json())
-              .then(json => {if(json.codigo == 1){telaHome(email);
+              .then(json => {if(json.codigo == 1){telaHome(cpf);
                 _storeData();
               }else{
                 Alert.alert('LOGIN ERRO \n' + json.mensagem)
@@ -50,10 +50,10 @@ export default function Login({navigation}) {
         </View>
         <View>
             <TextInput
-                value={email}
-                onChangeText={(email) => {setEmail(email)}}
+                value={cpf}
+                onChangeText={(cpf) => {setCpf(cpf)}}
                 style={styles.input}
-                placeholder='Digite seu CPF ou Email'
+                placeholder='Digite seu CPF/CNPJ'
             ></TextInput>
             <TextInput
                 value={senha}
@@ -67,7 +67,7 @@ export default function Login({navigation}) {
                 <Button
                   title="ENTRAR"
                   color="#008000"
-                  onPress={() => {login( email, senha ),setSenha('')}}
+                  onPress={() => {login( cpf, senha ),setSenha('')}}
                   //onPress={() => {adotar()}}
                 />
               </View>
