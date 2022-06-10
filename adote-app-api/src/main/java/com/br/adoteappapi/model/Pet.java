@@ -12,6 +12,7 @@ public class Pet {
     private String ds_raca;
     private String ds_genero;
     private Long id_ong;
+    private String ds_nome_ong;
     private String ds_status;
     private String ds_obs;
     private byte[] tx_foto;
@@ -19,8 +20,7 @@ public class Pet {
     public Pet() {
 
     }
-
-    public Pet(long id_pet, String ds_nome, String ds_genero, String ds_raca, String ds_status, String dt_nascimento, long id_ong, byte[] tx_foto, String ds_obs) {
+    public Pet(long id_pet, String ds_nome, String ds_genero, String ds_raca, String ds_status, String dt_nascimento, long id_ong, byte[] tx_foto, String ds_nome_ong, String ds_obs) {
         this.id_pet = id_pet;
         this.ds_nome = ds_nome;
         this.ds_genero = ds_genero;
@@ -29,8 +29,7 @@ public class Pet {
         this.dt_nascimento = dt_nascimento;
         this.id_ong = id_ong;
         this.tx_foto = tx_foto;
+        this.ds_nome_ong = ds_nome_ong;
         this.ds_obs = ds_obs;
     }
-
-
 }

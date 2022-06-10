@@ -16,18 +16,17 @@ export default function Topo( {navigation, cliente}) {
   return (
       <View style={styles.topo}>
         <Image style={styles.logo} source={require('../../../assets/LogoT.png')}/>  
-        <View style={{flexDirection: 'row'}}>
+        <View style={{flexDirection: 'row', marginTop:15}}>
           <TouchableWithoutFeedback onPress={() => telaPerfil()}>
             <Image style={styles.perfil} source={{uri: getImageSource()}}/>
           </TouchableWithoutFeedback>
           <View style={{marginTop:25, marginStart:10}}>
-                <Text style={{fontWeight:'bold'}}>Olá,</Text>
-                <Text style={{fontWeight:'bold'}}>{cliente.ds_nome}</Text>
+            <Text style={{fontWeight:'bold'}}>Olá,</Text>
+            <Text style={{fontWeight:'bold'}}>{cliente.ds_nome}</Text>
           </View>
           <TouchableWithoutFeedback onPress={() => telaLogin()}>
-            <Text style={{marginStart:150, fontWeight:'bold', fontSize:16}}>Sair</Text>
+            <Text style={{marginStart:140, fontWeight:'bold', fontSize:16}}>Sair</Text>
           </TouchableWithoutFeedback>
-         
           </View>   
           <View style={{marginTop:10}}>
             <TextInputComIcone></TextInputComIcone>
@@ -38,22 +37,22 @@ export default function Topo( {navigation, cliente}) {
 
 const styles = StyleSheet.create({
   logo: {
-    height: 60,
-    width: 150,
-    marginStart: 100
+    height: 35,
+    width: 200,
+    marginStart: 100,
+    marginTop:10
   },
   perfil: {
-    marginTop: 20,
-    marginStart: 5,
-    height: 90,
-    width: 90,
-    marginLeft: -20,
+    marginTop: 25,
+    marginStart: 10,
+    height: 95,
+    width: 95,
     borderRadius: 45
   },
   topo: {
-    height: 100,
-    marginTop: 20
-  },
+    height: 270,
+    marginTop: 10,
+    },
 
 });
 

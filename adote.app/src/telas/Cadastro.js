@@ -4,12 +4,16 @@ import {StyleSheet,
         TextInput,
         ScrollView,
         SafeAreaView, 
+        Picker,
         View,
-        Alert, 
+        Alert,
+        KeyboardAvoidingView, 
         TouchableWithoutFeedback
 } from 'react-native';
 import { API_URL } from '@env';
 import UploadImage from './components/UploadImage'
+import {TextInputMask} from 'react-native-masked-text';
+import DatePicker from 'react-native-datepicker'
 
 export default function Cadastro({navigation}) {
   
@@ -28,15 +32,84 @@ export default function Cadastro({navigation}) {
     const [observacoes, setObservacoes] = useState('')
     const [email, setEmail] = useState('')
     const [senha, setSenha] = useState('')
-    const [txFoto, setTxFoto] = useState([]);
-    const [endereco, setEndereco] = useState([]);
+    const [deficiencia, setDeficiencia] = useState('')
+    const [txFoto, setTxFoto] = useState([]);    
+    const [errorNome, setErrorNome] = useState('')
+    const [errorEmail, setErrorEmail] = useState(null)
+    const [errordtNascimento, setErrordtNascimento] = useState('')
+    const [errorCep, setErrorCep] = useState(null)
+    const [errorCpf, setErrorCpf] = useState(null)
+    const [errorSenha, setErrorSenha] = useState('')
+    const [errorTelefone, setErrorTelefone] = useState(null)
+    const [errorGenero, setErrorGenero] = useState(null)
+
+    const [btTutorBackGroundColor, setBtTutorBackGroundColor] = useState('#0b3a5c');
+    const [btTutorFontColor, setBtTutorFontColor] = useState('white');
+    const [btOngBackGroundColor, setBtOngBackGroundColor] = useState('#c0c0c0');
+    const [btOngFontColor, setBtOngFontColor] = useState('#0b3a5c');
+     
+    const validar = () => {
+        let error = false
+        setErrorEmail(null)
+        setErrorCpf('')
+        setErrorSenha('')
+        setErrorTelefone('')
+        setErrordtNascimento('')
+        setErrorNome('')
+        setErrorCep('')
+        setErrorGenero(null)
+        
+        
+        const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        if (!re.test(String(email).toLowerCase())){
+          setErrorEmail("Preencha seu e-mail corretamente")
+          error = true
+        }
+        if (email == null){  
+        setErrorEmail("Preencha seu e-mail")
+          error = true
+        }
+        const cpnj = /^([0-9]{3}\.?[0-9]{3}\.?[0-9]{3}\-?[0-9]{2}|[0-9]{2}\.?[0-9]{3}\.?[0-9]{3}\/?[0-9]{4}\-?[0-9]{2})$/
+        if (!cpnj.test(String(cpfCnpj).toLowerCase())){
+                setErrorCpf("Preencha seu CPF/CNPJ corretamente")
+                error = true
+        }
+        if (cpfCnpj == ''){
+          setErrorCpf("Preencha seu CPF")
+          error = true
+        }
+        if (telefone == ''){
+          setErrorTelefone("Preencha seu telefone")
+          error = true
+        }
+        if (dtNascimento == ''){
+                setErrordtNascimento("Preencha sua data de nascimento")
+                error = true
+        }
+        if (nome == ''){
+                setErrorNome("Preencha seu nome")
+                error = true
+        }
+        if (senha == ''){
+                setErrorSenha("Preencha a senha")
+                error = true
+        }
+        if (genero == null){
+                setErrorGenero("Preencha seu genero")
+                error = true
+        }
+        
+        if (cep == ''){
+                setErrorCep("Preencha seu CEP")
+                error = true
+        }
+        return !error
+      }
+
     const telaLogin = () => navigation.navigate('Login');
 
-    const [botaoPfOpacity,setBotaoPfOpacity] = useState(0.3);   
-    const [botaoOngOpacity,setBotaoOngOpacity] = useState(1);   
-    
     const cadastrar = ()=>{
-        fetch(API_URL + '/cliente',{
+        fetch((API_URL + '/cliente'),{
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ "ds_nome": nome,
@@ -64,8 +137,8 @@ export default function Cadastro({navigation}) {
                 .catch(error => console.log(error))
       }
 
-      const buscaEndereco = async ()=>{
-        fetch('https://viacep.com.br/ws/' + cep +'/json/')
+      const buscaEndereco = async () => {
+        fetch('https://viacep.com.br/ws/' + cep + '/json/')
                 .then(response => response.json())
                 .then(json => {
                         setLogradouro(json.logradouro);
@@ -87,116 +160,264 @@ useEffect(() => {
 
   return (
       <SafeAreaView style={styles.container}>
-        <Text style={{fontSize:25, fontWeight:'bold', marginTop: 10, marginStart: -210}}>Cadastre-se</Text>
-        <View style={{flexDirection:'row', marginTop:10}}>        
+        <KeyboardAvoidingView        
+        //behavior={Platform.OS == "android" ? "padding" : "height"}
+        style={[styles.container]}
+        keyboardVerticalOffset={80}></KeyboardAvoidingView>
+        <Text style={{fontSize:40, fontWeight:'bold', marginStart: 10, color:'#0b3a5c'}}>Registro</Text>
+        <View style={{flexDirection:'row', marginTop:10, height:50}}>        
                 <TouchableWithoutFeedback 
                         style={{marginBottom: 1}}
-                        onPress={() => {setBotaoPfOpacity(0.3);setBotaoOngOpacity(1);setTipoCliente('PF')}}>
-                        <View style={{marginRight:50, opacity: botaoOngOpacity ,backgroundColor:'white', borderRadius:5, height:40, width:150}}>
-                                <Text style={{color:'black', fontSize:20, padding:5, marginStart:5}}>Pessoa Fisica</Text>
+                        onPress={() => 
+                                {setBtTutorBackGroundColor('#0b3a5c');
+                                setBtTutorFontColor('white');
+                                setBtOngBackGroundColor('#c0c0c0');
+                                setBtOngFontColor('#0b3a5c')
+                                setTipoCliente('PF')}}>
+                        <View style={{marginRight:50 ,backgroundColor:btTutorBackGroundColor, borderRadius:10, height:50, width:200}}>
+                                <Text style={{color:btTutorFontColor, fontSize:30, marginStart:40}}>Tutor</Text>
                         </View> 
                 </TouchableWithoutFeedback>
                 <TouchableWithoutFeedback 
-                        style={{marginBottom: 1}}
-                        onPress={() => {setBotaoPfOpacity(1);setBotaoOngOpacity(0.3);setTipoCliente('ONG')}}>
-                        <View style={{marginRight:30, opacity: botaoPfOpacity ,backgroundColor:'white', borderRadius:5, height:40, width:120}}>
-                                <Text style={{color:'black', fontSize:20, padding:5, marginStart:35}}>ONG</Text>
+                        style={{}}
+                        onPress={() => 
+                                {setBtTutorBackGroundColor('#c0c0c0');
+                                setBtTutorFontColor('#0b3a5c');
+                                setBtOngBackGroundColor('#0b3a5c');
+                                setBtOngFontColor('white')
+                                setTipoCliente('ONG')}}>
+                        <View style={{backgroundColor:btOngBackGroundColor, borderRadius:10, height:50, width:120, marginLeft:-70}}>
+                                <Text style={{color:btOngFontColor, fontSize:30, marginStart:20}}>ONG</Text>
                         </View> 
                 </TouchableWithoutFeedback>
         </View>
-        <View style={{width:430, height:750,marginTop:15}}>
+        <View style={{width:430, height:650,marginTop:15, marginBottom:30}}>
         <ScrollView>
                 <TextInput
                         value={nome}
                         onChangeText={(nome) => {setNome(nome)}}
                         style={styles.input}
                         placeholder={(tipoCliente == 'ONG') ? 'Razão Social' : 'Nome completo'}
+                        placeholderTextColor="white"
                 />
-                <TextInput
+                <Text style={styles.errorMessage}>{errorNome}</Text>
+                {tipoCliente == 'PF' &&
+                <TextInputMask
+                        type={'cpf'}
                         value={cpfCnpj}
-                        onChangeText={(cpfCnpj) => {setCpfCnpj(cpfCnpj)}}
+                        onChangeText={(cpf) => {setCpfCnpj((cpf.split(".").join("")).replace("-","")),
+                                setErrorCpf(null)}}
+                        //errorMessage={errorCpf}   
                         style={styles.input}
                         placeholder={(tipoCliente == 'ONG') ? 'CNPJ' : 'CPF'}
-                />
-                <TextInput
-                        value={dtNascimento}
-                        onChangeText={(dtNascimento) => {setDtNascimento(dtNascimento)}}
-                        style={styles.input}
-                        placeholder={(tipoCliente == 'ONG') ? 'Data Fundação' : 'Data Nascimento'}
-                />
-                {tipoCliente == 'PF' &&
-                <TextInput
-                        value={genero}
-                        onChangeText={(genero) => {setGenero(genero)}}
-                        style={styles.input}
-                        placeholder='Sexo'
+                        placeholderTextColor="white"
+                        //ref={(ref) => cpfField = ref}
+                        keyboardType="phone-pad"  
+                        returnKeyType="done"  
+                         
                 />}
-                              
-                <TextInput 
+                {tipoCliente == 'ONG' &&
+                <TextInputMask
+                        type={'cnpj'}
+                        value={cpfCnpj}
+                        onChangeText={(cpfCnpj) => {setCpfCnpj(cpfCnpj)
+                                setErrorCpf(null) }}
+                        style={styles.input}
+                        placeholder={(tipoCliente == 'ONG') ? 'CNPJ' : 'CPF'}
+                        placeholderTextColor="white"
+                        //ref={(ref) => cpfField = ref}
+                        keyboardType="phone-pad"  
+                        returnKeyType="done" 
+                        //errorMessage={errorCpf}    
+                />}
+                <Text style={styles.errorMessage}>{errorCpf}</Text>
+                
+                {tipoCliente == 'PF' &&
+                <View style={styles.input} >        
+                        <Picker 
+                                selectedValue={genero}
+                                placeholder='Gênero'
+                                placeholderTextColor="white"
+                                mode="dropdown"
+                                onValueChange={(genero) => {setGenero(genero) 
+                                setErrorGenero(null)}}
+                                errorMessage={errorGenero} >
+                                <Picker.Item color='white' label="Sexo"/>
+                                <Picker.Item color='white' label="Masculino" value="Masculino" />
+                                <Picker.Item color='white' label="Feminino" value="Feminino" />
+                        </Picker>
+                </View>                     
+                }   
+
+                {tipoCliente == 'PF' &&<Text style={styles.errorMessage}>{errorGenero}</Text>}
+                <DatePicker
+                        style={styles.input}
+                        date={dtNascimento}
+                        mode="date"
+                
+                        placeholder={(tipoCliente == 'ONG') ? 'Data Fundação' : 'Data Nascimento'}
+                        format="DD-MM-YYYY"
+                        minDate="01-05-1920"
+                        maxDate="2022-06-30"
+                        confirmBtnText="Confirm"
+                        cancelBtnText="Cancel"
+                        customStyles={{
+                        dateIcon: {
+                        position: 'absolute',
+                        left: 0,
+                        top: 8,
+                        marginLeft: 310
+                        },
+                        placeholderText: {
+                        fontSize: 25,
+                        color: "white",
+                        marginStart: -30
+                        },
+                        dateInput: {
+                        marginLeft: -120,
+                        color: 'black',
+                        top: 4,
+                        borderColor: 'transparent',
+                        },
+                        dateText: {
+                        fontSize: 20,
+                        color: "black",
+                        textAlign: "left",
+                        marginStart: -60
+                        }
+                        }}
+                        onDateChange={(dtNascimento) => {setDtNascimento(dtNascimento)
+                        setErrordtNascimento('')}}
+                        errorMessage={errordtNascimento}
+                />  
+                <Text style={styles.errorMessage}>{errordtNascimento}</Text>
+                <TextInputMask
                         value={telefone}
-                        onChangeText={(telefone) => {setTelefone(telefone)}}
+                        type={'custom'}
+                        options={{mask: '(99) 999999999'}}
+                        onChangeText={(telefone) => {setTelefone(telefone.replace("(","").replace(")","").replace(" ",""))
+                        setErrorTelefone(null)}}
+                        errorMessage={errorTelefone}
                         style={styles.input}
                         placeholder='Telefone'
-                />
-                <TextInput
+                        placeholderTextColor="white"
+                        keyboardType="phone-pad"  
+                        returnKeyType="done" 
+                />    
+                <Text style={styles.errorMessage}>{errorTelefone}</Text>
+                <TextInputMask
+                        type='zip-code'
                         value={cep}
-                        onChangeText={(cep) => {setCep(cep)}}
+                        onChangeText={(cep) => {setCep(cep.replace("-",""))
+                        setErrorCep(null)}}
+                        errorMessage={errorCep}   
                         onEndEditing={()=>buscaEndereco()}
                         style={styles.input}
                         placeholder='CEP'
+                        placeholderTextColor="white"
                 />
+                <Text style={styles.errorMessage}>{errorCep}</Text>
                 <TextInput
                         value={logradouro}
                         onChangeText={(logradouro) => {setLogradouro(logradouro)}}
                         style={styles.input}
                         placeholder='Logradouro'
+                        placeholderTextColor="white"
                 />
-                <TextInput
+
+                <Text style={styles.errorMessage}></Text>
+                
+                <TextInputMask
                         value={numero}
+                        type={'custom'}
+                        options={{mask: '9999999'}}
                         onChangeText={(numero) => {setNumero(numero)}}
                         style={styles.input}
-                        placeholder='Numero'
-                />
+                        placeholder='Número'
+                        placeholderTextColor="white"
+                        keyboardType="phone-pad"  
+                        returnKeyType="done" 
+                /> 
+                <Text style={styles.errorMessage}></Text>
                 <TextInput
                         value={bairro}
                         onChangeText={(bairro) => {setBairro(bairro)}}
                         style={styles.input}
                         placeholder='Bairro'
+                        placeholderTextColor="white"
                 />
+                <Text style={styles.errorMessage}></Text>
                 <TextInput
                         value={cidade}
                         onChangeText={(cidade) => {setCidade(cidade)}}
                         style={styles.input}
                         placeholder='Cidade'
+                        placeholderTextColor="white"
                 />
+                <Text style={styles.errorMessage}></Text>
                 <TextInput
                         value={uf}
                         onChangeText={(uf) => {setCidade(uf)}}
                         style={styles.input}
                         placeholder='UF'
+                        placeholderTextColor="white"
                 />
-                <TextInput
-                        value={observacoes}
-                        onChangeText={(observacoes) => {setObservacoes(observacoes)}}
-                        style={styles.input}
-                        placeholder='Observações'
+                <Text style={styles.errorMessage}></Text>
+
+                {tipoCliente == 'PF' &&   
+                <View style={styles.input} >
+                        <Picker 
+                                selectedValue={deficiencia}
+                                placeholder='Deficiência'
+                                style={{height: 50, width: 360, marginStart: -10, color :'white' }}
+                                onValueChange={(deficiencia) => {setDeficiencia(deficiencia) }}>
+                                <Picker.Item color='white' label="Deficiência"/>
+                                <Picker.Item color='black' label="SIM" value="SIM" />
+                                <Picker.Item color='black' label="NÃO" value="NÃO" />
+                        </Picker>
+                </View>                     
+                                }
+                                {tipoCliente == 'PF' &&  <Text style={styles.errorMessage}></Text>}
+                        <TextInput
+                                value={observacoes}
+                                onChangeText={(observacoes) => {setObservacoes(observacoes)}}
+                                style={styles.input}
+                                placeholder='Observações'
+                                placeholderTextColor="white"
+
+                        />
+                        <Text style={styles.errorMessage}></Text>
+                
+                        <TextInput
+                value={email}
+                placeholder="E-mail"
+                placeholderTextColor="white"
+                onChangeText={(email) => {
+                setEmail(email)
+                setErrorEmail('')
+                }}
+                style={styles.input}
+                keyboardType="email-address"
+                errorMessage={errorEmail}        
                 />
-                <TextInput
-                        value={email}
-                        onChangeText={(email) => {setEmail(email)}}
-                        style={styles.input}
-                        placeholder='Email'
-                />
-                <TextInput
+                <Text style={styles.errorMessage}>{errorEmail}</Text>
+        
+                       <TextInput
                         value={senha}
-                        onChangeText={(senha) => {setSenha(senha)}}
+                        onChangeText={(senha) => {setSenha(senha)
+                        setErrorSenha}}
                         style={styles.input}
                         placeholder='Senha'
+                        placeholderTextColor="white"
                         secureTextEntry={true}
+                        errorMessage={errorSenha} 
                 />
-                <UploadImage setProps={setTxFoto}></UploadImage>
+                <Text style={styles.errorMessage}>{errorSenha}</Text>
+                
+                <View style={{marginLeft:85, height:40,width: 200, marginBottom: 10}}><UploadImage setProps={setTxFoto}></UploadImage></View>
+         
                 <TouchableWithoutFeedback 
-                        style={{marginBottom: 1}}
+                        style={{marginBottom: 2}}
                         onPress={() => cadastrar()}>
                         <View style={styles.botaoResponder}>
                                 <Text style={styles.responderText}>Cadastrar</Text>
@@ -212,19 +433,17 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#F0E68C'
+    backgroundColor: 'white'
   },
   input: {
-    borderWidth: 1,
-    backgroundColor: 'white',
+    backgroundColor: '#c0c0c0',
     height: 50,
-    width: 300,
+    width: 370,
     marginStart: 30,
     marginTop: 20,
-    borderRadius: 5,
-    fontSize: 20,
-    paddingStart: 10
+    borderRadius: 10,
+    fontSize: 25,
+    paddingStart: 20
   },
   logo: {
     height: 120,

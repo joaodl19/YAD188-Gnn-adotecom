@@ -1,6 +1,7 @@
 package com.br.adoteappapi.controller;
 
 import com.br.adoteappapi.model.QuestionarioResponse;
+import com.br.adoteappapi.model.QuestionarioResponseCliente;
 import com.br.adoteappapi.model.RespostasQuestionario;
 import com.br.adoteappapi.repositories.QuestionarioRepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,12 @@ public class QuetionarioController {
     public ResponseEntity<List<QuestionarioResponse>> buscarQuestionario(){
         System.out.println("Buscando Questionario");
         return ResponseEntity.ok(repository.buscarQuestionario());
+    }
+
+    @GetMapping("/{id_cliente}")
+    public ResponseEntity<List<QuestionarioResponseCliente>> buscarQuestionarioCliente(@PathVariable Long id_cliente){
+        System.out.println("Buscando Questionario");
+        return ResponseEntity.ok(repository.buscarQuestionarioCliente(id_cliente));
     }
 
     @PostMapping(value = "/{id}")

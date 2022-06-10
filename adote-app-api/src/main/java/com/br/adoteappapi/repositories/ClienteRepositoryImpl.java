@@ -7,8 +7,11 @@ import org.springframework.stereotype.Repository;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @Repository
 public class ClienteRepositoryImpl implements ClienteRepository{
@@ -29,22 +32,33 @@ public class ClienteRepositoryImpl implements ClienteRepository{
         this.QUERY_DELETAR_CLIENTE = "DELETE FROM public.cliente WHERE nr_cpf_cnpj = ?";
         this.QUERY_CONSULTAR_DADOS_CLIENTE = "SELECT id_cliente, ds_nome, nr_cpf_cnpj, dt_nascimento_fundacao," +
                 " ds_genero, nr_telefone, nr_cep, ds_logradouro, ds_bairro, nr_numero, ds_cidade, ds_uf, ds_deficiencia, ds_obs, ds_email, tx_foto, ds_tipo_cliente" +
-                " FROM public.cliente WHERE nr_cpf_cnpj = ?";
+                " FROM public.cliente WHERE nr_cpf_cnpj = ? OR id_cliente = ? ";
 
     }
 
 
     @Override
     public void cadastrarCliente(Cliente cliente) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+        SimpleDateFormat dateIn = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat dateOut = new SimpleDateFormat("yyyy-MM-dd");
+        Date dtNascimento = new Date();
+        try {
+            dtNascimento = dateIn.parse(cliente.getDt_nascimento_fundacao());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        var dtNascimentoFinal = dateOut.format(dtNascimento);
+
         MessageDigest algoritimo = MessageDigest.getInstance("MD5");
         byte messageDigest[] = algoritimo.digest(cliente.getDs_senha().getBytes("UTF-8"));
         String senha = new String(messageDigest,"UTF-8");
+
         jdbcTemplate.update(connection -> {
         PreparedStatement ps = connection
                     .prepareStatement(QUERY_CADASTRAR_CLIENTE);
                     ps.setString(1, cliente.getDs_nome());
                     ps.setString(2, cliente.getNr_cpf_cnpj());
-                    ps.setDate(3, Date.valueOf(cliente.getDt_nascimento_fundacao()));
+                    ps.setDate(3, java.sql.Date.valueOf(dtNascimentoFinal));
                     ps.setString(4, cliente.getDs_genero());
                     ps.setBigDecimal(5, cliente.getNr_telefone());
                     ps.setString(6, cliente.getNr_cep());
@@ -69,15 +83,15 @@ public class ClienteRepositoryImpl implements ClienteRepository{
             PreparedStatement ps = connection
                     .prepareStatement(QUERY_ATUALIZAR_DADOS_CLIENTE);
             ps.setString(1, cliente.getDs_nome());
-            ps.setDate(2, Date.valueOf(cliente.getDt_nascimento_fundacao()));
+            ps.setDate(2, java.sql.Date.valueOf(cliente.getDt_nascimento_fundacao()));
             ps.setString(3, cliente.getDs_genero());
             ps.setBigDecimal(4, cliente.getNr_telefone());
             ps.setString(5, cliente.getNr_cep());
             ps.setString(6, cliente.getDs_logradouro());
             ps.setString(7, cliente.getDs_cidade());
             ps.setString(8, String.valueOf(cliente.getDs_deficiencia()));
-            ps.setString(9,cliente.getDs_obs());
-            ps.setString(10,cliente.getDs_email());
+            ps.setString(9, cliente.getDs_obs());
+            ps.setString(10, cliente.getDs_email());
             ps.setString(11, cliente.getDs_senha());
             ps.setBytes(12, cliente.getTx_foto());
             ps.setString(13, cpf);
@@ -112,7 +126,7 @@ public class ClienteRepositoryImpl implements ClienteRepository{
             cliente.setTx_foto(rs.getBytes("tx_foto"));
             cliente.setDs_tipo_cliente(rs.getString("ds_tipo_cliente"));
             cliente.setDs_senha("*******");
-        },cpf);
+        },cpf, Long.valueOf(cpf));
         return cliente;
     }
 }

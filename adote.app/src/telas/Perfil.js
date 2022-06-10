@@ -1,12 +1,12 @@
 import React, {useState,useEffect} from 'react';
-import {StyleSheet,Text, SafeAreaView, View,Image} from 'react-native';
+import {StyleSheet,Text, SafeAreaView, View,Image,TextInput} from 'react-native';
 import {TouchableOpacity} from 'react-native';
 
 export default function Perfil1({route, navigation}){
   const {cliente} = route.params;
   const telaHome = () => navigation.navigate('Home')
-  const telaCadastroPet = () => navigation.navigate('CadastroPet',cliente.id_cliente)
-  const telaAgendamentos = () => navigation.navigate('AgendamentosOng', cliente.id_cliente)
+  const telaCadastroPet = () => navigation.navigate('CadastroPet',{id_cliente: cliente.id_cliente})
+  const telaAgendamentos = () => navigation.navigate('AgendamentosOng', {id_cliente: cliente.id_cliente})
   
   const getImageSource = () => {
     return `data:image/jpeg;base64,${cliente.tx_foto}`
@@ -16,23 +16,18 @@ export default function Perfil1({route, navigation}){
 
   return(
     <SafeAreaView style={styles.container}>
-
       <Image style={styles.logo} source={require('../../assets/LogoT.png')}/>
-    
       <Image style={styles.perfil} source={{uri: getImageSource()}}/>
       {(cliente.ds_tipo_cliente == 'ONG') &&
         <TouchableOpacity style={styles.botao2}  onPress={()=>telaCadastroPet()}>
             <Text style={{color:'white',textAlign:'center'}}>CADASTRAR PET</Text>
         </TouchableOpacity>      
       }
-      <TouchableOpacity style={styles.botao3}  onPress={()=>telaAgendamentos()}>
-           <Text style={{color:'white',textAlign:'center'}}>MEUS PET</Text>
-      </TouchableOpacity>    
 
       <Text style={styles.saudacoes}>Dados do cliente:</Text>  
             
               
-              <View style={styles.item}><Text  style={styles.fontdados}>Nome: {cliente.ds_nome}</Text></View> 
+              <View style={styles.item}><TextInput  style={styles.fontdados}>Nome: {cliente.ds_nome}</TextInput></View> 
               <View style={styles.item}><Text style={styles.fontdados}>CPF/CNPJ: {cliente.nr_cpf_cnpj}</Text></View> 
               <View style={styles.item}><Text style={styles.fontdados}>Data Nascimento: {cliente.dt_nascimento_fundacao}</Text></View> 
               <View style={styles.item}><Text style={styles.fontdados}>Gênero: {cliente.ds_genero}</Text></View> 
@@ -47,7 +42,6 @@ export default function Perfil1({route, navigation}){
           <TouchableOpacity style={styles.botao}  onPress={()=>telaHome()}>
            <Text style={{color:'white',textAlign:'center'}}>RETORNAR AO MENU!</Text>
           </TouchableOpacity>
-          
     
     </SafeAreaView>
     )

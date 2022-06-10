@@ -1,11 +1,12 @@
 import React, {useState,useEffect} from 'react';
-import {StyleSheet,Text, SafeAreaView, View,Image, Alert} from 'react-native';
+import {ActivityIndicator, StyleSheet,Text, SafeAreaView, View,Image, Alert} from 'react-native';
 import {TouchableOpacity} from 'react-native';
 import { API_URL } from '@env';
 
 export default function PerfilPet({route, navigation}){
-  const {id_pet, id_cliente, id_ong}  = route.params
+  const {id_pet, id_cliente, tipo_cliente, id_ong}  = route.params
   const [pet, setPet] = useState([]);
+  const [isLoading,setLoading] = useState(false)
   const telaHome = () => navigation.navigate('Home')
   const telaQuestionario = () => navigation.navigate('Questionario', {id_cliente: id_cliente, id_ong: id_ong,id_pet: id_pet})
   //const telaPerfilPet = () => navigation.navigate('PerfilPet')
@@ -13,19 +14,15 @@ export default function PerfilPet({route, navigation}){
     return `data:image/jpeg;base64,${pet.tx_foto}`
   }
   const perfis = async () =>{
-      fetch(API_URL + '/pet/' + id_pet,{
-          method: 'GET',
-          headers: { 'Content-Type': 'application/json' },
-      }
-          )
+      fetch(API_URL+'/pet/'+id_pet)
            .then(response => response.json())
-           .then(json => setPet(json))
-           //.then(Alert.alert("Perfil Criado")
+           .then(json => {setPet(json),
+                          setLoading(true)})
            .catch(error => console.log(error))
           
   }
   const adotar = async (id_pet, id_cliente) =>{
-    fetch(API_URL + '/adocao',{
+    fetch((API_URL+'/adocao'),{
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ "id_pet": id_pet,
@@ -44,33 +41,33 @@ export default function PerfilPet({route, navigation}){
     },[]);
 
   return(
-    <SafeAreaView style={styles.container}>
-
-      <Image style={styles.logo} source={require('../../assets/LogoT.png')}/>
-    
-     <Image style={styles.perfil} source={{uri: getImageSource()}}/>
-
-      <TouchableOpacity style={styles.botao2}  onPress={()=>adotar(id_pet, id_cliente)}>
+    (isLoading == false)?
+      <SafeAreaView style={styles.container}>
+        <View style={{marginTop:300}}>
+          <ActivityIndicator size="large" color="white" />         
+        </View>  
+      </SafeAreaView>
+       :
+      <SafeAreaView style={styles.container}>
+       <Image style={styles.logo} source={require('../../assets/LogoT.png')}/>
+        <Image style={styles.perfil} source={{uri: getImageSource()}}/>
+        {tipo_cliente == 'PF' &&
+        <TouchableOpacity style={styles.botao2}  onPress={()=>adotar(id_pet, id_cliente)}>
            <Text style={{color:'white',textAlign:'center'}}>Adotar</Text>
-      </TouchableOpacity>      
-   
-      <Text style={styles.saudacoes}>Dados do Pet:</Text>  
-            
-              
-              <View style={styles.item}><Text style={styles.fontdados}>Nome: {pet.ds_nome}</Text></View> 
-              <View style={styles.item}><Text style={styles.fontdados}>Raca: {pet.ds_raca}</Text></View> 
-              <View style={styles.item}><Text style={styles.fontdados}>Data Nascimento: {pet.dt_nascimento}</Text></View> 
-              <View style={styles.item}><Text style={styles.fontdados}>Gênero: {pet.ds_genero}</Text></View>  
-              <View style={styles.item}><Text style={styles.fontdados}>Status: {pet.ds_status}</Text></View> 
-              <View style={styles.item}><Text style={styles.fontdados}>Observações: {pet.ds_obs}</Text></View>
-         
-              
-          <TouchableOpacity style={styles.botao}  onPress={()=>telaHome()}>
-           <Text style={{color:'white',textAlign:'center'}}>Retornar para Home</Text>
-          </TouchableOpacity>
-          
+        </TouchableOpacity>      
+        }
+        <Text style={styles.saudacoes}>Dados do Pet:</Text>    
+        <View style={styles.item}><Text style={styles.fontdados}>Nome: {pet.ds_nome}</Text></View> 
+        <View style={styles.item}><Text style={styles.fontdados}>Raca: {pet.ds_raca}</Text></View> 
+        <View style={styles.item}><Text style={styles.fontdados}>Data Nascimento: {pet.dt_nascimento}</Text></View> 
+        <View style={styles.item}><Text style={styles.fontdados}>Gênero: {pet.ds_genero}</Text></View>  
+        <View style={styles.item}><Text style={styles.fontdados}>Status: {pet.ds_status}</Text></View> 
+        <View style={styles.item}><Text style={styles.fontdados}>Observações: {pet.ds_obs}</Text></View>           
+        <TouchableOpacity style={styles.botao}  onPress={()=>telaHome()}>
+        <Text style={{color:'white',textAlign:'center'}}>Retornar para Home</Text>
+        </TouchableOpacity>  
+    </SafeAreaView>  
     
-    </SafeAreaView>
     )
 };
 
@@ -161,8 +158,8 @@ fontdados:{
       },
       perfil: {
         marginTop: 0,
-        height: 80,
-        width: 80,
+        height: 110,
+        width: 110,
         marginLeft: -220,
         borderRadius: 45
       },

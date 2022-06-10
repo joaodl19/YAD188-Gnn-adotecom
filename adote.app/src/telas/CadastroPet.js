@@ -23,7 +23,7 @@ export default function CadastroPet({route, navigation}) {
 
   const cadastropet =  () => {
       
-    fetch(API_URL + '/pet',{
+    fetch((API_URL+'/pet'),{
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({ "ds_nome": nome,

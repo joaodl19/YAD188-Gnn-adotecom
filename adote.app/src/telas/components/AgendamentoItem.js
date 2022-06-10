@@ -27,7 +27,7 @@ import {
         </TouchableWithoutFeedback>
     }    
     const aprovar = async (id_agendamento) =>{
-        fetch(API_URL + '/agendamento/' + id_agendamento + '/aprovar',{
+        fetch((API_URL + '/agendamento/' + id_agendamento + '/aprovar'),{
             method: 'PUT'}
             )
              .then(response => response.json())

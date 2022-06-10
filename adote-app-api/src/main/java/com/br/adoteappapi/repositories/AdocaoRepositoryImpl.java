@@ -22,7 +22,7 @@ public class AdocaoRepositoryImpl implements AdocaoRepository {
 
     @Override
     public void cadastrarAdocao(Adocao adocao) {
-        petRepository.alterarStatusPet(adocao.getId_pet(), "EM_PROCESSO_DE_ADOCAO");
+        petRepository.alterarStatusPet(adocao.getId_pet(), "Aguardando aprovação agendamento");
 
         jdbcTemplate.update(connection ->   {
             PreparedStatement ps = connection

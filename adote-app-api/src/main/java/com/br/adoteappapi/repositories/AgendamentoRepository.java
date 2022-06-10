@@ -11,4 +11,6 @@ public interface AgendamentoRepository {
     List<AgendamentoResponse> buscarAgendamentoOng(Long idOng);
 
     void aprovarAgendamento(Long idAgendamento);
+
+    AgendamentoResponse buscarAgendamentoPet(Long idPet);
 }

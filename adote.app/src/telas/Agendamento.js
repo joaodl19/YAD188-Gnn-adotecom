@@ -31,8 +31,16 @@ export default function Agendamento({route, navigation}) {
 
   const [dataSelecionada, setDataSelecionada] = useState('');
 
+  const montaData = (day) => {
+    let dia;
+    let mes;
+    let ano = day.year;
+    if(day.day < 10){dia = '0' + day.day}else{dia = day.day};
+    if(day.month < 10){mes = '0' + day.month}else{mes = day.month};
+    setDataSelecionada(dia + '-' + mes + '-' + ano)
+  }
   const escolherData = async (data, id_cliente, id_ong, id_pet) =>{
-    await fetch(API_URL + '/agendamento',{
+    await fetch((API_URL + '/agendamento'),{
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({"id_cliente": id_cliente,
@@ -56,7 +64,7 @@ export default function Agendamento({route, navigation}) {
         <Calendar
           minDate={'2022-05-01'}
           maxDate={'2022-08-10'}
-          onDayPress={day => {setDataSelecionada(day.dateString)
+          onDayPress={day => {montaData(day)
           }}
         ></Calendar>
         <Text style={{marginStart: 25, fontSize: 16, marginTop:20}}>Data escolhida</Text>

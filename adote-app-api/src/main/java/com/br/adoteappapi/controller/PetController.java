@@ -34,9 +34,17 @@ public class PetController {
         return ResponseEntity.ok("Dados atualizados com Sucesso");
     }
 
+    @PutMapping(value = "/{id}/{status}")
+    @ResponseBody
+    public ResponseEntity alterarStatusPet(@PathVariable Long id, @PathVariable String status){
+        System.out.println("ID: " + id + "Status: " + status);
+        petRepository.alterarStatusPet(id,status);
+        return ResponseEntity.ok("Dados atualizados com Sucesso");
+    }
+
     @DeleteMapping(value = "/{id}")
     @ResponseBody
-    public ResponseEntity atualizarDadosPet(@PathVariable Long id){
+    public ResponseEntity deletarDadosPet(@PathVariable Long id){
         petRepository.deletarPet(id);
         return ResponseEntity.ok("Pet deletado da base de dados");
     }
@@ -47,10 +55,10 @@ public class PetController {
         return ResponseEntity.ok(petRepository.consultarDadosPet(id));
     }
 
-    @GetMapping(value = "/filtro/{filtro}")
+    @GetMapping(value = "/ong/{id_ong}")
     @ResponseBody
-    public ResponseEntity<List<Pet>> consultarDadosPetFiltro(@PathVariable String filtro){
-        return ResponseEntity.ok(petRepository.consultarDadosPetFiltro(filtro));
+    public ResponseEntity<List<Pet>> consultarDadosPetFiltro(@PathVariable long id_ong){
+        return ResponseEntity.ok(petRepository.consultarDadosPetPorOng(id_ong));
     }
 
     @GetMapping(value = "/status/disponivel")

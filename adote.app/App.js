@@ -7,9 +7,11 @@ import Questionario from './src/telas/Questionario'
 import Cadastro from './src/telas/Cadastro'
 import Agendamento from './src/telas/Agendamento'
 import AgendamentosOng from './src/telas/AgendamentosOng';
+import ConfirmarAgendamento from './src/telas/ConfirmarAgendamento';
 import Perfil1 from './src/telas/Perfil'
 import CadastroPet from './src/telas/CadastroPet'
 import PerfilPet from './src/telas/PerfilPet'
+import AprovarAdocao from './src/telas/AprovarAdocao'
 
 CadastroPet
 export default function App() {
@@ -20,18 +22,16 @@ export default function App() {
     <NavigationContainer>
     <Stack.Navigator>
     <Stack.Screen name="Login" component={Login} />
-
     <Stack.Screen name="Home" component={Home} />
-
     <Stack.Screen name="PerfilPet" component={PerfilPet} />
-
     <Stack.Screen name="CadastroPet" component={CadastroPet} />
-
     <Stack.Screen name="Perfil" component={Perfil1} />
-      <Stack.Screen name="Cadastro" component={Cadastro} />
-      <Stack.Screen name="AgendamentosOng" component={AgendamentosOng} />
-      <Stack.Screen name="Agendamento" component={Agendamento} />
-      <Stack.Screen name="Questionario" component={Questionario} /> 
+    <Stack.Screen name="Cadastro" component={Cadastro} />
+    <Stack.Screen name="AgendamentosOng" component={AgendamentosOng} />
+    <Stack.Screen name="ConfirmarAgendamento" component={ConfirmarAgendamento} />
+    <Stack.Screen name="Agendamento" component={Agendamento} />
+    <Stack.Screen name="Questionario" component={Questionario} />
+    <Stack.Screen name="AprovarAdocao" component={AprovarAdocao} /> 
     </Stack.Navigator>
   </NavigationContainer>
   );

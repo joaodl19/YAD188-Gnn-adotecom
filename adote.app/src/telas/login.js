@@ -4,8 +4,10 @@ import {
     View,
     TextInput,
     Image,
+    Text,
     Button,
     Alert,
+    TouchableWithoutFeedback
   } from 'react-native';
 import { AsyncStorage } from 'react-native';
 import { API_URL } from '@env';
@@ -27,7 +29,7 @@ export default function Login({navigation}) {
     }
 
     const login = ( cpf, senha )=>{
-      fetch(API_URL + '/login',{
+      fetch( (API_URL+'/login'),{
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({ "cpf": cpf,
@@ -47,38 +49,38 @@ export default function Login({navigation}) {
       <View style={styles.container}>
         <View>
           <Image style={styles.logo} source={require('../../assets/LogoT.png')} />
+          <Text style={{fontFamily:'Lexend Mega', marginStart:50 ,fontSize:40, fontWeight:'bold', color:'#0b3a5c' }}>Bem-Vindo</Text>
         </View>
         <View>
             <TextInput
                 value={cpf}
                 onChangeText={(cpf) => {setCpf(cpf)}}
                 style={styles.input}
-                placeholder='Digite seu CPF/CNPJ'
+                placeholder='CPF/CNPJ'
+                placeholderTextColor="white" 
             ></TextInput>
             <TextInput
                 value={senha}
                 onChangeText={(senha) => {setSenha(senha)}}
-                placeholder='Digite sua Senha'
+                placeholder='Senha'
+                placeholderTextColor="white"
                 secureTextEntry={true}
                 style={styles.input}
             ></TextInput>
-            <View style={{ flexDirection: 'row' }}>
-              <View style={{ marginTop: 10, width: 80, marginRight: 22 }}>
-                <Button
-                  title="ENTRAR"
-                  color="#008000"
-                  onPress={() => {login( cpf, senha ),setSenha('')}}
-                  //onPress={() => {adotar()}}
-                />
-              </View>
-            <View style={{ marginTop: 10, width: 120 }}>
-              <Button
-                title="Cadastre-se"
-                color="#0080FF"
-                onPress={telaCadastro}
-              />
+            <View style={{ flexDirection: 'row', marginTop:10}}>
+              <TouchableWithoutFeedback style={{borderRadius:20}}
+                  onPress={() => {telaCadastro()}}>
+                  <View style={{ backgroundColor:'#696969', height:50, width:220, borderRadius:12}}>
+                      <Text style={{padding:5, paddingStart:10, fontSize:30, color:'white'}}>Registre-se</Text>
+                  </View>
+              </TouchableWithoutFeedback>
+              <TouchableWithoutFeedback style={{}}
+                  onPress={() => {login( cpf, senha ),setSenha('')}}>
+                  <View style={{ backgroundColor:'#0b3a5c', height:50, width:110, borderRadius:12, marginLeft:-20}}>
+                      <Text style={{padding:5, paddingStart:10, fontSize:30, color:'white'}}>Entrar</Text>
+                  </View>
+                </TouchableWithoutFeedback>
             </View>
-          </View>
         </View>
       </View>
     );
@@ -89,12 +91,12 @@ export default function Login({navigation}) {
       flex: 1,
       alignItems: 'center',
       justifyContent: 'center',
-      backgroundColor: '#F0E68C',
+      backgroundColor: 'white',
     },
     logo: {
-      height: 120,
+      height: 60,
       width: 300,
-      marginBottom: 50,
+      marginBottom: 10,
     },
     botao: {
       height: 500,
@@ -103,15 +105,16 @@ export default function Login({navigation}) {
       color: '#008000',
     },
     input: {
-        borderWidth: 2,
-        backgroundColor: 'white',
-        height: 40,
-        width: 250,
+        backgroundColor: '#c0c0c0',
+        height: 50,
+        width: 310,
         marginTop: 10,
-        borderRadius: 5,
-        fontSize: 15,
+        borderRadius: 15,
+        fontSize: 30,
         paddingStart: 10,
         borderColor: '#000080',
+        color:'black',
+
       }
   
   });

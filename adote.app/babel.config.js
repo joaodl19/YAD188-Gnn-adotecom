@@ -9,5 +9,5 @@ module.exports = {
       "safe": false,
       "allowUndefined": true
     }]
-  ]
+  ],
 };

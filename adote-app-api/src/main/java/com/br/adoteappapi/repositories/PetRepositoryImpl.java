@@ -20,15 +20,29 @@ public class PetRepositoryImpl implements PetRepository {
     private String QUERY_CONSULTAR_DADOS_PET_DISPONIVEL;
     private String QUERY_ALTERAR_STATUS_PET;
     private String QUERY_CONSULTAR_PET_FILTRO;
-
+    private String QUERY_CONSULTAR_DADOS_PET_ONG;
+    private String QUERY_ATUALIZAR_STATUS_PET;
 
     public PetRepositoryImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
         this.QUERY_CADASTRAR_PET = "INSERT INTO public.pet (ds_nome, dt_nascimento, ds_genero, ds_raca,id_ong, ds_obs, tx_foto, ds_status) VALUES (?,?,?,?,?,?,?,?) ";
         this.QUERY_ATUALIZAR_DADOS_PET = "UPDATE public.pet SET ds_nome=?, dt_nascimento=?, ds_genero=?, ds_raca=?, ds_obs=?, tx_foto=?)";
         this.QUERY_DELETAR_PET = "DELETE FROM public.pet WHERE id_pet = ?";
-        this.QUERY_CONSULTAR_DADOS_PET = "SELECT * FROM public.pet WHERE id_pet = ?";
-        this.QUERY_CONSULTAR_DADOS_PET_DISPONIVEL = "SELECT * FROM public.pet WHERE ds_status = 'DISPONIVEL'";
+        this.QUERY_CONSULTAR_DADOS_PET = "SELECT c.ds_nome as ds_nome_ong, p.id_pet, p.ds_nome, p.dt_nascimento, p.ds_raca, p.ds_genero, p.id_ong, p.ds_status, p.ds_obs, p.tx_foto, p.ds_visita\n" +
+                "FROM public.pet p\n" +
+                "JOIN public.cliente c\n" +
+                "ON p.id_ong = c.id_cliente\n" +
+                "WHERE p.id_pet = ?;";
+        this.QUERY_CONSULTAR_DADOS_PET_DISPONIVEL = "SELECT c.ds_nome as ds_nome_ong, p.id_pet, p.ds_nome, p.dt_nascimento, p.ds_raca, p.ds_genero, p.id_ong, p.ds_status, p.ds_obs, p.tx_foto, p.ds_visita\n" +
+                "FROM public.pet p\n" +
+                "JOIN public.cliente c\n" +
+                "ON p.id_ong = c.id_cliente\n" +
+                " WHERE ds_status = 'DISPONIVEL'";
+        this.QUERY_CONSULTAR_DADOS_PET_ONG = "SELECT c.ds_nome as ds_nome_ong, p.id_pet, p.ds_nome, p.dt_nascimento, p.ds_raca, p.ds_genero, p.id_ong, p.ds_status, p.ds_obs, p.tx_foto, p.ds_visita\n" +
+                "FROM public.pet p\n" +
+                "JOIN public.cliente c\n" +
+                "ON p.id_ong = c.id_cliente\n" +
+                " WHERE p.id_ong = ?";
         this.QUERY_ALTERAR_STATUS_PET = "UPDATE public.pet SET ds_status=? WHERE id_pet = ?";
         this.QUERY_CONSULTAR_PET_FILTRO ="SELECT * FROM public.pet WHERE ds_raca LIKE '%?%'";
     }
@@ -93,6 +107,7 @@ public class PetRepositoryImpl implements PetRepository {
             pet.setDt_nascimento(rs.getString("dt_nascimento"));
             pet.setId_ong(rs.getLong("id_ong"));
             pet.setTx_foto(rs.getBytes("tx_foto"));
+            pet.setDs_nome_ong(rs.getString("ds_nome_ong"));
             pet.setDs_obs(rs.getString("ds_obs"));
         }, id);
         return pet;
@@ -110,6 +125,7 @@ public class PetRepositoryImpl implements PetRepository {
             rs.getString("dt_nascimento"),
             rs.getLong("id_ong"),
             rs.getBytes("tx_foto"),
+            rs.getString("ds_nome_ong"),
             rs.getString("ds_obs"))
         );
         return pets;
@@ -128,8 +144,32 @@ public class PetRepositoryImpl implements PetRepository {
                 rs.getString("dt_nascimento"),
                 rs.getLong("id_ong"),
                 rs.getBytes("tx_foto"),
+                rs.getString("ds_nome_ong"),
                 rs.getString("ds_obs"))
         );
         return pets;
+    }
+
+    @Override
+    public List<Pet> consultarDadosPetPorOng(long id_ong) {
+        List<Pet> pets;
+        pets = jdbcTemplate.query(QUERY_CONSULTAR_DADOS_PET_ONG, (rs, rowNumber) -> new Pet(
+                rs.getLong("id_pet"),
+                rs.getString("ds_nome"),
+                rs.getString("ds_genero"),
+                rs.getString("ds_raca"),
+                rs.getString("ds_status"),
+                rs.getString("dt_nascimento"),
+                rs.getLong("id_ong"),
+                rs.getBytes("tx_foto"),
+                rs.getString("ds_nome_ong"),
+                rs.getString("ds_obs"))
+        ,id_ong);
+        return pets;
+    }
+
+    @Override
+    public void atualizarStatusPet(Long id, String status) {
+
     }
 }

@@ -18,4 +18,8 @@ public interface PetRepository {
     List<Pet> consultarDadosPetDisponivel();
 
     List<Pet> consultarDadosPetFiltro(String filtro);
+
+    List<Pet> consultarDadosPetPorOng(long id_ong);
+
+    void atualizarStatusPet(Long id, String status);
 }

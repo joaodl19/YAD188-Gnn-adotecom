@@ -8,19 +8,21 @@ import Topo from './components/Topo';
 export default function Questionario({navigation, route}) {
   const {id_cliente, id_ong, id_pet} = route.params;
   const [questionario, setQuetionario] = useState([])
+  const [cliente, setCliente] = useState([])
+  
   const telaHome = () => navigation.navigate('Home')
   const telaAgendamento = () => navigation.navigate('Agendamento', {id_cliente: id_cliente,
      id_pet: id_pet,
       id_ong: id_ong})
-  const buscaQuestionario = async () =>{
-    await fetch(API_URL + '/questionario')
+  const buscaQuestionario = () =>{
+    fetch(API_URL + '/questionario')
          .then(response => response.json())
          .then(json => setQuetionario(json))
          .catch(error => console.log(error))
  }
 
  const inserirQuestionario = async (id_cliente, respostas) =>{
-    await fetch(API_URL + '/questionario/' + id_cliente,{
+    await fetch((API_URL+'/questionario/'+id_cliente),{
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(respostas)})
@@ -31,8 +33,18 @@ export default function Questionario({navigation, route}) {
          )        
  }
 
+ const buscaDadosCliente = async (cpf) =>{
+  fetch(url+'/cliente/'+cpf)
+       .then(response => response.json())
+       .then(json => {setCliente(json);
+                    
+          })
+
+       .catch(error => console.log(error))
+} 
+
 const [respostas, setRespostas] = useState([])
- 
+
 const gravaResposta = (prevRespostas, resposta) => {
     let index = respostas.findIndex((array) => array.id_pergunta == resposta.id_pergunta); 
     if(index == -1){
@@ -42,18 +54,23 @@ const gravaResposta = (prevRespostas, resposta) => {
         setRespostas(prevRespostas);
     }}
 
-    const responder = (respostas) => {return(
-    respostas.map(resposta => Alert.alert("id: " + resposta.id + " resp.: " + resposta.resposta)),
-    console.log(respostas)
+const responder = (respostas) => {return(
+  respostas.map(resposta => Alert.alert("id: " + resposta.id + " resp.: " + resposta.resposta)),
+  console.log(respostas)
 )}
+
+const getImageSource = () => {
+  return `data:image/jpeg;base64,${cliente.tx_foto}`
+}
+
   useEffect(() => {
-    buscaQuestionario()
+    buscaQuestionario(),
+    buscaDadosCliente(id_cliente)
   },[]);
 
   return (
       <SafeAreaView style={styles.container}>
         <View style={{flexDirection: 'row'}}> 
-          <Image style={styles.perfil} source={require('../../assets/perfil.png')}/>
           <Image style={styles.logo} source={require('../../assets/LogoT.png')}/>
         </View>   
         <View style={{backgroundColor: 'white', marginTop: 10, height: 480}}>
@@ -61,8 +78,7 @@ const gravaResposta = (prevRespostas, resposta) => {
             <View style={{marginTop: 50, height: 350, backgroundColor: 'white'}}> 
               <FlatList 
                 data={questionario}
-                renderItem={({ item }) => <Questao {...item} setProps={gravaResposta} value={respostas}>
-                </Questao>}
+                renderItem={({ item }) => <Questao {...item} setProps={gravaResposta} value={respostas}/>}
               />
             </View>
         </View>
@@ -96,7 +112,8 @@ const styles = StyleSheet.create({
   },
   logo: {
     height: 120,
-    width: 300
+    width: 300,
+    marginLeft: 30
   },
   botao: {
     marginTop: 10,
