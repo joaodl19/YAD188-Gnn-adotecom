@@ -85,7 +85,7 @@ export default function Home({navigation}) {
            :
         <View>
           <Topo cliente={cliente} navigation={navigation}/>
-            <View style={{marginTop: 0, height: 500, width: 385,backgroundColor: '#808080'}}>
+            <View style={{marginTop: 0, height: 400, width: 385,backgroundColor: '#808080'}}>
               <FlatList 
               refreshControl={
                 <RefreshControl

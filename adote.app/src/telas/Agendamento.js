@@ -62,11 +62,19 @@ export default function Agendamento({route, navigation}) {
   return (
     <SafeAreaView style={styles.container}>
         <Calendar
-          minDate={'2022-05-01'}
+          minDate={'2022-06-01'}
           maxDate={'2022-08-10'}
           onDayPress={day => {montaData(day)
           }}
         ></Calendar>
+        <Text style={{marginStart: 0, 
+          fontSize: 21,
+          fontWeight: 'bold',
+          textAlign: 'center',
+          marginTop:30 , 
+          marginBottom:30}}>Agende uma data em que você esteja disponivel,
+           para que um agente da ONG possa visitar sua residência</Text>
+
         <Text style={{marginStart: 25, fontSize: 16, marginTop:20}}>Data escolhida</Text>
         <View style={{flexDirection: 'row'}}>
           <TextInput style={styles.input} value={dataSelecionada}></TextInput>
@@ -86,7 +94,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    backgroundColor: '#F0E68C',
+    backgroundColor: '#c0c0c0',
   },
   input: {
     borderWidth: 1,
@@ -111,14 +119,14 @@ const styles = StyleSheet.create({
   },
   
 responderText:{
-  fontSize: 18,
+  fontSize: 20,
   marginTop: 5,
   color: 'white',
   marginLeft: 10 
 },
 botaoResponder:{
   marginTop:10,   
-  marginLeft: 20,
+  marginLeft: 10,
   height: 40,
   width: 95,
   borderRadius: 15,

@@ -57,7 +57,7 @@ import {
             <TouchableWithoutFeedback 
                     style={{marginTop: 100}}
                     onPress={() => proximaTela()}>
-                <View style={{marginLeft:260, backgroundColor:'green', height:40, width:110}}>
+                <View style={{marginLeft:170, backgroundColor:'green',borderRadius: 30, height:50, width:130, justifyContent:'center'}}>
                    <Text style={{textAlign:'center', fontSize:16, color:'white'}}>{labelBotao()}</Text>
                 </View>
             </TouchableWithoutFeedback>}

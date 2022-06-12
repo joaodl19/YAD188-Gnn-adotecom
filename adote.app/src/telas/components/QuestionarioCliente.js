@@ -13,7 +13,7 @@ import {
     return(
         <View style={styles.container}>
             <Text style={styles.fontdados}>{pergunta}</Text>
-            <Text style={styles.fontdados}>R: {respostas}</Text>
+            <Text style={styles.dados}>R: {respostas}</Text>
         </View>  
       )
   };
@@ -21,13 +21,15 @@ import {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        marginStart:15,
-        marginTop: 15
+        marginStart:22,
+        marginTop: 5,
+        backgroundColor: '#c0c0c0',
+        height: 85
     },  
     item:{
         alignItems: 'center',
-        backgroundColor: 'white',
-        height: 80,
+        backgroundColor: '#c0c0c0',
+        height: 500,
         width: 370,
         marginLeft: 10,
         marginTop: 30,
@@ -35,11 +37,20 @@ const styles = StyleSheet.create({
     },
       fontdados:{
         fontSize: 20,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        height: 50,
+        width: 330,
+        marginLeft: 50,
+        color:'white'
     },
+    
     dados:{
-        marginLeft: 15,
-        fontSize: 20
+        fontSize: 20,
+        fontWeight: 'bold',
+        height: 50,
+        width: 330,
+        marginLeft: 50,
+        color:'black'
         },
     botaoResponder:{
         marginTop: 10,

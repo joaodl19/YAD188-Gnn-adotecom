@@ -1,0 +1,107 @@
+
+  @media (min-width:1200px) {
+
+    .mobile-component {
+    
+    display: none;
+    
+    }
+    
+    }
+    
+    
+    
+    /* Telefones em paisagem e abaixo */
+    
+    @media (max-width:480px) {
+    
+    .mobile-component {
+    
+    display: block !important;
+    
+    }
+    .teste { color: red
+
+    }
+
+    .carousel-innerimg {
+    
+    min-width: auto;
+    
+    max-height: fit-content;
+    
+    }
+    
+    }
+    
+    
+    
+    /* Telefones em paisagem a tablet em retrato */
+    
+    @media (max-width:767px) {
+    
+    .deskptop-Component {
+    
+    display: none;
+    
+    }
+    
+    .mobile-component {
+    
+    display: block !important;
+    
+    }
+    
+    }
+    
+    
+    
+    @media (max-width:1000px) {
+    
+    .column-footer-vkh4 {
+    
+    display: inline-block;
+    
+    background:#eee;
+    
+    padding-top:5px;
+    
+    padding-bottom:5px;
+    
+    text-align: center;
+    
+    text-transform: uppercase;
+    
+    color:#666;
+    
+    width:100%;
+    
+    font-size:15px;
+    
+    }
+    
+    .column-footer-vkul {
+    
+    text-align: center;
+    
+    width:100%;
+    
+    }
+    
+    .minHeight{
+    
+    margin-top:10px;
+    
+    margin-bottom:30px;
+    
+    }
+    
+    .carousel-innerimg {
+    
+    min-width: auto;
+    
+    max-height: fit-content;
+    
+    }
+    
+    }

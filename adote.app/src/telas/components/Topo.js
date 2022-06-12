@@ -21,16 +21,24 @@ export default function Topo( {navigation, cliente}) {
             <Image style={styles.perfil} source={{uri: getImageSource()}}/>
           </TouchableWithoutFeedback>
           <View style={{marginTop:25, marginStart:10}}>
-            <Text style={{fontWeight:'bold'}}>Olá,</Text>
-            <Text style={{fontWeight:'bold'}}>{cliente.ds_nome}</Text>
+            <Text style={{fontWeight:'bold', fontSize:18}}>Olá,</Text>
+            <Text style={{fontWeight:'bold', fontSize:18}}>{cliente.ds_nome}</Text>
+            <Text style={{fontWeight:'bold', marginTop:10}}>Clique em sua foto para acessar o perfil</Text>
           </View>
           <TouchableWithoutFeedback onPress={() => telaLogin()}>
-            <Text style={{marginStart:140, fontWeight:'bold', fontSize:16}}>Sair</Text>
+            <Text style={{marginStart:-50, fontWeight:'bold', fontSize:20}}>Sair</Text>
           </TouchableWithoutFeedback>
           </View>   
-          <View style={{marginTop:10}}>
+          <View style={{marginTop:10,marginStart:10}}>
             <TextInputComIcone></TextInputComIcone>
           </View>
+          {cliente.ds_tipo_cliente == 'ONG' &&
+          <Text style={{fontWeight:'bold', marginTop:5, fontSize:18,marginStart:30}}>
+          Listagem dos seus Pets doados ao app</Text>}
+          {cliente.ds_tipo_cliente == 'PF' &&
+          <Text style={{fontWeight:'bold', marginTop:5, fontSize:18,marginStart:30}}>
+          Listagem dos Pets disponíveis a adoção</Text>}
+
       </View>
   );
 }

@@ -17,7 +17,7 @@ import {
                     <Text style={styles.fontdados}>{pergunta.ds_pergunta}</Text>
                     <Picker
                         
-                        style={{ height: 50, width: 150 }}
+                        //style={{ height: 150, width: 150, }}
                         onValueChange={(itemValue) => setProps(value, {"id_pergunta":pergunta.id_pergunta,"ds_pergunta":pergunta.ds_pergunta,
                          "ds_resposta":itemValue})}
                         >
@@ -38,12 +38,15 @@ const styles = StyleSheet.create({
     },  
     item:{
         alignItems: 'center',
-        backgroundColor: 'white',
-        height: 80,
-        width: 370,
+        backgroundColor: '#c0c0c0',
+        height: 90,
+        width: 360,
         marginLeft: 10,
-        marginTop: 30,
-        flexDirection: 'row'
+        marginTop: 20,
+        flexDirection: 'row',
+        borderRadius: 15,
+        borderWidth: 1,
+        borderColor: 'black'
     },
       fontdados:{
         fontSize: 18,

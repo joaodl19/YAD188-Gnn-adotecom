@@ -1,18 +1,31 @@
 import React, {useState,useEffect} from 'react';
-import {ActivityIndicator, StyleSheet,Text, SafeAreaView, View,Image, Alert} from 'react-native';
+import {StyleSheet,Text, TextInput, SafeAreaView, View,Image, Alert, Picker} from 'react-native';
 import {TouchableOpacity} from 'react-native';
 import { API_URL } from '@env';
+import DatePicker from 'react-native-datepicker'
+
 
 export default function PerfilPet({route, navigation}){
   const {id_pet, id_cliente, tipo_cliente, id_ong}  = route.params
+  const [cliente, setCliente] = useState([]);
   const [pet, setPet] = useState([]);
   const [isLoading,setLoading] = useState(false)
+  const [nome, setNome] = useState(pet.ds_nome)
+  const [dtNascimento, setDtNascimento] = useState(pet.dt_nascimento)
+  const [raca, setRaca] = useState(pet.ds_raca)
+  const [genero, setGenero] = useState(pet.ds_genero)
+  const [observacoes, setObs] = useState(pet.ds_obs)
+  const [errorRaca, setErrorRaca] = useState('')
+  const [errorNome, setErrorNome] = useState('')
+  const [errorGenero, setErrorGenero] = useState('')
+  const [errorDtnascimento, setErrordtNascimento] = useState('')
   const telaHome = () => navigation.navigate('Home')
   const telaQuestionario = () => navigation.navigate('Questionario', {id_cliente: id_cliente, id_ong: id_ong,id_pet: id_pet})
   //const telaPerfilPet = () => navigation.navigate('PerfilPet')
   const getImageSource = () => {
     return `data:image/jpeg;base64,${pet.tx_foto}`
   }
+  
   const perfis = async () =>{
       fetch(API_URL+'/pet/'+id_pet)
            .then(response => response.json())
@@ -35,38 +48,203 @@ export default function PerfilPet({route, navigation}){
          )
         
 }
+const validar = () => {
+  let error = false
+  
+  setErrordtNascimento('')
+  setErrorNome('')
+  setErrorRaca('')
+  setErrorGenero('')
+  
+  
+ 
+  if (dtNascimento == ''){
+          setErrordtNascimento("Preencha a data de nascimento")
+          error = true
+  }
+  if (nome == ''){
+          setErrorNome("Preencha o nome")
+          error = true
+  }
+  if (genero == ''){
+          setErrorGenero("Preencha o genero")
+          error = true
+  }
+  if (cep == ''){
+          setErrorRaca("Preencha a raça")
+          error = true
+  }
+  return !error
+}
+
+
+
+const atualizar = (id_pet)=>{
+  if (validar()){
+   fetch(API_URL+'/pet/'+id_pet,{
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ "ds_nome": nome,
+                                  "ds_raca": raca,
+                                  "dt_nascimento_fundacao": dtNascimento,
+                                  "ds_genero": genero,
+                                  "ds_obs": observacoes
+                                   })
+                                }
+                                 
+          )
+          //.then(response => response.json())
+          .then(Alert.alert("Cadastro Atualizado Com Sucesso!"),
+                          telaHome())
+          .catch(error => {Alert.alert("Cadastro incompleto");console.log(error)})
+                              }else {Alert.alert("Cadastro incompleto , preencha os campos obrigatórios");console.log()}           
+                            
+          }
 
   useEffect(() => {
       perfis()
     },[]);
 
   return(
-    (isLoading == false)?
-      <SafeAreaView style={styles.container}>
-        <View style={{marginTop:300}}>
-          <ActivityIndicator size="large" color="white" />         
-        </View>  
-      </SafeAreaView>
-       :
-      <SafeAreaView style={styles.container}>
-       <Image style={styles.logo} source={require('../../assets/LogoT.png')}/>
-        <Image style={styles.perfil} source={{uri: getImageSource()}}/>
-        {tipo_cliente == 'PF' &&
-        <TouchableOpacity style={styles.botao2}  onPress={()=>adotar(id_pet, id_cliente)}>
-           <Text style={{color:'white',textAlign:'center'}}>Adotar</Text>
-        </TouchableOpacity>      
-        }
-        <Text style={styles.saudacoes}>Dados do Pet:</Text>    
-        <View style={styles.item}><Text style={styles.fontdados}>Nome: {pet.ds_nome}</Text></View> 
-        <View style={styles.item}><Text style={styles.fontdados}>Raca: {pet.ds_raca}</Text></View> 
-        <View style={styles.item}><Text style={styles.fontdados}>Data Nascimento: {pet.dt_nascimento}</Text></View> 
-        <View style={styles.item}><Text style={styles.fontdados}>Gênero: {pet.ds_genero}</Text></View>  
-        <View style={styles.item}><Text style={styles.fontdados}>Status: {pet.ds_status}</Text></View> 
-        <View style={styles.item}><Text style={styles.fontdados}>Observações: {pet.ds_obs}</Text></View>           
+    //(isLoading == false)?
+    
+    <SafeAreaView style={styles.container}>
+
+    <Image style={styles.logo} source={require('../../assets/LogoT.png')}/>
+  
+   <Image style={styles.perfil} source={{uri: getImageSource()}}/>
+
+    <TouchableOpacity style={styles.botao2}  onPress={()=>adotar(id_pet, id_cliente)}>
+         <Text style={{color:'white',textAlign:'center', fontSize: 22}}>Adotar</Text>
+    </TouchableOpacity>      
+ 
+    <Text style={styles.saudacoes}>Dados do Pet:</Text>  
+          
+            
+            <View style={styles.item}>
+            <Text style={{marginLeft: -120, fontSize: 17, fontWeight: 'bold',}}>Nome:</Text>
+            <TextInput 
+        value={pet.ds_nome} 
+        style={{fontSize: 16,
+          width: '100%',
+          fontWeight: 'bold',
+          marginLeft: 68,
+          color: 'black'}}
+        onChangeText={(value)=>{setNome(value)
+        setErrorNome('')}}
+        errorMessage={errorNome}/></View> 
+
+      <Text style={styles.errorMessage}>{errorNome}</Text>
+
+            <View style={styles.item}>
+            <Text style={{marginLeft: -120, fontSize: 17, fontWeight: 'bold',}}>Raca: </Text>
+            <TextInput  value={pet.ds_raca} 
+            style={{fontSize: 16,
+              width: '100%',
+              fontWeight: 'bold',
+              marginLeft: 68,
+              color: 'black'}}
+        onChangeText={(value) => {setRaca(value)
+        setErrorRaca('')}}          
+        errorMessage={errorRaca}/></View> 
+
+      <Text style={styles.errorMessage}>{errorRaca}</Text>
+
+            <View style={styles.item}><Text style={{marginLeft: -120, fontSize: 17, fontWeight: 'bold',}}>Nascimento: </Text>
+            <DatePicker
+
+      date={pet.dt_nascimento}
+      mode="date"
+      format="YYYY-MM-DD"
+      minDate="1920-05-01"
+      maxDate="2022-06-30"
+      confirmBtnText="Confirm"
+      cancelBtnText="Cancel"
+      customStyles={{
+        dateIcon: {
+          position: 'absolute',
+          left: 0,
+          top: 4,
+          marginLeft: 210
+        },
+        dateInput: {
+          marginLeft: 20,
+          fontcolor: 'black',
+          borderColor: 'transparent',
+        },
+        dateText: {
+          fontSize: 17,
+          fontWeight: 'bold',
+          color: "black",
+          textAlign: "left",
+          marginStart: -39
+          }
+      }}
+      onDateChange={(date) => {setDtnasc(date)
+       setErrordtNascimento('')}}
+       errorMessage={errorDtnascimento}
+    />  
+  
+</View> 
+
+<Text style={styles.errorMessage}>{errorDtnascimento}</Text>
+
+            <View style={styles.item}>
+            <Text style={{marginLeft: -120, fontSize: 17, fontWeight: 'bold',}}>Gênero: </Text>
+            <TextInput
+            value={pet.ds_genero}
+            onValueChange={(value) => {setGenero(value) 
+              setErrorGenero('')}}
+              errorMessage={errorGenero}
+            style={{fontSize: 16,
+width: '100%',
+fontWeight: 'bold',
+marginLeft: 52,
+color: 'black'}}/>
+            <Picker 
+      selectedValue={pet.ds_genero}
+      style={{fontSize: 16,
+              width: '100%',
+              fontWeight: 'bold',
+              marginLeft: 60,
+              color: 'black'}}
+      onValueChange={(selectedValue) => {setGenero(selectedValue)
+      setErrorGenero(null)}}
+      errorMessage={errorGenero}>
+      <Picker.Item label="Selecione seu Gênero"/>
+      <Picker.Item label="Macho" value="Macho" />
+      <Picker.Item label="Fêmea" value="Fêmea" />
+    </Picker></View>  
+
+    <Text style={styles.errorMessage}>{errorGenero}</Text>
+
+            <View style={styles.item}>
+              <Text style={{marginLeft: -120, fontSize: 16, fontWeight: 'bold',}}>Status:                  {pet.ds_status}
+              </Text></View>      
+
+              <Text style={styles.errorMessage}>{errorGenero}</Text>         
+      
+        
+            <View style={styles.item}>
+              <Text style={{marginLeft: -120, fontSize: 17, fontWeight: 'bold',}}>Observações:</Text>
+        <TextInput style={{fontSize: 16,
+              width: '100%',
+              fontWeight: 'bold',
+              marginLeft: 13,
+              color: 'black'}}value={pet.ds_obs} onChangeText={(value)=>setObs(value)}/></View>
+
+{(cliente.ds_tipo_cliente == 'ONG') &&
+      <TouchableOpacity style={styles.botao}  onPress={()=>atualizar()}>
+          <Text style={{color:'white',textAlign:'center', fontSize: 19}}>Atualizar Dados</Text>
+      </TouchableOpacity>     }
+       
+            
         <TouchableOpacity style={styles.botao}  onPress={()=>telaHome()}>
-        <Text style={{color:'white',textAlign:'center'}}>Retornar para Home</Text>
-        </TouchableOpacity>  
-    </SafeAreaView>  
+         <Text style={{color:'white',textAlign:'center', fontSize: 23}}>Retornar para Home</Text>
+        </TouchableOpacity>
+        
+  
+  </SafeAreaView>
     
     )
 };
@@ -76,22 +254,22 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'blue',
     alignItems: 'center',
-    backgroundColor: '#F0E68C',
+    backgroundColor: 'white',
   },
   item:{
     alignItems: 'center',
     backgroundColor: 'white',
     borderRadius: 20,
-    height: 30,
-    width: 300,
-    marginLeft: 10,
-    marginTop: 5,
+    height: 46,
+    width: 250,
+    marginLeft: 110,
+    marginTop: 3,
     flexDirection: 'row',
-    backgroundColor: 'white',
+    backgroundColor: '#c0c0c0',
     borderRadius: 5,
     paddingStart: 10,
     borderColor: 'black',
-    borderWidth: 2
+    borderWidth: 0
 },
   dados:{
     marginLeft: 15,
@@ -99,8 +277,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'black'
   },
   botao: {
-    height: 25,
-    width: '50%',
+    height: 45,
+    width: '70%',
     marginTop: 25,
     borderRadius: 30,
     backgroundColor: 'blue',
@@ -108,8 +286,8 @@ const styles = StyleSheet.create({
   },
   botao2: {
     marginLeft: 180,
-    height: 20,
-    width: '40%',
+    height: 30,
+    width: '50%',
     marginTop: 1,
     borderRadius: 30,
     backgroundColor: 'green',
@@ -136,9 +314,9 @@ const styles = StyleSheet.create({
     
 },
 saudacoes:{
-    fontSize: 20,
-    marginTop: 0,
-    marginBottom: 1,
+    fontSize: 26,
+    marginTop: 2,
+    marginBottom: 5,
     fontWeight: 'bold',
     justifyContent: 'center',
     textAlign:'center'

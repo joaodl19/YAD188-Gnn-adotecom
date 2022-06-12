@@ -9,6 +9,7 @@ import { API_URL } from '@env';
 export default function ConfirmarAgendamento({route, navigation}) {
 
   const [refreshing, setRefreshing] = useState(false); 
+  const telaConfirmarAgendamento = () => navigation.navigate('ConfirmarAgendamento')
 
   const onRefresh = () => {
     setRefreshing(true);
@@ -82,22 +83,22 @@ const atualizarStatusPet = async (id_pet) =>{
                 {(dadosAgendamento.ds_status == 'Pendente')?
                  <TouchableWithoutFeedback style={{}}
                     onPress={() => aprovar(dadosAgendamento.id_agendamento)}>
-                    <View style={{marginLeft:20, backgroundColor:'green', height:40, width:110}}>
-                        <Text style={{textAlign:'center', fontSize:19, color:'white',fontWeight: 'bold'}}>Confirmar</Text>
+                    <View style={{marginLeft:20, backgroundColor:'green', height:50, width:120 , borderRadius: 30,justifyContent: 'center'}}>
+                        <Text style={{textAlign:'center', fontSize:22, color:'white',fontWeight: 'bold'}}>Confirmar</Text>
                     </View>
                 </TouchableWithoutFeedback>
                 :
                 <TouchableWithoutFeedback style={{}}
                     onPress={() => aprovar(dadosAgendamento.id_agendamento)}>
-                    <View style={{marginLeft:20, backgroundColor:'green', height:40, width:110}}>
-                        <Text style={{textAlign:'center', fontSize:19, color:'white',fontWeight: 'bold'}}>Reagendar</Text>
+                    <View style={{marginLeft:20, backgroundColor:'green', height:50, width:120, borderRadius: 30,justifyContent: 'center'}}>
+                        <Text style={{textAlign:'center', fontSize:22, color:'white',fontWeight: 'bold'}}>Reagendar</Text>
                     </View>
                 </TouchableWithoutFeedback>
                 }
                 <TouchableWithoutFeedback style={{}}
                     onPress={() => telaConfirmarAgendamento()}>
-                    <View style={{marginLeft:20, backgroundColor:'red', height:40, width:110}}>
-                        <Text style={{textAlign:'center', fontSize:19, color:'white',fontWeight: 'bold'}}>Cancelar</Text>
+                    <View style={{marginLeft:20, backgroundColor:'red', height:50, width:120, borderRadius: 30,justifyContent: 'center'}}>
+                        <Text style={{textAlign:'center', fontSize:22, color:'white',fontWeight: 'bold'}}>Cancelar</Text>
                     </View>
                 </TouchableWithoutFeedback>
         </View>

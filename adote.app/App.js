@@ -2,7 +2,7 @@ import React, {useState,useEffect} from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Home from './src/telas/Home';
-import Login from './src/telas/Login';
+import Login from './src/telas/login';
 import Questionario from './src/telas/Questionario'
 import Cadastro from './src/telas/Cadastro'
 import Agendamento from './src/telas/Agendamento'
@@ -12,6 +12,7 @@ import Perfil1 from './src/telas/Perfil'
 import CadastroPet from './src/telas/CadastroPet'
 import PerfilPet from './src/telas/PerfilPet'
 import AprovarAdocao from './src/telas/AprovarAdocao'
+
 
 CadastroPet
 export default function App() {

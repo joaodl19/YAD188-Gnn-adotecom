@@ -85,8 +85,8 @@ const buscaQuestionarioCliente = async (id_cliente) =>{
   return (
     <SafeAreaView style={styles.container}>
         <Text style={{textAlign: 'center', fontSize: 30, fontWeight: 'bold'}}>Aprovar Adoção</Text>
-        <View style={{backgroundColor:'white', height:200, width:430, marginTop:30, marginLeft:30}}>
-            <View style={{backgroundColor:'white', marginTop:20, marginLeft:20}}>
+        <View style={{backgroundColor:'white', height:200, width:500, marginTop:10, marginLeft:30}}>
+            <View style={{backgroundColor:'#c0c0c0', marginTop:20, marginLeft:-35}}>
                 <Text style={styles.fontdados}>Nome Pet: {dadosAgendamento.ds_nome_pet}</Text>
                 <Text style={styles.fontdados}>Nome Cliente: {dadosAgendamento.ds_nome_cliente}</Text>
                 <Text style={styles.fontdados}>Data Visita: {dadosAgendamento.dt_visita}</Text>
@@ -96,28 +96,28 @@ const buscaQuestionarioCliente = async (id_cliente) =>{
                 {(pet.ds_status == 'Visita Realizada')?
                  <TouchableWithoutFeedback style={{}}
                     onPress={() => aprovarAdocao()}>
-                    <View style={{marginLeft:20, backgroundColor:'green', height:50, width:110}}>
+                    <View style={{marginLeft:50, backgroundColor:'green', height:50, width:110, borderRadius:30, justifyContent:'center'}}>
                         <Text style={{textAlign:'center', fontSize:19, color:'white',fontWeight: 'bold'}}>Aprovar Adocao</Text>
                     </View>
                 </TouchableWithoutFeedback>
                 :
                 <TouchableWithoutFeedback style={{}}
                     onPress={() => aprovar(dadosAgendamento.id_agendamento)}>
-                    <View style={{marginLeft:20, backgroundColor:'green', height:40, width:110}}>
+                    <View style={{marginLeft:-25, backgroundColor:'green', height:50, width:105, borderRadius:30, justifyContent:'center'}}>
                         <Text style={{textAlign:'center', fontSize:19, color:'white',fontWeight: 'bold'}}>Reagendar</Text>
                     </View>
                 </TouchableWithoutFeedback>
                 }
                 <TouchableWithoutFeedback style={{}}
                     onPress={() => telaConfirmarAgendamento()}>
-                    <View style={{marginLeft:20, backgroundColor:'red', height:40, width:110}}>
+                    <View style={{marginLeft:20, backgroundColor:'red', height:50, width:90, borderRadius:30, justifyContent:'center'}}>
                         <Text style={{textAlign:'center', fontSize:19, color:'white',fontWeight: 'bold'}}>Cancelar</Text>
                     </View>
                 </TouchableWithoutFeedback>
                 {(pet.ds_status == 'Aguardando visita')?
                  <TouchableWithoutFeedback style={{}}
                  onPress={() => finalizarVisita()}>
-                 <View style={{marginLeft:20, backgroundColor:'blue', height:40, width:140}}>
+                 <View style={{marginLeft:20, backgroundColor:'blue', height:50, width:140, borderRadius:30, justifyContent:'center'}}>
                      <Text style={{textAlign:'center', fontSize:19, color:'white',fontWeight: 'bold'}}>Finalizar visita</Text>
                  </View>
              </TouchableWithoutFeedback>
@@ -126,14 +126,14 @@ const buscaQuestionarioCliente = async (id_cliente) =>{
             </View>         
         </View>
         {(questionario == true)?
-         <View style={{marginTop:20, marginStart:40}}>
+         <View style={{marginTop:20, marginStart:70}}>
             <Text style={{fontSize:25, fontWeight:'bold'}}>Questionario Cliente</Text>        
          </View>
          :<Text></Text>
 
         }
         {(questionario == true)?
-        <View style={{backgroundColor:'white', height:400, width:430, marginTop:30, marginLeft:30}}>
+        <View style={{backgroundColor:'white', height:350, width:500, marginTop:30, marginLeft:-30}}>
             <FlatList 
               refreshControl={
                 <RefreshControl
@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    backgroundColor: '#F0E68C',
+    backgroundColor: 'white',
   },
   input: {
     borderWidth: 1,
@@ -184,7 +184,8 @@ const styles = StyleSheet.create({
   fontdados:{
     fontSize: 20,
     fontWeight: 'bold',
-    color: 'black'
+    color: 'black',
+    marginStart: 40
 },
 responderText:{
   fontSize: 18,

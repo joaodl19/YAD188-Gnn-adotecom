@@ -73,10 +73,10 @@ const getImageSource = () => {
         <View style={{flexDirection: 'row'}}> 
           <Image style={styles.logo} source={require('../../assets/LogoT.png')}/>
         </View>   
-        <View style={{backgroundColor: 'white', marginTop: 10, height: 480}}>
+        <View style={{backgroundColor: 'white', marginTop: -60, height: 490}}>
             <Text style={styles.saudacoes}>Olá! Responda o questionário abaixo para ajudarmos a escolher o Pet ideal para o seu lar.</Text>        
-            <View style={{marginTop: 50, height: 350, backgroundColor: 'white'}}> 
-              <FlatList 
+            <View style={{marginTop: 50, height: 350, backgroundColor: '#c0c0c0'}}> 
+              <FlatList                 
                 data={questionario}
                 renderItem={({ item }) => <Questao {...item} setProps={gravaResposta} value={respostas}/>}
               />
@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'blue',
     alignItems: 'center',
-    backgroundColor: '#F0E68C',
+    backgroundColor: 'white',
   },
   input: {
     borderWidth: 2,
@@ -124,23 +124,27 @@ const styles = StyleSheet.create({
   },
   botaoResponder:{
     marginTop:40,   
-    marginRight:20,
-    height: 40,
-    width: 90,
+    marginRight:0,
+    height: 50,
+    width: 200,
     borderRadius: 15,
     backgroundColor: '#000080'
 },
 saudacoes:{
-    fontSize: 22,
+    fontSize: 21,
     marginTop: 10,
-    marginLeft: 12,
-    fontWeight: 'bold'
+    marginLeft: 7,
+    fontWeight: 'bold',
+    justifyContent: 'center',
+    textAlign: 'center'
 },
 responderText:{
-    fontSize: 18,
+    fontSize: 25,
     marginTop: 5,
     color: 'white',
-    marginLeft: 20 
+    marginLeft: 0,
+    justifyContent: 'center',
+    textAlign: 'center'
 },
     logo: {
         height: 60,
@@ -159,7 +163,6 @@ responderText:{
       topo: {
         height: 100,
         marginTop: 20
-      },
-    
+      }    
 });
 

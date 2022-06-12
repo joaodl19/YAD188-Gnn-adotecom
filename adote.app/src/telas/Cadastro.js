@@ -95,7 +95,7 @@ export default function Cadastro({navigation}) {
                 error = true
         }
         if (genero == null){
-                setErrorGenero("Preencha seu genero")
+                setErrorGenero("Preencha seu sexo")
                 error = true
         }
         
@@ -109,33 +109,36 @@ export default function Cadastro({navigation}) {
     const telaLogin = () => navigation.navigate('Login');
 
     const cadastrar = ()=>{
-        fetch((API_URL + '/cliente'),{
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ "ds_nome": nome,
-                                        "nr_cpf_cnpj": cpfCnpj,
-                                        "dt_nascimento_fundacao": dtNascimento,
-                                        "ds_genero": genero,
-                                        "nr_telefone": telefone,
-                                        "nr_cep": cep,
-                                        "ds_logradouro": logradouro,
-                                        "nr_numero": numero,
-                                        "ds_bairro": bairro,
-                                        "ds_cidade": cidade,
-                                        "ds_uf": uf,
-                                        "ds_deficiencia":"N",
-                                        "ds_obs": observacoes,
-                                        "ds_email": email,
-                                        "ds_senha": senha,
-                                        "ds_tipo_cliente": tipoCliente,
-                                        "tx_foto": txFoto})
-                                      }
-                )
-                .then(response => response.json())
-                .then(json => Alert.alert("Cadastro Realizado Com Sucesso!"),
-                                telaLogin())
-                .catch(error => console.log(error))
-      }
+        if (validar()){
+
+                fetch(API_URL+'/cliente',{
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ "ds_nome": nome,
+                                                "nr_cpf_cnpj": cpfCnpj,
+                                                "dt_nascimento_fundacao": dtNascimento,
+                                                "ds_genero": genero,
+                                                "nr_telefone": telefone,
+                                                "nr_cep": cep,
+                                                "ds_logradouro": logradouro,
+                                                "nr_numero": numero,
+                                                "ds_bairro": bairro,
+                                                "ds_cidade": cidade,
+                                                "ds_uf": uf,
+                                                "ds_deficiencia":deficiencia,
+                                                "ds_obs": observacoes,
+                                                "ds_email": email,
+                                                "ds_senha": senha,
+                                                "ds_tipo_cliente": tipoCliente,
+                                                "tx_foto": txFoto})
+                                              }
+                        )
+                        
+                        .then(Alert.alert("Cadastro Realizado Com Sucesso!"),
+                                        telaLogin())
+                        .catch(error => {Alert.alert("Cadastro incompleto");console.log(error)})
+                                        } else {Alert.alert("Cadastro incompleto , preencha os campos obrigatórios");console.log()}           
+                }
 
       const buscaEndereco = async () => {
         fetch('https://viacep.com.br/ws/' + cep + '/json/')
@@ -159,11 +162,9 @@ useEffect(() => {
 },[]);
 
   return (
+        
       <SafeAreaView style={styles.container}>
-        <KeyboardAvoidingView        
-        //behavior={Platform.OS == "android" ? "padding" : "height"}
-        style={[styles.container]}
-        keyboardVerticalOffset={80}></KeyboardAvoidingView>
+        
         <Text style={{fontSize:40, fontWeight:'bold', marginStart: 10, color:'#0b3a5c'}}>Registro</Text>
         <View style={{flexDirection:'row', marginTop:10, height:50}}>        
                 <TouchableWithoutFeedback 
@@ -191,11 +192,21 @@ useEffect(() => {
                         </View> 
                 </TouchableWithoutFeedback>
         </View>
-        <View style={{width:430, height:650,marginTop:15, marginBottom:30}}>
+                             
+        
         <ScrollView>
+        <KeyboardAvoidingView        
+        //behavior={Platform.OS == "android" ? "padding" : "height"}
+        //style={[styles.container]}
+        keyboardVerticalOffset={80}>
+        
+        <View style={{width:400, height:1500,marginTop:15, marginBottom:30, marginLeft: -30}}>
+        
+        
                 <TextInput
                         value={nome}
-                        onChangeText={(nome) => {setNome(nome)}}
+                        onChangeText={(nome) => {setNome(nome)
+                        setErrorNome('')}}
                         style={styles.input}
                         placeholder={(tipoCliente == 'ONG') ? 'Razão Social' : 'Nome completo'}
                         placeholderTextColor="white"
@@ -236,15 +247,16 @@ useEffect(() => {
                 <View style={styles.input} >        
                         <Picker 
                                 selectedValue={genero}
-                                placeholder='Gênero'
-                                placeholderTextColor="white"
                                 mode="dropdown"
                                 onValueChange={(genero) => {setGenero(genero) 
                                 setErrorGenero(null)}}
-                                errorMessage={errorGenero} >
-                                <Picker.Item color='white' label="Sexo"/>
-                                <Picker.Item color='white' label="Masculino" value="Masculino" />
-                                <Picker.Item color='white' label="Feminino" value="Feminino" />
+                                errorMessage={errorGenero} 
+                                style={styles.pickerstyle}
+                                
+                                >
+                                <Picker.Item color='black' label="Sexo"/>
+                                <Picker.Item color='black' label="Masculino" value="Masculino" />
+                                <Picker.Item color='black' label="Feminino" value="Feminino" />
                         </Picker>
                 </View>                     
                 }   
@@ -269,12 +281,12 @@ useEffect(() => {
                         marginLeft: 310
                         },
                         placeholderText: {
-                        fontSize: 25,
+                        fontSize: 20,
                         color: "white",
-                        marginStart: -30
+                        marginStart: -62
                         },
                         dateInput: {
-                        marginLeft: -120,
+                        marginLeft: -140,
                         color: 'black',
                         top: 4,
                         borderColor: 'transparent',
@@ -283,7 +295,7 @@ useEffect(() => {
                         fontSize: 20,
                         color: "black",
                         textAlign: "left",
-                        marginStart: -60
+                        marginStart: -100
                         }
                         }}
                         onDateChange={(dtNascimento) => {setDtNascimento(dtNascimento)
@@ -367,11 +379,11 @@ useEffect(() => {
                 {tipoCliente == 'PF' &&   
                 <View style={styles.input} >
                         <Picker 
-                                selectedValue={deficiencia}
-                                placeholder='Deficiência'
-                                style={{height: 50, width: 360, marginStart: -10, color :'white' }}
-                                onValueChange={(deficiencia) => {setDeficiencia(deficiencia) }}>
-                                <Picker.Item color='white' label="Deficiência"/>
+                                selectedValue={deficiencia}                                
+                                style={styles.pickerstyle}
+                                onValueChange={(deficiencia) => {setDeficiencia(deficiencia) }}
+                                >
+                                <Picker.Item color='black' label="Deficiência" />
                                 <Picker.Item color='black' label="SIM" value="SIM" />
                                 <Picker.Item color='black' label="NÃO" value="NÃO" />
                         </Picker>
@@ -405,7 +417,7 @@ useEffect(() => {
                        <TextInput
                         value={senha}
                         onChangeText={(senha) => {setSenha(senha)
-                        setErrorSenha}}
+                        setErrorSenha('')}}
                         style={styles.input}
                         placeholder='Senha'
                         placeholderTextColor="white"
@@ -414,18 +426,22 @@ useEffect(() => {
                 />
                 <Text style={styles.errorMessage}>{errorSenha}</Text>
                 
-                <View style={{marginLeft:85, height:40,width: 200, marginBottom: 10}}><UploadImage setProps={setTxFoto}></UploadImage></View>
+                <View style={{marginLeft:82, height:40,width: 200, marginBottom: 25}}><UploadImage setProps={setTxFoto}></UploadImage></View>
          
                 <TouchableWithoutFeedback 
-                        style={{marginBottom: 2}}
+                        style={{marginBottom: 3}}
                         onPress={() => cadastrar()}>
                         <View style={styles.botaoResponder}>
                                 <Text style={styles.responderText}>Cadastrar</Text>
                         </View> 
                 </TouchableWithoutFeedback>
-        </ScrollView>
+        
+        
         </View>
-    </SafeAreaView>
+        
+    </KeyboardAvoidingView>
+    </ScrollView> 
+    </SafeAreaView>                      
   );
 }
 
@@ -442,7 +458,7 @@ const styles = StyleSheet.create({
     marginStart: 30,
     marginTop: 20,
     borderRadius: 10,
-    fontSize: 25,
+    fontSize: 20,
     paddingStart: 20
   },
   logo: {
@@ -456,20 +472,40 @@ const styles = StyleSheet.create({
     color: '#008000'
   },
   responderText:{
-        fontSize: 25,
+        fontSize: 28,
         marginTop: 5,
         color: 'white',
-        marginLeft: 10 
+        marginLeft: 10 ,
+        textAlign: 'center'
         },
         botaoResponder:{
         marginTop:20,   
-        marginLeft: 30,
+        marginLeft: 60,
         marginBottom: 20,
         height: 50,
-        width: 130,
+        width: 300,
         borderRadius: 15,
         backgroundColor: '#000080'
-        }      
+        },
+        containerMask: {
+                flexDirection: "row",
+                marginBottom: 5,
+                marginLeft: 10,
+                marginRight: 10
+              },
+              errorMessage: {
+                alignSelf: "flex-start",
+                marginLeft: 50,
+                color: "#f00",
+                fontSize: 14
+              } ,
+              pickerstyle: {
+                height: 50, 
+                width: 360,
+                marginStart: -10,
+                color :'white',
+                fontSize: 35}
+
 });
 
 

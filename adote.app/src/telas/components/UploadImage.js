@@ -43,10 +43,13 @@ const imageUploaderStyles=StyleSheet.create({
        left: 30,
        top:10,
        backgroundColor:'lightgrey',
+       borderRadius: 20,
+       backgroundColor: '#c0c0c0'
    },
    uploadBtn:{
        display:'flex',
        alignItems:"center",
-       justifyContent:'center'
+       justifyContent:'center',
+       borderRadius: 15
    }
 })

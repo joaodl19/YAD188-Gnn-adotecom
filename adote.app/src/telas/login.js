@@ -52,7 +52,7 @@ export default function Login({navigation}) {
           <Text style={{fontFamily:'Lexend Mega', marginStart:50 ,fontSize:40, fontWeight:'bold', color:'#0b3a5c' }}>Bem-Vindo</Text>
         </View>
         <View>
-            <TextInput
+            <TextInput class="teste"
                 value={cpf}
                 onChangeText={(cpf) => {setCpf(cpf)}}
                 style={styles.input}
