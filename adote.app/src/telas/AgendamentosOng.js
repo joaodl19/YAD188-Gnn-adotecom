@@ -21,7 +21,7 @@ export default function AgendamentosOng({route, navigation}) {
   const {id_cliente} = route.params;
   const [agendamentos, setAgendamentos] = useState([]);  
   const startAgendamentos = async (id_cliente) =>{
-    fetch(host_api+'/agendamento/'+id_cliente)
+    await fetch(host_api+'/agendamento/'+id_cliente)
          .then(response => response.json())
          .then(json => setAgendamentos(json))
          .catch(error => console.log(error))

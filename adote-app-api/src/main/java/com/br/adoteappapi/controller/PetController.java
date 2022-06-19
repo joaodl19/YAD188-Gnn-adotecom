@@ -2,6 +2,8 @@ package com.br.adoteappapi.controller;
 
 import com.br.adoteappapi.model.Pet;
 import com.br.adoteappapi.repositories.PetRepositoryImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -18,19 +21,27 @@ public class PetController {
 
     @Autowired
     PetRepositoryImpl petRepository;
+    private Logger logger = LoggerFactory.getLogger(PetController.class);
 
     @PostMapping
     @ResponseBody
     public ResponseEntity cadastrarPet(@RequestBody Pet pet) throws UnsupportedEncodingException, NoSuchAlgorithmException {
+        logger.info("cadastrando pet");
         petRepository.cadastrarPet(pet);
-        System.out.println("cadastrando Pet");
+        logger.info("pet cadastrado com sucesso");
         return ResponseEntity.ok("Cadastro Realizado com Sucesso");
     }
 
     @PutMapping(value = "/{id}")
     @ResponseBody
     public ResponseEntity atualizarDadosPet(@PathVariable Long id, @RequestBody Pet pet){
-        petRepository.atualizarDadosPet(id,pet);
+        logger.info("atualizando dados pet");
+        try {
+            petRepository.atualizarDadosPet(id, pet);
+        }catch (Exception e){
+            e.printStackTrace();
+            logger.info("erro ao atualizar dados pet");
+        }
         return ResponseEntity.ok("Dados atualizados com Sucesso");
     }
 
@@ -61,11 +72,18 @@ public class PetController {
         return ResponseEntity.ok(petRepository.consultarDadosPetPorOng(id_ong));
     }
 
-    @GetMapping(value = "/status/disponivel")
+    @GetMapping(value = "/status/{statusPet}")
     @ResponseBody
-    public ResponseEntity<List<Pet>> consultarDadosPetDisponivel(){
-        System.out.println("Buscando Pets");
-        return ResponseEntity.ok(petRepository.consultarDadosPetDisponivel());
+    public ResponseEntity<List<Pet>> consultarDadosPetDisponivel(@PathVariable String statusPet){
+        logger.info("Buscando pets com status " + statusPet);
+        List<Pet> pets = new ArrayList<>();
+        try {
+            pets = petRepository.consultarDadosPetStatus(statusPet);
+        }catch (Exception e){
+            e.printStackTrace();
+            logger.info("erro ao buscar pets com status " + statusPet);
+        }
+        return ResponseEntity.ok(pets);
     }
 }
 

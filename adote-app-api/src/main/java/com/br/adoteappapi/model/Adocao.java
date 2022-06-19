@@ -12,5 +12,6 @@ public class Adocao {
     private Long id_visita;
     private String dt_adocao;
     private String ds_status;
+    private String ds_ciclo;
     private String ds_obs;
 }

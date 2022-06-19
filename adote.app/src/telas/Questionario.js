@@ -6,6 +6,7 @@ import { API_URL } from '@env';
 import Topo from './components/Topo';
 
 export default function Questionario({navigation, route}) {
+ 
   const host_api = API_URL;
   const {id_cliente, id_ong, id_pet} = route.params;
   const [questionario, setQuetionario] = useState([])

@@ -15,7 +15,7 @@ public interface PetRepository {
 
     Pet consultarDadosPet(Long id);
 
-    List<Pet> consultarDadosPetDisponivel();
+    List<Pet> consultarDadosPetStatus(String statusPet);
 
     List<Pet> consultarDadosPetFiltro(String filtro);
 

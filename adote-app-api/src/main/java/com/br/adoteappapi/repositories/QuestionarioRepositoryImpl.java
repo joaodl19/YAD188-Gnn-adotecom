@@ -2,10 +2,12 @@ package com.br.adoteappapi.repositories;
 
 import com.br.adoteappapi.model.*;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -87,7 +89,8 @@ public class QuestionarioRepositoryImpl {
         return questionario;
     }
 
-    public void inserirQuestionario(Long id, List<RespostasQuestionario> respostasQuestionarios) {
+    public int inserirQuestionario(Long id, List<RespostasQuestionario> respostasQuestionarios) {
+        KeyHolder keyHolder = new GeneratedKeyHolder();
         String perguntas = "";
         String respostas = "";
         for(RespostasQuestionario resp : respostasQuestionarios){
@@ -106,11 +109,12 @@ public class QuestionarioRepositoryImpl {
         String respostasFinal = respostas;
         jdbcTemplate.update(connection -> {
                    PreparedStatement ps = connection
-                           .prepareStatement(QUERY_INSERIR_QUESTIONARIO);
+                           .prepareStatement(QUERY_INSERIR_QUESTIONARIO, Statement.RETURN_GENERATED_KEYS);
                    ps.setLong(1, id);
                    ps.setString(2, perguntasFinal);
                    ps.setString(3, respostasFinal);
                    return ps;
-        });
+        },keyHolder);
+       return (int) keyHolder.getKeys().get("id_questionario");
     }
 }

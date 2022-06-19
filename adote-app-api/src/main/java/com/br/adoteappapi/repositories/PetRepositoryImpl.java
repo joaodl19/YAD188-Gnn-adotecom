@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -17,7 +18,7 @@ public class PetRepositoryImpl implements PetRepository {
     private String QUERY_ATUALIZAR_DADOS_PET;
     private String QUERY_DELETAR_PET;
     private String QUERY_CONSULTAR_DADOS_PET;
-    private String QUERY_CONSULTAR_DADOS_PET_DISPONIVEL;
+    private String QUERY_CONSULTAR_DADOS_PET_STATUS;
     private String QUERY_ALTERAR_STATUS_PET;
     private String QUERY_CONSULTAR_PET_FILTRO;
     private String QUERY_CONSULTAR_DADOS_PET_ONG;
@@ -33,11 +34,11 @@ public class PetRepositoryImpl implements PetRepository {
                 "JOIN public.cliente c\n" +
                 "ON p.id_ong = c.id_cliente\n" +
                 "WHERE p.id_pet = ?;";
-        this.QUERY_CONSULTAR_DADOS_PET_DISPONIVEL = "SELECT c.ds_nome as ds_nome_ong, p.id_pet, p.ds_nome, p.dt_nascimento, p.ds_raca, p.ds_genero, p.id_ong, p.ds_status, p.ds_obs, p.tx_foto, p.ds_visita\n" +
+        this.QUERY_CONSULTAR_DADOS_PET_STATUS = "SELECT c.ds_nome as ds_nome_ong, p.id_pet, p.ds_nome, p.dt_nascimento, p.ds_raca, p.ds_genero, p.id_ong, p.ds_status, p.ds_obs, p.tx_foto, p.ds_visita\n" +
                 "FROM public.pet p\n" +
                 "JOIN public.cliente c\n" +
                 "ON p.id_ong = c.id_cliente\n" +
-                " WHERE ds_status = 'DISPONIVEL'";
+                " WHERE ds_status = ?";
         this.QUERY_CONSULTAR_DADOS_PET_ONG = "SELECT c.ds_nome as ds_nome_ong, p.id_pet, p.ds_nome, p.dt_nascimento, p.ds_raca, p.ds_genero, p.id_ong, p.ds_status, p.ds_obs, p.tx_foto, p.ds_visita\n" +
                 "FROM public.pet p\n" +
                 "JOIN public.cliente c\n" +
@@ -114,39 +115,27 @@ public class PetRepositoryImpl implements PetRepository {
     }
 
     @Override
-    public List<Pet> consultarDadosPetDisponivel() {
+    public List<Pet> consultarDadosPetStatus(String statusPet) {
         List<Pet> pets;
-        pets = jdbcTemplate.query(QUERY_CONSULTAR_DADOS_PET_DISPONIVEL, (rs, rowNumber) -> new Pet(
-            rs.getLong("id_pet"),
-            rs.getString("ds_nome"),
-            rs.getString("ds_genero"),
-            rs.getString("ds_raca"),
-            rs.getString("ds_status"),
-            rs.getString("dt_nascimento"),
-            rs.getLong("id_ong"),
-            rs.getBytes("tx_foto"),
-            rs.getString("ds_nome_ong"),
-            rs.getString("ds_obs"))
-        );
+        pets = jdbcTemplate.query(QUERY_CONSULTAR_DADOS_PET_STATUS, (rs, rowNumber) ->
+            new Pet(
+                            rs.getLong("id_pet"),
+                            rs.getString("ds_nome"),
+                            rs.getString("ds_genero"),
+                            rs.getString("ds_raca"),
+                            rs.getString("ds_status"),
+                            rs.getString("dt_nascimento"),
+                            rs.getLong("id_ong"),
+                            rs.getBytes("tx_foto"),
+                            rs.getString("ds_nome_ong"),
+                            rs.getString("ds_obs"))
+        , statusPet);
         return pets;
     }
 
     @Override
     public List<Pet> consultarDadosPetFiltro(String filtro) {
-        List<Pet> pets;
-        QUERY_CONSULTAR_DADOS_PET_DISPONIVEL = "SELECT * FROM public.pet WHERE ds_raca LIKE '%" +filtro+"?%";
-        pets = jdbcTemplate.query(QUERY_CONSULTAR_DADOS_PET_DISPONIVEL, (rs, rowNumber) -> new Pet(
-                rs.getLong("id_pet"),
-                rs.getString("ds_nome"),
-                rs.getString("ds_genero"),
-                rs.getString("ds_raca"),
-                rs.getString("ds_status"),
-                rs.getString("dt_nascimento"),
-                rs.getLong("id_ong"),
-                rs.getBytes("tx_foto"),
-                rs.getString("ds_nome_ong"),
-                rs.getString("ds_obs"))
-        );
+        List<Pet> pets = new ArrayList<>();
         return pets;
     }
 
