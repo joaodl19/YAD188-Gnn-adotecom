@@ -6,6 +6,8 @@ import DatePicker from 'react-native-datepicker'
 
 
 export default function PerfilPet({route, navigation}){
+
+  const host_api = API_URL;
   const {id_pet, id_cliente, tipo_cliente, id_ong}  = route.params
   const [cliente, setCliente] = useState([]);
   const [pet, setPet] = useState([]);
@@ -27,7 +29,7 @@ export default function PerfilPet({route, navigation}){
   }
   
   const perfis = async () =>{
-      fetch(API_URL+'/pet/'+id_pet)
+      fetch(host_api+'/pet/'+id_pet)
            .then(response => response.json())
            .then(json => {setPet(json),
                           setLoading(true)})
@@ -35,7 +37,7 @@ export default function PerfilPet({route, navigation}){
           
   }
   const adotar = async (id_pet, id_cliente) =>{
-    fetch((API_URL+'/adocao'),{
+    fetch((host_api+'/adocao'),{
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ "id_pet": id_pet,
@@ -81,7 +83,7 @@ const validar = () => {
 
 const atualizar = (id_pet)=>{
   if (validar()){
-   fetch(API_URL+'/pet/'+id_pet,{
+   fetch(host_api+'/pet/'+id_pet,{
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ "ds_nome": nome,

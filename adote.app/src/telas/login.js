@@ -15,6 +15,7 @@ import { API_URL } from '@env';
 
 export default function Login({ navigation }) {
 
+  const host_api = API_URL
   const [cpf, setCpf] = useState('')
   const [senha, setSenha] = useState('')
 
@@ -30,9 +31,8 @@ export default function Login({ navigation }) {
       // saving error
     }
   }
-
   const login = (cpf, senha) => {
-    fetch((API_URL + '/login'), {
+    fetch((host_api + '/login'), {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -52,6 +52,7 @@ export default function Login({ navigation }) {
       })
       .catch(error => console.log(error))
   }
+
   const window = useWindowDimensions();
   const styles = StyleSheet.create({
 
@@ -127,5 +128,6 @@ export default function Login({ navigation }) {
     </View>
   );
 }
+
 
 

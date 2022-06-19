@@ -19,6 +19,7 @@ import DatePicker from 'react-native-datepicker'
 
 export default function Cadastro({ navigation }) {
 
+        const host_api = API_URL;
         const [nome, setNome] = useState('')
         const [cpfCnpj, setCpfCnpj] = useState('')
         const [dtNascimento, setDtNascimento] = useState('')
@@ -110,10 +111,10 @@ export default function Cadastro({ navigation }) {
 
         const telaLogin = () => navigation.navigate('Login');
 
+
         const cadastrar = () => {
                 if (validar()) {
-
-                        fetch(API_URL + '/cliente', {
+                        fetch(host_api + '/cliente', {
                                 method: 'POST',
                                 headers: { 'Content-Type': 'application/json' },
                                 body: JSON.stringify({
@@ -164,56 +165,56 @@ export default function Cadastro({ navigation }) {
                         })
         }
 
-        
-const styles = StyleSheet.create({
-        container: {
-                flex: 1,
-                alignItems: 'center',
-                backgroundColor: 'white'
-        },
-        input: {
-                backgroundColor: '#c0c0c0',
-                height: window.height * 0.070,
-                width: window.width * 0.960,
-                marginStart: window.width * 0.080,
-                marginTop: window.height * 0.020,
-                borderRadius: window.width * 0.025,
-                fontSize: window.height * 0.026,
-                paddingStart: window.width * 0.055,
-        },
-        responderText: {
-                fontSize: window.height * 0.047,
-                marginTop: window.height * -0.003,
-                color: 'white',
-                marginLeft: window.width * 0.026,
-                textAlign: 'center',
-                justifyContent: 'center',
-                textAlign: 'center'
-        },
-        botaoResponder: {
-                marginTop: window.height * 0.014,
-                marginLeft: window.width * 0.136,
-                marginBottom: window.height * 0.004,
-                height: window.height * 0.070,
-                width: window.width * 0.826,
-                borderRadius: window.width * 0.028,
-                backgroundColor: '#000080'
-        },
-        errorMessage: {
-                alignSelf: "flex-start",
-                marginLeft: window.width * 0.140,
-                color: "#f00",
-                fontSize: window.width * 0.037
-        },
-        pickerstyle: {
-                height: window.height * 0.070,
-                width: window.width * 0.930,
-                marginStart: window.width * -0.030,
-                color: 'black',
-                fontSize: 20
-        }
 
-});
+        const styles = StyleSheet.create({
+                container: {
+                        flex: 1,
+                        alignItems: 'center',
+                        backgroundColor: 'white'
+                },
+                input: {
+                        backgroundColor: '#c0c0c0',
+                        height: window.height * 0.070,
+                        width: window.width * 0.960,
+                        marginStart: window.width * 0.080,
+                        marginTop: window.height * 0.020,
+                        borderRadius: window.width * 0.025,
+                        fontSize: window.height * 0.026,
+                        paddingStart: window.width * 0.055,
+                },
+                responderText: {
+                        fontSize: window.height * 0.047,
+                        marginTop: window.height * -0.003,
+                        color: 'white',
+                        marginLeft: window.width * 0.026,
+                        textAlign: 'center',
+                        justifyContent: 'center',
+                        textAlign: 'center'
+                },
+                botaoResponder: {
+                        marginTop: window.height * 0.014,
+                        marginLeft: window.width * 0.136,
+                        marginBottom: window.height * 0.004,
+                        height: window.height * 0.070,
+                        width: window.width * 0.826,
+                        borderRadius: window.width * 0.028,
+                        backgroundColor: '#000080'
+                },
+                errorMessage: {
+                        alignSelf: "flex-start",
+                        marginLeft: window.width * 0.140,
+                        color: "#f00",
+                        fontSize: window.width * 0.037
+                },
+                pickerstyle: {
+                        height: window.height * 0.070,
+                        width: window.width * 0.930,
+                        marginStart: window.width * -0.030,
+                        color: 'black',
+                        fontSize: 20
+                }
+
+        });
         useEffect(() => {
         }, []);
 
@@ -252,7 +253,7 @@ const styles = StyleSheet.create({
                         </View>
 
 
-                        <ScrollView>
+                        <ScrollView style={{marginTop:10}}>
                                 <KeyboardAvoidingView
                                         //behavior={Platform.OS == "android" ? "padding" : "height"}
                                         //style={[styles.container]}

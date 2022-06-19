@@ -7,7 +7,8 @@ import AgendamentoItem from './components/AgendamentoItem';
 import { API_URL } from '@env';
 
 export default function AgendamentosOng({route, navigation}) {
-
+  
+  const host_api = API_URL;
   const [refreshing, setRefreshing] = useState(false); 
 
   const onRefresh = () => {
@@ -20,7 +21,7 @@ export default function AgendamentosOng({route, navigation}) {
   const {id_cliente} = route.params;
   const [agendamentos, setAgendamentos] = useState([]);  
   const startAgendamentos = async (id_cliente) =>{
-    fetch(API_URL+'/agendamento/'+id_cliente)
+    fetch(host_api+'/agendamento/'+id_cliente)
          .then(response => response.json())
          .then(json => setAgendamentos(json))
          .catch(error => console.log(error))

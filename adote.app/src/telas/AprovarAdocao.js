@@ -8,7 +8,7 @@ import QuestionarioCliente from './components/QuestionarioCliente';
 import { API_URL } from '@env';
 
 export default function ConfirmarAgendamento({route, navigation}) {
-
+  const host_api = API_URL;
   const [refreshing, setRefreshing] = useState(false); 
 
   const onRefresh = () => {
@@ -26,21 +26,21 @@ export default function ConfirmarAgendamento({route, navigation}) {
   const [questionario, setQuestionario] = useState('false');  
 
   const buscarDadosAgendamento = async (id_pet) =>{
-    fetch(API_URL+'/agendamento/pet/'+id_pet)
+    fetch(host_api+'/agendamento/pet/'+id_pet)
          .then(response => response.json())
          .then(json => setDadosAgendamento(json))
          .catch(error => console.log(error))
   };
   
   const buscarDadosPet = async (id_pet) =>{
-    fetch(API_URL+'/pet/'+id_pet)
+    fetch(host_api+'/pet/'+id_pet)
          .then(response => response.json())
          .then(json => setPet(json))
          .catch(error => console.log(error))
   };
 
   const aprovar = async (id_agendamento) =>{
-    fetch((API_URL + '/agendamento/' + id_agendamento + '/aprovar'),{
+    fetch((host_api + '/agendamento/' + id_agendamento + '/aprovar'),{
         method: 'PUT'}
         )
          .then(response => response.json())
@@ -49,7 +49,7 @@ export default function ConfirmarAgendamento({route, navigation}) {
         
 }
 const atualizarStatusPet = async (id_pet, status) =>{
-  fetch((API_URL + '/pet/' + id_pet + '/' + status),{
+  fetch((host_api + '/pet/' + id_pet + '/' + status),{
       method: 'PUT'}
       )
        .then(response => response.json())
@@ -64,7 +64,7 @@ const aprovarAdocao = () =>{
     telaHome();
 }
 const buscaQuestionarioCliente = async (id_cliente) =>{
-    fetch(API_URL+'/questionario/'+id_cliente)
+    fetch(host_api+'/questionario/'+id_cliente)
          .then(response => response.json())
          .then(json => setDadosQuestionario(json))
          .catch(error => console.log(error))

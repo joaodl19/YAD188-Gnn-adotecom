@@ -10,6 +10,7 @@ import {TextInputMask} from 'react-native-masked-text';
 
 export default function CadastroPet({route, navigation}) {
   
+  const host_api = API_URL;
   const id_cliente = route.params;
 
   const [nome, setNome] = useState('');
@@ -58,7 +59,7 @@ export default function CadastroPet({route, navigation}) {
 
   const cadastropet =  () => {
     if (validar()){
-    fetch(API_URL+'/pet',{
+    fetch(host_api+'/pet',{
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({ "ds_nome": nome,

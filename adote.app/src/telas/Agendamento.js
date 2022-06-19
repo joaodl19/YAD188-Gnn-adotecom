@@ -6,6 +6,7 @@ import { API_URL } from '@env';
 
 export default function Agendamento({route, navigation}) {
   
+  const host_api = API_URL;
   const {id_cliente, id_pet, id_ong} = route.params;
   LocaleConfig.locales['br'] = {
     monthNames: [
@@ -40,7 +41,7 @@ export default function Agendamento({route, navigation}) {
     setDataSelecionada(dia + '-' + mes + '-' + ano)
   }
   const escolherData = async (data, id_cliente, id_ong, id_pet) =>{
-    await fetch((API_URL + '/agendamento'),{
+    await fetch((host_api + '/agendamento'),{
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({"id_cliente": id_cliente,

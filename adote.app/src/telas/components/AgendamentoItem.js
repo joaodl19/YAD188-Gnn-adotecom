@@ -10,6 +10,7 @@ import {
   import { API_URL } from '@env';
 
   export default function AgendamentoItem({ds_nome_cliente, ds_nome_pet, dt_visita,ds_status, id_agendamento}){
+    const host_api = API_URL;
     const renderizaBotao = (ds_status) => {
         if(ds_status == "Pendente"){
            return <TouchableWithoutFeedback style={{marginTop: 100}}
@@ -27,7 +28,7 @@ import {
         </TouchableWithoutFeedback>
     }    
     const aprovar = async (id_agendamento) =>{
-        fetch((API_URL + '/agendamento/' + id_agendamento + '/aprovar'),{
+        fetch((host_api + '/agendamento/' + id_agendamento + '/aprovar'),{
             method: 'PUT'}
             )
              .then(response => response.json())

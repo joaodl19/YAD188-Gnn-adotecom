@@ -6,6 +6,8 @@ import DatePicker from 'react-native-datepicker'
 import { API_URL } from '@env';
 import {TextInputMask} from 'react-native-masked-text';
 export default function Perfil1({route, navigation}){
+
+  const host_api = API_URL;
   const {cliente} = route.params;
 
   const [nome, setNome] = useState(cliente.ds_nome)
@@ -99,7 +101,7 @@ export default function Perfil1({route, navigation}){
   
   const atualizar = (cpfCnpj)=>{
     if (validar()){
-     fetch(API_URL+'/cliente/'+cpfCnpj,{
+     fetch(host_api+'/cliente/'+cpfCnpj,{
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ "ds_nome": nome,

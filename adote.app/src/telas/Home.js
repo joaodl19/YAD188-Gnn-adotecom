@@ -7,6 +7,8 @@ import { AsyncStorage } from 'react-native';
 import { API_URL } from '@env';
   
 export default function Home({navigation}) {
+
+  const host_api = API_URL
   const [pets, setPets] = useState([]);
   const [cliente, setCliente] = useState([])
   const [ong, setOng] = useState([])
@@ -32,9 +34,8 @@ export default function Home({navigation}) {
     }
   }
 
-  const url = API_URL;
   const buscaPets = async () =>{
-     fetch(url+'/pet/status/disponivel')
+     fetch(host_api + '/pet/status/disponivel')
           .then(response => response.json())
           .then(json => {
                 setPets(json);
@@ -44,7 +45,7 @@ export default function Home({navigation}) {
           .catch(error => console.log(error))
   }
   const buscaPetsOng = async (id_ong) =>{
-    fetch(url+'/pet/ong/'+id_ong)
+    fetch(host_api + '/pet/ong/'+id_ong)
          .then(response => response.json())
          .then(json => {
                setPets(json);
@@ -55,7 +56,7 @@ export default function Home({navigation}) {
  }
 
   const buscaDadosCliente = async (cpf) =>{
-    fetch(url+'/cliente/'+cpf)
+    fetch(host_api + '/cliente/'+cpf)
          .then(response => response.json())
          .then(json => {setCliente(json),(json.ds_tipo_cliente == 'ONG')? buscaPetsOng(json.id_cliente) : buscaPets();
                       
@@ -65,7 +66,7 @@ export default function Home({navigation}) {
  } 
 
  const buscaDadosOng = async (idOng) =>{
-  fetch(url + '/cliente/' + idOng)
+  fetch(host_api + '/cliente/' + idOng)
        .then(response => response.json())
        .then(json => setOng(json))
        .catch(error => console.log(error))

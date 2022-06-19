@@ -6,6 +6,7 @@ import { API_URL } from '@env';
 import Topo from './components/Topo';
 
 export default function Questionario({navigation, route}) {
+  const host_api = API_URL;
   const {id_cliente, id_ong, id_pet} = route.params;
   const [questionario, setQuetionario] = useState([])
   const [cliente, setCliente] = useState([])
@@ -15,14 +16,14 @@ export default function Questionario({navigation, route}) {
      id_pet: id_pet,
       id_ong: id_ong})
   const buscaQuestionario = () =>{
-    fetch(API_URL + '/questionario')
+    fetch(host_api + '/questionario')
          .then(response => response.json())
          .then(json => setQuetionario(json))
          .catch(error => console.log(error))
  }
 
  const inserirQuestionario = async (id_cliente, respostas) =>{
-    await fetch((API_URL+'/questionario/'+id_cliente),{
+    await fetch((host_api+'/questionario/'+id_cliente),{
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(respostas)})
