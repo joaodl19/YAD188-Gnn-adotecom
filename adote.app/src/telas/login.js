@@ -11,7 +11,7 @@ import {
   TouchableWithoutFeedback
 } from 'react-native';
 import { AsyncStorage } from 'react-native';
-import { API_URL } from '@env';
+import { API_URL} from '@env';
 
 export default function Login({ navigation }) {
 

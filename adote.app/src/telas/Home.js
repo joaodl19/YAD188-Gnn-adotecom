@@ -3,7 +3,7 @@ import { StyleSheet, ActivityIndicator, useWindowDimensions, FlatList, SafeAreaV
 import Pets from './components/Pets';
 
 import Topo from './components/Topo';
-import { AsyncStorage } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { API_URL } from '@env';
 
 export default function Home({ navigation }) {
@@ -28,7 +28,6 @@ export default function Home({ navigation }) {
       const value = await AsyncStorage.getItem('@session')
       if (value !== null) {
         buscaDadosCliente(value);
-
       }
     } catch (e) {
       // error reading value
@@ -61,7 +60,6 @@ export default function Home({ navigation }) {
       .then(response => response.json())
       .then(json => {
         setCliente(json), (json.ds_tipo_cliente == 'ONG') ? buscaPetsOng(json.id_cliente) : buscaPets();
-
       })
 
       .catch(error => console.log(error))

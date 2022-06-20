@@ -2,7 +2,6 @@ import React from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {Alert,StyleSheet, TouchableWithoutFeedback, TextInput, View, useWindowDimensions} from 'react-native';
 
-
 export default function TextInputComIcone() {  
   const window = useWindowDimensions();
   const getData = async () => {

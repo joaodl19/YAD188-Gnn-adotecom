@@ -3,8 +3,6 @@ import {Alert,Image, Text,TouchableWithoutFeedback, StyleSheet,FlatList, SafeAre
 import Questao from './components/Questao';
 import { API_URL } from '@env';
 
-import Topo from './components/Topo';
-
 export default function Questionario({navigation, route}) {
  
   const host_api = API_URL;
@@ -12,7 +10,6 @@ export default function Questionario({navigation, route}) {
   const [questionario, setQuetionario] = useState([])
   const [cliente, setCliente] = useState([])
   
-  const telaHome = () => navigation.navigate('Home')
   const telaAgendamento = () => navigation.navigate('Agendamento', {id_cliente: id_cliente,
      id_pet: id_pet,
       id_ong: id_ong})
