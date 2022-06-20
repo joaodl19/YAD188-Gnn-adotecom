@@ -1,5 +1,5 @@
 import React, {useState,useEffect} from 'react';
-import {TextInput, Text,Image, TouchableWithoutFeedback,KeyboardAvoidingView,
+import {TextInput, Text,Image, useWindowDimensions,KeyboardAvoidingView,
 StyleSheet,Alert, SafeAreaView,ScrollView, View,Picker} from 'react-native';
 import {Statusbar} from 'expo-status-bar';
 import {TouchableOpacity} from 'react-native';
@@ -12,7 +12,7 @@ export default function CadastroPet({route, navigation}) {
   
   const host_api = API_URL;
   const id_cliente = route.params;
-
+  const window = useWindowDimensions();
   const [nome, setNome] = useState('');
   const [dtnascimento, setDtnasc] = useState('');
   const [raca, setRaca] = useState('');
@@ -34,7 +34,7 @@ export default function CadastroPet({route, navigation}) {
     setErrordtNascimento('')
     setErrorNome('')
     setErrorRaca('')
-    setErrorGenero(null)
+    setErrorGenero('')
 
     if (raca == ''){
         setErrorRaca("Preencha a Raça do Pet")
@@ -49,7 +49,7 @@ export default function CadastroPet({route, navigation}) {
             error = true
     }
     
-    if (genero == null){
+    if (genero == ''){
             setErrorGenero("Preencha o genero")
             error = true
     }
@@ -77,6 +77,71 @@ export default function CadastroPet({route, navigation}) {
          //telaHome(cpf))
                     }else {Alert.alert("Cadastro incompleto , preencha os campos obrigatórios");console.log()} 
   }
+  
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: 'blue',
+    alignItems: 'center',
+    backgroundColor: 'white',
+    height: window.height * 0.918,
+    width: window.width * 1.000
+  },
+  botao: {
+        marginTop: window.height * 0.048,   
+        marginBottom: window.height * 0.045,
+        height: window.height * 0.068, 
+        width: window.height * 0.345,
+        borderRadius: window.height * 0.025,
+        backgroundColor: '#000080'
+        
+  },
+  TextInput:{ 
+    borderWidth: 0.5,
+    backgroundColor: '#c0c0c0',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: window.height * 0.064,
+    width: window.width * 0.920,
+    marginTop: window.height * 0.012,
+    borderRadius: window.height * 0.012,
+    fontSize: window.height * 0.024,
+    paddingStart: window.height * 0.024,
+    borderColor: 'transparent',
+    
+},
+saudacoes:{
+    fontSize: window.height * 0.033,
+    marginBottom: window.height * 0.015,
+    marginLeft:window.height * 0.015,
+    fontWeight: 'bold',
+    justifyContent: 'center',
+    textAlign:'center'
+},
+    logo: {
+        height: window.height * 0.083,
+        width: window.width * 0.733,
+        resizeMode: 'center',
+        marginBottom: window.height * 0.050,
+        marginLeft: window.height * 0.020
+      },
+      errorMessage: {
+        alignSelf: "flex-start",
+        marginLeft: window.width * 0.096,
+        color: "#f00",
+        fontSize: window.width * 0.035
+      },
+      responderTextbt:{
+        fontSize: window.width * 0.080,
+        marginTop: window.width * 0.005,
+        color: 'white',
+        marginLeft: window.width * 0.005,
+        justifyContent: 'center',
+        textAlign: 'center'
+        }
+    
+});
+
 
   return (
      
@@ -115,28 +180,27 @@ export default function CadastroPet({route, navigation}) {
         customStyles={{
           dateIcon: {
             position: 'absolute',
-            left: 275,
-            top: 4,
-            marginLeft: -5,
-            color: 'white'
-          },
-          placeholderText: {
-            fontSize: 20,
+            left: 0,
+            top: window.height * 0.005,
+            marginLeft: window.width * 0.760,
+    },
+    placeholderText: {
+            fontSize: window.height * 0.025,
             color: "white",
-            marginStart: 75
-          },
-          dateInput: {
-            marginLeft: -250,
-            fontSize: 20,
-            fontcolor: 'white',
-            borderColor: 'transparent'
-          },
-          dateText: {
-            fontSize: 20,
+            marginStart: window.width * -0.110,
+    },
+    dateInput: {
+            marginLeft: window.width * -0.370,
+            color: 'black',
+            top: window.height * 0.001,
+            borderColor: 'transparent',
+    },
+    dateText: {
+            fontSize: window.height * 0.024,
             color: "black",
             textAlign: "left",
-            marginStart: 25
-            }
+            marginStart: window.width * -0.255,
+    }
           // ... You can check the source to find the other keys.
         }}
         onDateChange={(dtnascimento) => {setDtnasc(dtnascimento)
@@ -162,7 +226,7 @@ export default function CadastroPet({route, navigation}) {
         selectedValue={genero}
         placeholder='Gênero'
         
-        style={{height: 50, width: 300, marginStart: -44, color: 'white'}}
+        style={{height: window.height * 0.044, width: window.height * 0.434, marginStart: window.height * -0.014, color: 'black'}}
         onValueChange={(genero) => {setGenero(genero)
         setErrorGenero(null)}}
         errorMessage={errorGenero}>
@@ -181,7 +245,7 @@ export default function CadastroPet({route, navigation}) {
 
       <Text style={styles.errorMessage}></Text>
 
-          <View style={{marginLeft:-52, height:40,width: 150}}>
+          <View style={{marginLeft:window.height * -0.064, height:window.height * 0.050,width: window.width * 0.504}}>
             <UploadImage setProps={setFoto} ></UploadImage>
           </View>
           <TouchableOpacity style={styles.botao}  onPress={()=>cadastropet()}>
@@ -193,111 +257,6 @@ export default function CadastroPet({route, navigation}) {
         </ScrollView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'blue',
-    alignItems: 'center',
-    backgroundColor: 'white',
-    height: 720,
-    width: 380
-  },
-  input: {
-    borderWidth: 2,
-    backgroundColor: 'white',
-    height: 40,
-    width: 250,
-    marginTop: 10,
-    borderRadius: 5,
-    fontSize: 15,
-    paddingStart: 10,
-    borderColor: '#000080',
-  },
-  logo: {
-    height: 20,
-    width: 50
-  },
-  botao: {
-    marginTop:40,   
-        marginLeft: 0,
-        marginBottom: 20,
-        height: 50,
-        width: 300,
-        borderRadius: 15,
-        backgroundColor: '#000080'
-        
-  },
-  TextInput:{ 
-    borderWidth: 0.5,
-    backgroundColor: '#c0c0c0',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: 50,
-    width: 352,
-    marginStart: 0,
-    marginTop: 10,
-    borderRadius: 10,
-    fontSize: 20,
-    paddingStart: 20,
-    borderColor: 'transparent',
-    
-},
-saudacoes:{
-    fontSize: 20,
-    marginTop: 0,
-    marginBottom: 20,
-    marginLeft:12,
-    fontWeight: 'bold',
-    justifyContent: 'center',
-    textAlign:'center'
-},
-responderText:{
-    fontSize: 18,
-    marginTop: 5,
-    color: 'white',
-    marginLeft: 20 
-},
-    logo: {
-        height: 70,
-        width: 300,
-        resizeMode: 'center',
-        marginBottom: 50,
-        marginLeft: 20
-      },
-      perfil: {
-        marginTop: 60,
-        height: 90,
-        width: 90,
-        marginLeft: -20,
-        borderRadius: 45
-      },
-      topo: {
-        height: 100,
-        marginTop: 20
-      },
-      containerMask: {
-        flexDirection: "row",
-        marginBottom: 5,
-        marginLeft: 10,
-        marginRight: 10
-      },
-      errorMessage: {
-        alignSelf: "flex-start",
-        marginLeft: 35,
-        color: "#f00",
-        fontSize: 12
-      },
-      responderTextbt:{
-        fontSize: 27,
-        marginTop: 5,
-        color: 'white',
-        marginLeft: 10 ,
-        justifyContent: 'center',
-        textAlign: 'center'
-        }
-    
-});
 
 
 

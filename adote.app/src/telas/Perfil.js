@@ -1,6 +1,6 @@
 import React, {useState,useEffect} from 'react';
 import {StyleSheet,Text, SafeAreaView, View,Image,TextInput,
-TouchableWithoutFeedback, ScrollView, KeyboardAvoidingView,Alert,Picker} from 'react-native';
+useWindowDimensions, ScrollView, KeyboardAvoidingView,Alert,Picker} from 'react-native';
 import {TouchableOpacity} from 'react-native';
 import DatePicker from 'react-native-datepicker'
 import { API_URL } from '@env';
@@ -9,7 +9,7 @@ export default function Perfil1({route, navigation}){
 
   const host_api = API_URL;
   const {cliente} = route.params;
-
+  const window = useWindowDimensions();
   const [nome, setNome] = useState(cliente.ds_nome)
   const [cpfCnpj, setCpfCnpj] = useState(cliente.nr_cpf_cnpj)
   const [dtNascimento, setDtNascimento] = useState(cliente.dt_nascimento_fundacao)
@@ -129,6 +129,105 @@ export default function Perfil1({route, navigation}){
                                 }else {Alert.alert("Atualização de cadastro com campos sem preenchimento!");console.log()}           
                               
             }
+
+            const styles = StyleSheet.create({
+              container: {
+                flex: 1,
+                backgroundColor: 'blue',
+                alignItems: 'center',
+                backgroundColor: 'white',
+              },
+              item:{
+                alignItems: 'center',
+                backgroundColor: '#c0c0c0',
+                height: window.height * 0.059,
+                width: window.width * 0.670,
+                marginLeft: window.width * 0.280,
+                marginTop: window.width * 0.005,
+                flexDirection: 'row',
+                borderRadius: window.height * 0.017,
+                paddingStart: window.height * 0.010,
+                borderColor: 'black',
+                borderWidth: 1,
+                borderColor: 'transparent'            
+              },
+              botao: {
+                height: window.height * 0.069,
+                width: window.width * 0.700,
+                marginTop: window.height * 0.029,
+                borderRadius: window.height * 0.039,
+                backgroundColor: 'blue',
+                justifyContent: 'center',
+                marginBottom: window.height * 0.039
+              },
+              botao2: {
+                marginLeft: window.height * 0.215,
+                height: window.height * 0.050,
+                width: window.width * 0.500,
+                borderRadius: window.height * 0.039,
+                backgroundColor: 'green',
+                justifyContent: 'center',
+                marginBottom: window.height * 0.012,
+                alignItems: 'center',
+              },
+              botao3: {
+                marginLeft: window.height * 0.215,
+                height: window.height * 0.050,
+                width: window.width * 0.500,
+                borderRadius: window.height * 0.039,
+                backgroundColor: 'red',
+                justifyContent: 'center',
+                marginBottom: window.height * 0.012,
+                alignItems: 'center'
+              
+            },
+            saudacoes:{
+                fontSize: window.height * 0.037,
+                marginTop: window.height * 0.006,
+                marginBottom: window.height * 0.012,
+                fontWeight: 'bold',
+                justifyContent: 'center',
+                textAlign:'center'
+           
+            },
+                logo: {
+                    height: window.height * 0.097,
+                    width: window.width * 0.637,
+                    resizeMode: 'center',
+                    marginBottom: window.height * 0.017,
+                    marginLeft: window.width * 0.037
+                  },
+                  perfil: {                    
+                    height: window.height * 0.137,
+                    width:  window.width * 0.287,
+                    marginLeft: window.width * -0.567,
+                    borderRadius: window.width * 0.137
+                  
+                  },
+                  responderText:{
+                    fontSize: window.height * 0.028,
+                    color: 'white',
+                    marginLeft: window.height * 0.001,
+                    justifyContent: 'center',
+                    textAlign: 'center'
+                    },
+                    botaoResponder:{
+                    marginTop:window.height * 0.018,   
+                    marginBottom: window.height * 0.018,
+                    justifyContent: 'center',
+                    textAlign:'center',
+                    height: window.height * 0.066,
+                    width: window.width * 0.686,
+                    borderRadius: window.width * 0.086,
+                    backgroundColor: '#000080'
+                    },
+                    errorMessage: {
+                      alignSelf: "flex-start",
+                      marginLeft: window.width * 0.366,
+                      color: "#f00",
+                      fontSize: window.width * 0.032,
+                    }  
+            });
     
   useEffect(() => {
   },[]);
@@ -157,34 +256,34 @@ export default function Perfil1({route, navigation}){
             
               
               <View style={styles.item} >
-              <Text style={{marginLeft: -120, fontSize: 18, fontWeight: 'bold',}}>Nome: </Text>
+              <Text style={{marginLeft: window.width * -0.314, fontSize: window.width * 0.050, fontWeight: 'bold',}}>Nome: </Text>
               <TextInput
               value={nome}
               onChangeText={(nome) => {setNome(nome)
                 setErrorNome('')}}
                 errorMessage={errorNome}   
-              style={{fontSize: 19,
-  width: '100%',
+              style={{fontSize: window.width * 0.045,
+  width: window.width * 1,
   fontWeight: 'bold',
-  marginLeft: 68,
+  marginLeft: window.width * 0.170,
   color: 'black'}}/>
               </View>
               <Text style={styles.errorMessage}>{errorNome}</Text>
 
               {tipoCliente == 'PF' &&
               <View style={styles.item} >
-              <Text style={{marginLeft: -120, fontSize: 18, fontWeight: 'bold',}}>CPF: </Text>
+              <Text style={{marginLeft: window.width * -0.314, fontSize: window.width * 0.050, fontWeight: 'bold',}}>CPF: </Text>
                 <TextInputMask
                         type={'cpf'}
                         value={cpfCnpj}
                         onChangeText={(cpfCnpj) => {setCpfCnpj(cpfCnpj)
                           setErrorCpf('')}}
                           errorMessage={errorCpf} 
-                        style={{fontSize: 19,
-  width: '100%',
-  fontWeight: 'bold',
-  marginLeft: 82,
-  color: 'black'}}
+                        style={{fontSize: window.width * 0.045,
+                          width: window.width * 1,
+                          fontWeight: 'bold',
+                          marginLeft: window.width * 0.215,
+                          color: 'black'}}
                         
                         keyboardType="phone-pad"  
                         returnKeyType="done"  
@@ -197,18 +296,18 @@ export default function Perfil1({route, navigation}){
 
                 {tipoCliente == 'ONG' &&
                 <View style={styles.item} >
-                <Text style={{marginLeft: -120, fontSize: 18, fontWeight: 'bold',}}>CNPJ: </Text>
+                <Text style={{marginLeft: window.width * -0.314, fontSize: window.width * 0.050, fontWeight: 'bold',}}>CNPJ: </Text>
                 <TextInputMask
                         type={'cnpj'}
                         value={cpfCnpj}
                         onChangeText={(cpfCnpj) => {setCpfCnpj(cpfCnpj)
                           setErrorCpf('')}}
                           errorMessage={errorCpf} 
-                        style={{fontSize: 19,
-  width: '100%',
-  fontWeight: 'bold',
-  marginLeft: 70,
-  color: 'black'}}
+                        style={{fontSize: window.width * 0.045,
+                          width: window.width * 1,
+                          fontWeight: 'bold',
+                          marginLeft: window.width * 0.185,
+                          color: 'black'}}
                         
                         keyboardType="phone-pad"  
                         returnKeyType="done" 
@@ -219,7 +318,7 @@ export default function Perfil1({route, navigation}){
               
               {tipoCliente == 'PF' &&
               <View style={styles.item} >
-              <Text style={{marginLeft: -120, fontSize: 18, fontWeight: 'bold',}}>Nascimento: </Text>
+              <Text style={{marginLeft: window.width * -0.314, fontSize: window.width * 0.050, fontWeight: 'bold',}}>Nascimento: </Text>
               
       <DatePicker
         date={dtNascimento}
@@ -233,25 +332,23 @@ export default function Perfil1({route, navigation}){
           dateIcon: {
             position: 'absolute',
             left: 0,
-            top: 4,
-            marginLeft: 200
+            top:window.width * 0.005,
+            marginLeft: window.width * 0.540
           },
           dateInput: {
-            
-            marginLeft: 28,
+            marginLeft: window.width * 0.065,
             fontWeight: 'bold',
-            fontSize: 20,
+            fontSize: window.width * 0.045,
             fontcolor: 'black',
             color: 'black',
             borderColor: 'transparent',
-
           },
           dateText: {
-            fontSize: 18,
+            fontSize: window.width * 0.045,
             fontWeight: 'bold',
             color: "black",
             textAlign: "left",
-            marginStart: -36
+            marginStart: window.width * -0.099
             }
           // ... You
          
@@ -266,7 +363,7 @@ export default function Perfil1({route, navigation}){
 
                 {tipoCliente == 'ONG' &&
               <View style={styles.item} >
-              <Text style={{marginLeft: -120, fontSize: 18, fontWeight: 'bold',}}>Fundação: </Text>
+              <Text style={{marginLeft: window.width * -0.308, fontSize: window.width * 0.050, fontWeight: 'bold',}}>Fundação: </Text>
               
                 <DatePicker
         date={dtNascimento}
@@ -281,23 +378,23 @@ export default function Perfil1({route, navigation}){
           dateIcon: {
             position: 'absolute',
             left: 0,
-            top: 4,
-            marginLeft: 220
+            top:window.width * 0.005,
+            marginLeft: window.width * 0.570
           },
           dateInput: {
-            marginLeft: 68,
+            marginLeft: window.width * 0.150,
             fontWeight: 'bold',
-            fontSize: 20,
+            fontSize: window.width * 0.045,
             fontcolor: 'black',
             color: 'black',
             borderColor: 'transparent',
           },
           dateText: {
-            fontSize: 18,
+            fontSize: window.width * 0.045,
             fontWeight: 'bold',
             color: "black",
             textAlign: "left",
-            marginStart: -36
+            marginStart: window.width * -0.090
             }
           // ... You can check the source to find the other keys.
         }}
@@ -312,21 +409,21 @@ export default function Perfil1({route, navigation}){
 
             {tipoCliente == 'PF' &&
               <View style={styles.item} >
-              <Text style={{marginLeft: -120, fontSize: 18, fontWeight: 'bold',}}>Gênero: </Text>
+              <Text style={{marginLeft: window.width * -0.314, fontSize: window.width * 0.050, fontWeight: 'bold',}}>Gênero: </Text>
               <TextInput
               value={genero}
               onValueChange={(genero) => {setGenero(genero) 
                 setErrorGenero('')}}
                 errorMessage={errorGenero}
-              style={{fontSize: 19,
-  width: '100%',
-  fontWeight: 'bold',
-  marginLeft: 60,
-  color: 'black'}}/>
+              style={{fontSize: window.width * 0.045,
+                width: window.width * 1,
+                fontWeight: 'bold',
+                marginLeft: window.width * 0.160,
+                color: 'black'}}/>
 
             <Picker 
       
-        style={{height: 50, width: 500, marginStart: -230 , color: 'transparent' }}
+        style={{height: window.width * 0.270, width: window.width * 0.870, marginStart: window.width * -1.250 , color: 'transparent' }}
         onValueChange={(genero) => {setGenero(genero) 
           setErrorGenero('')}}
           errorMessage={errorGenero}
@@ -341,7 +438,7 @@ export default function Perfil1({route, navigation}){
               
 
               <View style={styles.item} >
-              <Text style={{marginLeft: -120, fontSize: 18, fontWeight: 'bold',}}>Telefone: </Text>
+              <Text style={{marginLeft: window.width * -0.314, fontSize: window.width * 0.050, fontWeight: 'bold',}}>Telefone: </Text>
               <TextInput
               type='number'
               value={telefone}
@@ -350,29 +447,29 @@ export default function Perfil1({route, navigation}){
                 errorMessage={errorTelefone}
                 keyboardType="phone-pad"  
                         returnKeyType="done" 
-              style={{fontSize: 19,
-  width: '100%',
-  fontWeight: 'bold',
-  marginLeft: 50,
-  color: 'black'}}/>
+              style={{fontSize: window.width * 0.045,
+                width: window.width * 1,
+                fontWeight: 'bold',
+                marginLeft: window.width * 0.125,
+                color: 'black'}}/>
               </View>
 
               <Text style={styles.errorMessage}>{errorTelefone}</Text>                    
               
              
               <View style={styles.item} >
-              <Text style={{marginLeft: -120, fontSize: 18, fontWeight: 'bold',}}>Cep: </Text>
+              <Text style={{marginLeft: window.width * -0.314, fontSize: window.width * 0.050, fontWeight: 'bold',}}>Cep: </Text>
               <TextInputMask
                         type='zip-code'
                         value={cep}
                         onChangeText={(cep) => {setCep(cep)
                         setErrorCep('')}}
                         errorMessage={errorCep}   
-                        style={{fontSize: 19,
-  width: '100%',
-  fontWeight: 'bold',
-  marginLeft: 87,
-  color: 'black'}}
+                        style={{fontSize: window.width * 0.045,
+                          width: window.width * 1,
+                          fontWeight: 'bold',
+                          marginLeft: window.width * 0.235,
+                          color: 'black'}}
                         
                 />
                 </View>
@@ -380,79 +477,79 @@ export default function Perfil1({route, navigation}){
                 <Text style={styles.errorMessage}>{errorCep}</Text>   
               
               <View style={styles.item} >
-              <Text style={{marginLeft: -120, fontSize: 18, fontWeight: 'bold',}}>Endereço: </Text>
+              <Text style={{marginLeft: window.width * -0.314, fontSize: window.width * 0.050, fontWeight: 'bold',}}>Endereço: </Text>
               <TextInput
               
               value={logradouro}
               onChangeText={(logradouro) => {setLogradouro(logradouro)}}
-              style={{fontSize: 19,
-  width: '100%',
-  fontWeight: 'bold',
-  marginLeft: 46,
-  color: 'black'}}/>
+              style={{fontSize: window.width * 0.045,
+                width: window.width * 1,
+                fontWeight: 'bold',
+                marginLeft: window.width * 0.115,
+                color: 'black'}}/>
               
               </View>
 
               <Text style={styles.errorMessage}></Text>
 
               <View style={styles.item} >
-              <Text style={{marginLeft: -120, fontSize: 18, fontWeight: 'bold',}}>Cidade: </Text>
+              <Text style={{marginLeft: window.width * -0.314, fontSize: window.width * 0.050, fontWeight: 'bold',}}>Cidade: </Text>
               <TextInput
               value={cidade}
               onChangeText={(cidade) => {setCidade(cidade)}}
-              style={{fontSize: 19,
-  width: '100%',
-  fontWeight: 'bold',
-  marginLeft: 65,
-  color: 'black'}}/>
+              style={{fontSize: window.width * 0.045,
+                width: window.width * 1,
+                fontWeight: 'bold',
+                marginLeft: window.width * 0.169,
+                color: 'black'}}/>
               </View>
 
               <Text style={styles.errorMessage}></Text>
 
               <View style={styles.item} >
-              <Text style={{marginLeft: -120, fontSize: 18, fontWeight: 'bold',}}>Bairro: </Text>
+              <Text style={{marginLeft: window.width * -0.314, fontSize: window.width * 0.050, fontWeight: 'bold',}}>Bairro: </Text>
               <TextInput
               value={bairro}
               onChangeText={(bairro) => {setBairro(bairro)}}
-              style={{fontSize: 19,
-  width: '100%',
-  fontWeight: 'bold',
-  marginLeft: 73,
-  color: 'black'}}/>
+              style={{fontSize: window.width * 0.045,
+                width: window.width * 1,
+                fontWeight: 'bold',
+                marginLeft: window.width * 0.190,
+                color: 'black'}}/>
               </View>
 
               <Text style={styles.errorMessage}></Text>
 
               <View style={styles.item} >
-              <Text style={{marginLeft: -120, fontSize: 18, fontWeight: 'bold',}}>Número: </Text>
+              <Text style={{marginLeft: window.width * -0.314, fontSize: window.width * 0.050, fontWeight: 'bold',}}>Número: </Text>
               <TextInput
               type='number'
               value={numero}
               onChangeText={(numero) => {setNumero(numero)}}
               keyboardType="phone-pad"  
               returnKeyType="done" 
-              style={{fontSize: 19,
-  width: '100%',
-  fontWeight: 'bold',
-  marginLeft: 58,
-  color: 'black'}}/>
+              style={{fontSize: window.width * 0.045,
+                width: window.width * 1,
+                fontWeight: 'bold',
+                marginLeft: window.width * 0.152,
+                color: 'black'}}/>
               </View>
 
               <Text style={styles.errorMessage}></Text>
 
               {tipoCliente == 'PF' &&   
         <View style={styles.item} >
-          <Text style={{marginLeft: -120, fontSize: 18, fontWeight: 'bold',}}>Deficiencia: </Text>
+          <Text style={{marginLeft: window.width * -0.314, fontSize: window.width * 0.050, fontWeight: 'bold',}}>Deficiencia: </Text>
           <TextInput
               value={deficiencia}
               onValueChange={(deficiencia) => {setDeficiencia(deficiencia)}}
-              style={{fontSize: 19,
-  width: '100%',
-  fontWeight: 'bold',
-  marginLeft: 33,
-  color: 'black'}}/>
+              style={{fontSize: window.width * 0.045,
+                width: window.width * 1,
+                fontWeight: 'bold',
+                marginLeft: window.width * 0.081,
+                color: 'black'}}/>
           <Picker        
-          style={{width: 500, marginStart: -230 , color: 'transparent'}}
+          style={{height: window.width * 0.270, width: window.width * 1.890, marginStart: window.width * -1.250 , color: 'transparent'}}
           onValueChange={(deficiencia) => {setDeficiencia(deficiencia) }}>
           <Picker.Item label="Deficiencia"/>
           <Picker.Item label="SIM" value="SIM" />
@@ -464,21 +561,21 @@ export default function Perfil1({route, navigation}){
               {tipoCliente == 'PF' &&   <Text style={styles.errorMessage}></Text>}
 
               <View style={styles.item} >
-              <Text style={{marginLeft: -120, fontSize: 18, fontWeight: 'bold',}}>Observações: </Text>
+              <Text style={{marginLeft: window.width * -0.314, fontSize: window.width * 0.048, fontWeight: 'bold',}}>Observações: </Text>
               <TextInput
               value={observacoes}
               onChangeText={(observacoes) => {setObservacoes(observacoes)}}
-              style={{fontSize: 19,
-  width: '100%',
-  fontWeight: 'bold',
-  marginLeft: 21,
-  color: 'black'}}/>
+              style={{fontSize: window.width * 0.045,
+                width: window.width * 1,
+                fontWeight: 'bold',
+                marginLeft: window.width * 0.048,
+                color: 'black'}}/>
               </View>            
 
               <Text style={styles.errorMessage}></Text>
 
               <View style={styles.item} >
-              <Text style={{marginLeft: -120, fontSize: 18, fontWeight: 'bold',}}>E-mail: </Text>
+              <Text style={{marginLeft: window.width * -0.314, fontSize: window.width * 0.050, fontWeight: 'bold',}}>E-mail: </Text>
               <TextInput
               value={email}
               onChangeText={(email) => {
@@ -486,17 +583,17 @@ export default function Perfil1({route, navigation}){
                 setErrorEmail('')}}
                 keyboardType="email-address"
                 errorMessage={errorEmail}    
-              style={{fontSize: 19,
-  width: '100%',
-  fontWeight: 'bold',
-  marginLeft: 70,
-  color: 'black'}}/>
+              style={{fontSize: window.width * 0.045,
+                width: window.width * 1,
+                fontWeight: 'bold',
+                marginLeft: window.width * 0.180,
+                color: 'black'}}/>
               </View>    
 
               <Text style={styles.errorMessage}>{errorEmail}</Text>
 
               <View style={styles.item} >
-              <Text style={{marginLeft: -120, fontSize: 18, fontWeight: 'bold',}}>Senha: </Text>
+              <Text style={{marginLeft: window.width * -0.314, fontSize: window.width * 0.050, fontWeight: 'bold',}}>Senha: </Text>
 
               <TextInput
                         value={senha}
@@ -504,10 +601,10 @@ export default function Perfil1({route, navigation}){
                         setErrorSenha('')}}
                         secureTextEntry={true}
                         errorMessage={errorSenha} 
-                        style={{fontSize: 19,
-                          width: '100%',
+                        style={{fontSize: window.width * 0.045,
+                          width: window.width * 1,
                           fontWeight: 'bold',
-                          marginLeft: 70,
+                          marginLeft: window.width * 0.188,
                           color: 'black'}}
                 /></View>
 
@@ -515,7 +612,7 @@ export default function Perfil1({route, navigation}){
                 
 
               <TouchableOpacity 
-                        style={{marginBottom: 1,marginTop: 3}}
+                        style={{marginBottom: window.height * 0.002,marginTop: window.height * 0.006}}
                         onPress={() => atualizar(cpfCnpj)}>
                         <View style={styles.botaoResponder}>
                                 <Text style={styles.responderText}>Atualizar Dados</Text>
@@ -534,133 +631,3 @@ export default function Perfil1({route, navigation}){
     )
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'blue',
-    alignItems: 'center',
-    backgroundColor: 'white',
-  },
-  item:{
-    alignItems: 'center',
-    backgroundColor: '#c0c0c0',
-    borderRadius: 20,
-    height: 45,
-    width: 240,
-    marginLeft: 110,
-    marginTop: 1,
-    flexDirection: 'row',
-    borderRadius: 5,
-    paddingStart: 10,
-    borderColor: 'black',
-    borderWidth: 1,
-    borderColor: 'transparent',
-},
-  dados:{
-    marginLeft: 15,
-    fontSize: 18,
-    backgroundColor: 'black'
-  },
-  botao: {
-    height: 60,
-    width: '70%',
-    marginTop: 25,
-    borderRadius: 30,
-    backgroundColor: 'blue',
-    justifyContent: 'center',
-    marginBottom: 30,
-  },
-  botao2: {
-    marginLeft: 170,
-    height:40,
-    width: '50%',
-    borderRadius: 30,
-    backgroundColor: 'green',
-    justifyContent: 'center',
-    marginBottom: 10,
-    alignItems: 'center',
-  },
-  botao3: {
-    marginLeft: 170,
-    height:40,
-    width: '50%',
-    borderRadius: 30,
-    backgroundColor: 'red',
-    justifyContent: 'center',
-    marginBottom: 10,
-    alignItems: 'center',
-  },
-  TextInput:{ 
-    paddingLeft: 15,
-    height: 25,
-    width: '70%',
-    marginTop: 10,
-    borderRadius: 30,
-    backgroundColor: 'white'
-    
-},
-saudacoes:{
-    fontSize: 26,
-    marginTop: 6,
-    marginBottom: 15,
-    fontWeight: 'bold',
-    justifyContent: 'center',
-    textAlign:'center'
-},
-fontdados:{
-  fontSize: 19,
-  width: '100%',
-  fontWeight: 'bold',
-  marginLeft: 70,
-  color: 'black'
-},
-    logo: {
-        height: 60,
-        width: 250,
-        resizeMode: 'center',
-        marginBottom: 15,
-        marginLeft: 20
-      },
-      perfil: {
-        marginTop: 0,
-        height: 80,
-        width: 80,
-        marginLeft: -220,
-        borderRadius: 45
-      },
-      topo: {
-        height: 100,
-        marginTop: 20
-      },
-      responderText:{
-        fontSize: 22,
-        marginTop: 0,
-        color: 'white',
-        marginLeft: 10 ,
-        justifyContent: 'center',
-        textAlign: 'center'
-        },
-        botaoResponder:{
-        marginTop:10,   
-        marginLeft: 0,
-        marginBottom: 10,
-        justifyContent: 'center',
-        textAlign:'center',
-        height: 55,
-        width: 260,
-        borderRadius: 30,
-        backgroundColor: '#000080'
-        },
-        containerMask: {
-          flexDirection: "row",
-          marginBottom: 5,
-          marginLeft: 10,
-          marginRight: 10
-        },
-        errorMessage: {
-          alignSelf: "flex-start",
-          marginLeft: 140,
-          color: "#f00",
-          fontSize: 12
-        }  
-});

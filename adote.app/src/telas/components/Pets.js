@@ -93,7 +93,7 @@ import {
                     <Text style={styles.fontdados}>Status: {ds_status}</Text>
                 </View>
             </View>
-            {(tipo_cliente == 'ONG' && ds_status != 'DISPONIVEL') &&
+            {(tipo_cliente == 'ONG' && ds_status != 'Disponivel') &&
             <TouchableWithoutFeedback 
                     style={{marginTop: window.height * 0.590}}
                     onPress={() => proximaTela()}>
