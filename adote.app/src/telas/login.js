@@ -92,7 +92,7 @@ export default function Login({ navigation }) {
     <View style={styles.container}>
       <View>
         <Image style={styles.logo} source={require('../../assets/LogoT.png')} />
-        <Text style={{ marginLeft: window.width * 0.092, alignItems: 'center', justifyContent: 'center', fontSize: window.height * 0.058, fontWeight: 'bold', color: '#0b3a5c' }}>Bem-Vindo</Text>
+        <Text style={{ marginLeft: window.width * 0.101, alignItems: 'center', justifyContent: 'center', fontSize: window.height * 0.053, fontWeight: 'bold', color: '#0b3a5c' }}>Bem-Vindo!</Text>
       </View>
       <View>
         <TextInput class="teste"
@@ -123,7 +123,18 @@ export default function Login({ navigation }) {
               <Text style={{ paddingStart: window.width * 0.012, paddingStart: window.width * 0.025, fontSize: window.height * 0.042, color: 'white' }}>Entrar</Text>
             </View>
           </TouchableWithoutFeedback>
+          
+          
+
         </View>
+        <View>        
+          <Text
+            style={{ marginLeft: window.width * 0.199, marginTop:window.height * 0.038, fontSize: window.height * 0.027, fontWeight: 'bold', color: 'blue',
+            fontStyle: 'italic',textDecorationLine: 'underline'}}
+            onPress={() => {telaCadastro() }}>
+            Esqueci a senha
+          </Text>
+          </View>
       </View>
     </View>
   );
