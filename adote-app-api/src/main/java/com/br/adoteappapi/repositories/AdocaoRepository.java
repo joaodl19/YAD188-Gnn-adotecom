@@ -1,6 +1,7 @@
 package com.br.adoteappapi.repositories;
 
 import com.br.adoteappapi.model.Adocao;
+import org.springframework.http.ResponseEntity;
 
 public interface AdocaoRepository {
     void cadastrarAdocao(Adocao adocao);
@@ -10,4 +11,6 @@ public interface AdocaoRepository {
     int buscarIdPorCliente(Long id);
 
     void alterarCiclo(int idAdocao, String ciclo);
+
+    Adocao buscarAdocaoPorPet(Long id_pet);
 }

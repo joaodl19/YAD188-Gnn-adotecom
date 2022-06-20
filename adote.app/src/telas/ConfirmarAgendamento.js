@@ -11,6 +11,8 @@ export default function ConfirmarAgendamento({route, navigation}) {
   const host_api = API_URL;
   const [refreshing, setRefreshing] = useState(false); 
   const telaConfirmarAgendamento = () => navigation.navigate('ConfirmarAgendamento')
+  const telaHome = () => navigation.navigate('Home')
+
   const window = useWindowDimensions();
   const onRefresh = () => {
     setRefreshing(true);
@@ -49,7 +51,7 @@ const buscarDadosCliente = async (id_cliente) =>{
       
 }
 const atualizarStatusPet = async (id_pet) =>{
-  fetch((host_api + '/pet/' + id_pet + '/Aguardando visita'),{
+  fetch(host_api + '/pet/' + id_pet + '/Aguardando visita',{
       method: 'PUT'}
       )
        .then(response => response.json())
@@ -62,7 +64,16 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
   },
-     fontdados:{
+    botao: {
+    height: 45,
+    width: '70%',
+    marginTop: 25,
+    marginStart:50,
+    borderRadius: 30,
+    backgroundColor: 'blue',
+    justifyContent: 'center'
+  },
+   fontdados:{
     fontSize: window.height * 0.025,
     fontWeight: 'bold',
     color: 'white'
@@ -74,6 +85,7 @@ const styles = StyleSheet.create({
   useEffect(() => {
     buscarDadosAgendamento(id_pet);
   },[]);
+  
   return (
     <SafeAreaView style={styles.container}>
         <Text style={{textAlign: 'center', marginTop: window.height * 0.050, fontSize: window.height * 0.040, fontWeight: 'bold', color:'black'}}>Dados Agendamento</Text>
@@ -115,7 +127,12 @@ const styles = StyleSheet.create({
                         <Text style={{textAlign:'center', fontSize:window.height * 0.028, color:'white',fontWeight: 'bold'}}>Cancelar</Text>
                     </View>
                 </TouchableWithoutFeedback>
-        </View>
+            </View>
+            <View style={styles.botao}>
+              <TouchableWithoutFeedback  onPress={() => telaHome()}>
+                <Text style={{textAlign:'center', fontSize:window.height * 0.028, color:'white',fontWeight: 'bold'}}>Retornar ao Menu</Text>
+              </TouchableWithoutFeedback>
+            </View>
     </SafeAreaView>
       
   );

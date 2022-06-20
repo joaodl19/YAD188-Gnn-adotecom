@@ -462,7 +462,7 @@ export default function Perfil1({ route, navigation }) {
             <Text style={{ marginLeft: window.width * -0.314, fontSize: window.width * 0.050, fontWeight: 'bold', }}>Telefone: </Text>
             <TextInput
               type='number'
-              value={telefone}
+              value={telefone.toString()}
               onChangeText={(telefone) => {
                 setTelefone(telefone)
                 setErrorTelefone('')
@@ -558,29 +558,6 @@ export default function Perfil1({ route, navigation }) {
           </View>
 
           <Text style={styles.errorMessage}>{errorEmail}</Text>
-
-          <View style={styles.item} >
-            <Text style={{ marginLeft: window.width * -0.314, fontSize: window.width * 0.050, fontWeight: 'bold', }}>Senha: </Text>
-
-            <TextInput
-              value={senha}
-              onChangeText={(senha) => {
-                setSenha(senha)
-                setErrorSenha('')
-              }}
-              secureTextEntry={true}
-              errorMessage={errorSenha}
-              style={{
-                fontSize: window.width * 0.045,
-                width: window.width * 1,
-                fontWeight: 'bold',
-                marginLeft: window.width * 0.188,
-                color: 'black'
-              }}
-            /></View>
-
-          <Text style={styles.errorMessage}>{errorSenha}</Text>
-
 
           <TouchableOpacity
             style={{ marginBottom: window.height * 0.002, marginTop: window.height * 0.006 }}

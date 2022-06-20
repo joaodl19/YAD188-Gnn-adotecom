@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useState, useEffect} from 'react';
 import {
     StyleSheet,
     View,
@@ -7,12 +7,32 @@ import {
     useWindowDimensions,
     TouchableWithoutFeedback
   } from 'react-native';
+  import { API_URL } from '@env';
+
 
   export default function Pets({navigation, id_cliente, tipo_cliente, ds_nome, ds_raca, tx_foto, id_pet, ds_status, id_ong, ds_nome_ong}){
+    
+    const host_api = API_URL
+
     const getImageSource = () => {
         return `data:image/jpeg;base64,${tx_foto}`
       }
     const window = useWindowDimensions();
+    
+    const [adocao, setAdocao] = useState([]);
+    const 
+    
+    buscarAdocaoAberta = () => {
+        {
+            fetch(host_api + '/adocao/aberto/pet/25')
+              .then(response => response.json())
+              .then(json => {
+                setAdocao(json)
+              })
+              .catch(error => console.log(error))
+          }
+    }
+    
     const labelBotao = () => {
         if(ds_status == 'Aguardando aprovação agendamento'){
             return 'Confirmar Agendamento'
@@ -79,6 +99,13 @@ import {
     const telaConfirmarAgendamento = () => navigation.navigate('ConfirmarAgendamento', {id_pet: id_pet})
     const telaAprovarAdocao = () => navigation.navigate('AprovarAdocao', {id_pet: id_pet, id_cliente})
 
+
+    useEffect(() => {
+        // Atualiza o título do documento usando a API do browser
+        buscarAdocaoAberta();
+    
+      }, []);
+
     return(
         <View style={styles.container}>
             <View style={styles.item}>
@@ -90,7 +117,7 @@ import {
                     <Text style={styles.fontdados}>Nome: {ds_nome}</Text>
                     <Text style={styles.fontdados}>Raça: {ds_raca}</Text>
                     <Text style={styles.fontdados}>Nome ONG: {ds_nome_ong}</Text>
-                    <Text style={styles.fontdados}>Status: {ds_status}</Text>
+                    <Text style={styles.fontdados}>Status: {adocao.ds_ciclo}</Text>
                 </View>
             </View>
             {(tipo_cliente == 'ONG' && ds_status != 'Disponivel') &&

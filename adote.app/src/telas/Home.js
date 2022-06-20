@@ -39,7 +39,6 @@ export default function Home({ navigation }) {
       .then(response => response.json())
       .then(json => {
         setPets(json);
-        buscaDadosOng(pets.id_ong)
         setIsLoading(true)
       })
       .catch(error => console.log(error))
@@ -49,7 +48,6 @@ export default function Home({ navigation }) {
       .then(response => response.json())
       .then(json => {
         setPets(json);
-        buscaDadosOng(pets.id_ong)
         setIsLoading(true)
       })
       .catch(error => console.log(error))

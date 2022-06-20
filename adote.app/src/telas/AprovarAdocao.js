@@ -1,14 +1,11 @@
 import React, {useState,useEffect} from 'react';
-import {StyleSheet, Image,FlatList,Text,TextInput,Picker, SafeAreaView,RefreshControl, View, TouchableWithoutFeedback, Alert} from 'react-native';
-import {Calendar, CalendarList, Agenda} from 'react-native-calendars'
-import {LocaleConfig} from 'react-native-calendars';
-import Topo from './components/Topo';
-import AgendamentoItem from './components/AgendamentoItem';
+import {StyleSheet, useWindowDimensions, Image, FlatList,Text,TextInput,Picker, SafeAreaView,RefreshControl, View, TouchableWithoutFeedback, Alert} from 'react-native';
 import QuestionarioCliente from './components/QuestionarioCliente';
 import { API_URL } from '@env';
 
 export default function ConfirmarAgendamento({route, navigation}) {
   const host_api = API_URL;
+  const window = useWindowDimensions();
   const [refreshing, setRefreshing] = useState(false); 
 
   const onRefresh = () => {
@@ -17,6 +14,7 @@ export default function ConfirmarAgendamento({route, navigation}) {
     setRefreshing(false);
   
   };
+  
   const telaHome = () => navigation.navigate('Home')
 
   const {id_pet} = route.params;
@@ -40,7 +38,7 @@ export default function ConfirmarAgendamento({route, navigation}) {
   };
 
   const aprovar = async (id_agendamento) =>{
-    fetch((host_api + '/agendamento/' + id_agendamento + '/aprovar'),{
+    fetch(host_api + '/agendamento/' + id_agendamento + '/aprovar',{
         method: 'PUT'}
         )
          .then(response => response.json())
@@ -85,8 +83,8 @@ const buscaQuestionarioCliente = async (id_cliente) =>{
   return (
     <SafeAreaView style={styles.container}>
         <Text style={{textAlign: 'center', fontSize: 30, fontWeight: 'bold'}}>Aprovar Adoção</Text>
-        <View style={{backgroundColor:'white', height:200, width:500, marginTop:10, marginLeft:30}}>
-            <View style={{backgroundColor:'#c0c0c0', marginTop:20, marginLeft:-35}}>
+        <View style={{backgroundColor:'white', height:window.height * 0.26, width:window.width, marginTop:10, marginLeft:30}}>
+            <View style={{backgroundColor:'#c0c0c0', marginTop:10, marginLeft:-35}}>
                 <Text style={styles.fontdados}>Nome Pet: {dadosAgendamento.ds_nome_pet}</Text>
                 <Text style={styles.fontdados}>Nome Cliente: {dadosAgendamento.ds_nome_cliente}</Text>
                 <Text style={styles.fontdados}>Data Visita: {dadosAgendamento.dt_visita}</Text>
@@ -126,14 +124,14 @@ const buscaQuestionarioCliente = async (id_cliente) =>{
             </View>         
         </View>
         {(questionario == true)?
-         <View style={{marginTop:20, marginStart:70}}>
+         <View style={{marginTop:20, marginStart:70, height: window.height * 0.05}}>
             <Text style={{fontSize:25, fontWeight:'bold'}}>Questionario Cliente</Text>        
          </View>
          :<Text></Text>
 
         }
         {(questionario == true)?
-        <View style={{backgroundColor:'white', height:350, width:500, marginTop:30, marginLeft:-30}}>
+        <View style={{backgroundColor:'white', height: window.height * 0.45, width:500, marginTop:20, marginLeft:-30}}>
             <FlatList 
               refreshControl={
                 <RefreshControl
@@ -156,6 +154,8 @@ const buscaQuestionarioCliente = async (id_cliente) =>{
 
 const styles = StyleSheet.create({
   container: {
+    height:window.height,
+    width: window.width,
     flex: 1,
     backgroundColor: '#fff',
     backgroundColor: 'white',

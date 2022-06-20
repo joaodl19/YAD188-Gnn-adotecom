@@ -1,6 +1,7 @@
 package com.br.adoteappapi.repositories;
 
 import com.br.adoteappapi.model.Adocao;
+import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -16,6 +17,7 @@ public class AdocaoRepositoryImpl implements AdocaoRepository {
     private String QUERY_INSERIR_ID_QUESTIONARIO_ADOCAO;
     private String QUERY_BUSCAR_ID_POR_CLIENTE;
     private String QUERY_ALTERAR_CICLO;
+    private String QUERY_BUSCAR_ADOCAO_ABERTO_POR_PET;
 
     public AdocaoRepositoryImpl(JdbcTemplate jdbcTemplate, PetRepositoryImpl petRepository) {
 
@@ -26,6 +28,7 @@ public class AdocaoRepositoryImpl implements AdocaoRepository {
                 "WHERE id_cliente = ? AND ds_status = 'Aberto'";
         this.QUERY_BUSCAR_ID_POR_CLIENTE = "SELECT ID_ADOCAO FROM public.adocao WHERE id_cliente = ? AND ds_status = 'Aberto'";
         this.QUERY_ALTERAR_CICLO = "UPDATE public.adocao SET ds_ciclo = ? WHERE id_adocao = ?";
+        this.QUERY_BUSCAR_ADOCAO_ABERTO_POR_PET = "SELECT * FROM public.adocao WHERE id_pet = ? AND ds_status =  'Aberto'";
     }
 
     @Override
@@ -61,5 +64,21 @@ public class AdocaoRepositoryImpl implements AdocaoRepository {
     @Override
     public void alterarCiclo(int idAdocao, String ciclo) {
         jdbcTemplate.update(QUERY_ALTERAR_CICLO, ciclo, idAdocao);
+    }
+
+    @Override
+    public Adocao buscarAdocaoPorPet(Long id_pet) {
+        Adocao adocao = new Adocao();
+        jdbcTemplate.query(QUERY_BUSCAR_ADOCAO_ABERTO_POR_PET, rs -> {
+            adocao.setDt_adocao(rs.getString("dt_adocao"));
+            adocao.setId_adocao(rs.getLong("id_adocao"));
+            adocao.setDs_ciclo(rs.getString("ds_ciclo"));
+            adocao.setId_pet(rs.getLong("id_pet"));
+            adocao.setId_cliente(rs.getLong("id_cliente"));
+            adocao.setDs_status(rs.getString("ds_status"));
+            adocao.setId_visita(rs.getLong("id_visita"));
+            adocao.setDs_obs(rs.getString("ds_obs"));
+        },id_pet);
+        return adocao;
     }
 }

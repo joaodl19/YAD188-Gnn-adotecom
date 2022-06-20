@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.http.HttpResponse;
+
 @RestController
 @RequestMapping("/adocao")
 public class AdocaoController {
@@ -21,5 +23,12 @@ public class AdocaoController {
     public ResponseEntity cadastrarCliente(@RequestBody Adocao adocao) {
         adocaoRepository.cadastrarAdocao(adocao);
         return ResponseEntity.ok("Cadastro Realizado com Sucesso");
+    }
+
+    @GetMapping("/aberto/pet/{id_pet}")
+    @ResponseBody
+    public ResponseEntity<Adocao> buscarAdocaoAbertaPorPet(@PathVariable Long id_pet){
+        var response = adocaoRepository.buscarAdocaoPorPet(id_pet);
+        return ResponseEntity.ok(response);
     }
 }

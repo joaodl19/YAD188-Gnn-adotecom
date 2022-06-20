@@ -1,6 +1,7 @@
 package com.br.adoteappapi.repositories;
 
 import com.br.adoteappapi.model.Cliente;
+import org.springframework.data.relational.core.sql.In;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -124,7 +125,7 @@ public class ClienteRepositoryImpl implements ClienteRepository{
             cliente.setTx_foto(rs.getBytes("tx_foto"));
             cliente.setDs_tipo_cliente(rs.getString("ds_tipo_cliente"));
             cliente.setDs_senha("*******");
-        },cpf, Long.valueOf(cpf));
+        },cpf, Long.parseLong(cpf));
         return cliente;
     }
 }
