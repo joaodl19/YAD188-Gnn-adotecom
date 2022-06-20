@@ -4,7 +4,7 @@ import {
     View,
     Text,
     Image,
-    Alert,
+    useWindowDimensions,
     TouchableWithoutFeedback
   } from 'react-native';
 
@@ -12,6 +12,7 @@ import {
     const getImageSource = () => {
         return `data:image/jpeg;base64,${tx_foto}`
       }
+    const window = useWindowDimensions();
     const labelBotao = () => {
         if(ds_status == 'Aguardando aprovação agendamento'){
             return 'Confirmar Agendamento'
@@ -33,7 +34,46 @@ import {
         }
     };            
 
-    
+    const styles = StyleSheet.create({
+        container: {
+            flex: 1,
+            backgroundColor: '#808080',
+            borderRadius: window.width * 0.044,
+            marginBottom: window.width * 0.030            
+        },  
+        item:{
+            alignItems: 'center',
+            backgroundColor: '#808080',
+            borderRadius: window.width * 0.055,
+            height: window.height * 0.164,
+            width: window.width * 0.844,
+            marginLeft: window.width * 0.025,
+            marginTop: window.width * 0.025,
+            flexDirection: 'row'
+        },
+        foto:{
+            marginLeft: window.width * 0.050,
+            height: window.height * 0.174,
+            width: window.width * 0.380,
+            borderRadius: window.width * 0.055
+        },
+        fontdados:{
+            fontSize: window.height * 0.020,
+            fontWeight: 'bold',
+            color: 'white',
+            width: window.width * 0.505
+        },
+        dados:{
+            marginLeft: window.height * 0.020,
+            fontSize: window.height * 0.020,
+            backgroundColor: '#808080'
+        },
+        lineStyle:{
+            borderWidth: window.height * 0.0007,
+            borderColor:'black',
+            margin:window.height * 0.015
+        },
+        })
 
     const telaPerfilPet = () => navigation.navigate('PerfilPet', {id_pet: id_pet, id_cliente: id_cliente, tipo_cliente: tipo_cliente, id_ong: id_ong})
     const telaConfirmarAgendamento = () => navigation.navigate('ConfirmarAgendamento', {id_pet: id_pet})
@@ -42,7 +82,7 @@ import {
     return(
         <View style={styles.container}>
             <View style={styles.item}>
-                <TouchableWithoutFeedback style={{marginTop: 100}}
+                <TouchableWithoutFeedback style={{marginTop: window.height * 0.590}}
                         onPress={() => telaPerfilPet()}>
                     <Image style={styles.foto} source={{uri: getImageSource()}}/>
                 </TouchableWithoutFeedback>
@@ -55,10 +95,10 @@ import {
             </View>
             {(tipo_cliente == 'ONG' && ds_status != 'DISPONIVEL') &&
             <TouchableWithoutFeedback 
-                    style={{marginTop: 100}}
+                    style={{marginTop: window.height * 0.590}}
                     onPress={() => proximaTela()}>
-                <View style={{marginLeft:170, backgroundColor:'green',borderRadius: 30, height:50, width:130, justifyContent:'center'}}>
-                   <Text style={{textAlign:'center', fontSize:16, color:'white'}}>{labelBotao()}</Text>
+                <View style={{marginLeft:window.width * 0.470, backgroundColor:'green',borderRadius: window.height * 0.035, height:window.height * 0.065, width:window.width * 0.365, justifyContent:'center'}}>
+                   <Text style={{textAlign:'center', fontSize:window.width * 0.044, color:'white'}}>{labelBotao()}</Text>
                 </View>
             </TouchableWithoutFeedback>}
             <View style = {styles.lineStyle} />
@@ -66,44 +106,3 @@ import {
       )
   };
   
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#808080',
-        borderRadius: 50,
-        marginBottom: 10,
-        marginTop: 0
-    },  
-    item:{
-        alignItems: 'center',
-        backgroundColor: '#808080',
-        borderRadius: 50,
-        height: 130,
-        width: 370,
-        marginLeft: 10,
-        marginTop: 10,
-        flexDirection: 'row'
-    },
-    foto:{
-        marginLeft: 15,
-        height: 130,
-        width: 140,
-        borderRadius: 20
-    },
-    fontdados:{
-        fontSize: 16,
-        fontWeight: 'bold',
-        color: 'white',
-        width: 200
-    },
-    dados:{
-        marginLeft: 15,
-        fontSize: 18,
-        backgroundColor: '#808080'
-    },
-    lineStyle:{
-        borderWidth: 0.5,
-        borderColor:'black',
-        margin:10,
-    },
-    })

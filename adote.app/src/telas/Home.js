@@ -73,6 +73,17 @@ export default function Home({ navigation }) {
       .then(json => setOng(json))
       .catch(error => console.log(error))
   }
+
+  
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    backgroundColor: 'white',
+  }
+
+});
+
   useEffect(() => {
     // Atualiza o título do documento usando a API do browser
     _getData();
@@ -82,13 +93,13 @@ export default function Home({ navigation }) {
   return (
     <SafeAreaView style={styles.container}>
       {(isLoading == false) ?
-        <View style={{ marginTop: 300 }}>
+        <View style={{ marginTop: window.height * 0.650 }}>
           <ActivityIndicator size="large" color="blue" />
         </View>
         :
         <View>
           <Topo cliente={cliente} navigation={navigation} />
-          <View style={{ marginTop: 0, height: 400, width: 385, backgroundColor: '#808080' }}>
+          <View style={{ marginTop: 0, height: window.height * 0.590, width: window.width * 1.005, backgroundColor: '#808080' }}>
             <FlatList
               refreshControl={
                 <RefreshControl
@@ -106,35 +117,6 @@ export default function Home({ navigation }) {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    backgroundColor: 'white',
-  },
-  input: {
-    borderWidth: 2,
-    backgroundColor: 'white',
-    height: 40,
-    width: 250,
-    marginTop: 10,
-    borderRadius: 5,
-    fontSize: 15,
-    paddingStart: 10,
-    borderColor: '#000080',
-  },
-  logo: {
-    height: 120,
-    width: 300
-  },
-  botao: {
-    height: 500,
-    width: 200,
-    marginTop: 200,
-    color: '#008000',
-  },
-
-});
 
 
 

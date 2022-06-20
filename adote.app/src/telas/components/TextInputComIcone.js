@@ -1,9 +1,10 @@
 import React from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {Alert,StyleSheet, TouchableWithoutFeedback, TextInput, View} from 'react-native';
+import {Alert,StyleSheet, TouchableWithoutFeedback, TextInput, View, useWindowDimensions} from 'react-native';
 
 
 export default function TextInputComIcone() {  
+  const window = useWindowDimensions();
   const getData = async () => {
     try {
       const value = await AsyncStorage.getItem('@session')
@@ -16,6 +17,30 @@ export default function TextInputComIcone() {
       Alert.alert(e)
     }
   }
+  
+  const styles = StyleSheet.create({
+    inputContainer: {
+        height: window.height * 0.058,
+        width: window.width * 0.915,
+        backgroundColor: '#CCF',
+        borderRadius: window.height * 0.058,
+        paddingLeft: window.height * 0.038,
+        marginLeft: window.height * 0.012,
+        flexDirection: 'row'
+    },
+    icon: {
+        alignSelf: 'center',
+        marginLeft: window.height * 0.012,
+        paddingRight: window.height * 0.022
+    },
+    input: {
+        fontSize: window.height * 0.020,
+        width: window.width * 0.822,
+        color: '#666',
+        flex: 1
+    }
+  
+  });
     return (
         <View style={styles.inputContainer}>
             <TextInput style={styles.input}
@@ -25,45 +50,12 @@ export default function TextInputComIcone() {
             </TextInput>
             <TouchableWithoutFeedback
                 onPress={getData}>
-                <Icon name="md-search" size={20} color="#666" style={styles.icon}/>
+                <Icon name="md-search" size={window.width * 0.055} color="#666" style={styles.icon}/>
             </TouchableWithoutFeedback>
             
       </View>
     );
   }
   
-  const styles = StyleSheet.create({
-    inputContainer: {
-        height: 45,
-        width: 350,
-        backgroundColor: '#CCF',
-        borderRadius: 30,
-        paddingLeft: 20,
-        marginLeft: 10,
-        flexDirection: 'row'
-    },
-    icon: {
-        alignSelf: 'center',
-        marginLeft: 20,
-        paddingRight: 15
-    },
-    input: {
-        fontSize: 15,
-        width: 500,
-        color: '#666',
-        flex: 1
-    },
-    perfil: {
-      height: 70,
-      width: 70,
-      marginStart: -80,
-      borderRadius: 35
-    },
-    topo: {
-      height: 100,
-      marginTop: 190
-    },
-  
-  });
   
   
