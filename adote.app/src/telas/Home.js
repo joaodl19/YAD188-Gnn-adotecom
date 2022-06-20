@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, ActivityIndicator, useWindowDimensions, useWindowDimensions, FlatList, SafeAreaView, View, Alert, RefreshControl } from 'react-native';
+import { StyleSheet, ActivityIndicator, useWindowDimensions, FlatList, SafeAreaView, View, Alert, RefreshControl } from 'react-native';
 import Pets from './components/Pets';
 
 import Topo from './components/Topo';
