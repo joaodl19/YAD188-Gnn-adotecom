@@ -24,7 +24,7 @@ export default function PerfilPet({ route, navigation }) {
   const [errorDtnascimento, setErrordtNascimento] = useState('')
   const telaHome = () => navigation.navigate('Home')
   const telaQuestionario = () => navigation.navigate('Questionario', { id_cliente: id_cliente, id_ong: id_ong, id_pet: id_pet })
-  //const telaPerfilPet = () => navigation.navigate('PerfilPet')
+  
   const getImageSource = () => {
     return `data:image/jpeg;base64,${pet.tx_foto}`
   }
