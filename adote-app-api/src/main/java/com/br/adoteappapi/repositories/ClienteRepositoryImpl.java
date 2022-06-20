@@ -27,7 +27,7 @@ public class ClienteRepositoryImpl implements ClienteRepository{
                 "ds_genero, nr_telefone, nr_cep, ds_logradouro, ds_bairro, nr_numero, ds_cidade, ds_uf, ds_deficiencia, ds_obs, ds_email, ds_senha, tx_foto, ds_tipo_cliente)" +
                 " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         this.QUERY_ATUALIZAR_DADOS_CLIENTE = "UPDATE public.cliente " +
-                "SET ds_nome=?, dt_nascimento_fundacao=?, ds_genero=?, nr_telefone=?, nr_cep=?, ds_logradouro=?, ds_cidade=?, ds_deficiencia=?, ds_obs=?, ds_email=?, ds_senha=?, tx_foto=?" +
+                "SET ds_nome=?, dt_nascimento_fundacao=?, ds_genero=?, nr_telefone=?, nr_cep=?, ds_logradouro=?, ds_cidade=?, ds_deficiencia=?, ds_obs=?, ds_email=?" +
                 " WHERE nr_cpf_cnpj = ?";
         this.QUERY_DELETAR_CLIENTE = "DELETE FROM public.cliente WHERE nr_cpf_cnpj = ?";
         this.QUERY_CONSULTAR_DADOS_CLIENTE = "SELECT id_cliente, ds_nome, nr_cpf_cnpj, dt_nascimento_fundacao," +
@@ -92,9 +92,7 @@ public class ClienteRepositoryImpl implements ClienteRepository{
             ps.setString(8, String.valueOf(cliente.getDs_deficiencia()));
             ps.setString(9, cliente.getDs_obs());
             ps.setString(10, cliente.getDs_email());
-            ps.setString(11, cliente.getDs_senha());
-            ps.setBytes(12, cliente.getTx_foto());
-            ps.setString(13, cpf);
+            ps.setString(11, cpf);
             return ps;
         });
     }
