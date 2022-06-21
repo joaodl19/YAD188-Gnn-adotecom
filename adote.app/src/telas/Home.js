@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, ActivityIndicator, useWindowDimensions, FlatList, SafeAreaView, View, Alert, RefreshControl } from 'react-native';
+import { StyleSheet, TextInput, ActivityIndicator, useWindowDimensions, FlatList, SafeAreaView, View, Alert, RefreshControl } from 'react-native';
 import Pets from './components/Pets';
 
 import Topo from './components/Topo';
@@ -93,6 +93,7 @@ const styles = StyleSheet.create({
         </View>
         :
         <View>
+     
           <Topo cliente={cliente} navigation={navigation} />
           <View style={{height: window.height * 0.590, width: window.width * 1.005, backgroundColor: '#808080' }}>
             <FlatList

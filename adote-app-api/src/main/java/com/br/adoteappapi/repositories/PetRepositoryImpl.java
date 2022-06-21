@@ -25,6 +25,7 @@ public class PetRepositoryImpl implements PetRepository {
     private String QUERY_CONSULTAR_DADOS_PET_ONG;
     private String QUERY_ATUALIZAR_STATUS_PET;
     private String QUERY_CONSULTAR_DADOS_PET_STATUS_UF;
+    private String QUERY_CONSULTAR_DADOS_PET_POR_FILTRO;
 
     public PetRepositoryImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
@@ -53,6 +54,11 @@ public class PetRepositoryImpl implements PetRepository {
                 "JOIN public.cliente c\n" +
                 "ON p.id_ong = c.id_cliente\n" +
                 " WHERE ds_status = ? AND c.ds_uf = ?";
+        this.QUERY_CONSULTAR_DADOS_PET_POR_FILTRO = "SELECT c.ds_nome as ds_nome_ong, p.id_pet, p.ds_nome, p.dt_nascimento, p.ds_raca, p.ds_genero, p.id_ong, p.ds_status, p.ds_obs, p.tx_foto, p.ds_visita\n" +
+                "        FROM public.pet p\n" +
+                "        JOIN public.cliente c\n" +
+                "        ON p.id_ong = c.id_cliente\n" +
+                "        WHERE p.ds_status = 'Disponivel' and (p.ds_nome like '%?%' or p.ds_raca like '%?%' or c.ds_nome like '%?%');";
     }
 
     @Override
@@ -200,7 +206,6 @@ public class PetRepositoryImpl implements PetRepository {
 
     @Override
     public List<Pet> consultarDadosPetStatusUf(String statusPet, String uf) {
-        System.out.println("UF: " + uf.toUpperCase());
         List<Pet> pets;
         pets = jdbcTemplate.query(QUERY_CONSULTAR_DADOS_PET_STATUS_UF, (rs, rowNumber) ->
                         new Pet(
@@ -217,4 +222,28 @@ public class PetRepositoryImpl implements PetRepository {
                 , statusPet, uf.toUpperCase());
         return pets;
     }
+
+    @Override
+    public List<Pet> consultarDadosPetPorFiltro(String filtro) {
+        return null;
+    }
+
+    @Override
+    public List<Pet> consultarDadosPetPorFiltro(String filtro, String status) {
+        List<Pet> pets;
+        String QUERY = QUERY_CONSULTAR_DADOS_PET_POR_FILTRO.replaceAll("\\?",filtro);
+        pets = jdbcTemplate.query(QUERY, (rs, rowNumber) ->
+                        new Pet(
+                                rs.getLong("id_pet"),
+                                rs.getString("ds_nome"),
+                                rs.getString("ds_genero"),
+                                rs.getString("ds_raca"),
+                                rs.getString("ds_status"),
+                                rs.getString("dt_nascimento"),
+                                rs.getLong("id_ong"),
+                                rs.getBytes("tx_foto"),
+                                rs.getString("ds_nome_ong"),
+                                rs.getString("ds_obs"))
+                );
+        return pets;    }
 }

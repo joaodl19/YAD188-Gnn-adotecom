@@ -97,7 +97,8 @@ responderText:{
         width: window.width * 0.550,
         resizeMode: 'center',
         marginBottom: window.width * 0.200,
-        marginLeft: window.width * 0.050
+        marginLeft: window.width * 0.050,
+        marginTop: 20
       }    
 });
 
@@ -109,7 +110,7 @@ responderText:{
 
   return (
       <SafeAreaView style={styles.container}>
-        <View style={{flexDirection: 'row'}}> 
+        <View style={{flexDirection: 'row', marginTop:20}}> 
           <Image style={styles.logo} source={require('../../assets/LogoT.png')}/>
         </View>   
         <View style={{backgroundColor: 'white', marginTop: window.width * -0.170, height:  window.width * 1.260}}>

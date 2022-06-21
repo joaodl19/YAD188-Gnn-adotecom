@@ -49,13 +49,15 @@ public class SolicitacaoRepositoryImpl implements  SolicitacaoRepository {
                         rs.getLong("id_adocao")
                 ),id_cliente);
         var solicitacaoDtFormat = solicitacaos.stream().map(solicitacao -> {
-            try {
-                var dtVisita = dateIn.parse(solicitacao.getDt_visita());
-                solicitacao.setDt_visita(dateOut.format(dtVisita));
-                var dtAdocao = dateIn.parse(solicitacao.getDt_adocao());
-                solicitacao.setDt_adocao(dateOut.format(dtAdocao));
-            } catch (ParseException e) {
-                e.printStackTrace();
+            if(!(solicitacao.getDt_visita() == null || solicitacao.getDt_adocao() == null)){
+                try {
+                    var dtVisita = dateIn.parse(solicitacao.getDt_visita());
+                    solicitacao.setDt_visita(dateOut.format(dtVisita));
+                    var dtAdocao = dateIn.parse(solicitacao.getDt_adocao());
+                    solicitacao.setDt_adocao(dateOut.format(dtAdocao));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
             return solicitacao;
         }).collect(Collectors.toList());

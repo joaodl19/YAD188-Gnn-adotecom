@@ -99,6 +99,20 @@ public class PetController {
         }
         return ResponseEntity.ok(pets);
     }
+
+    @GetMapping(value = "/filtro/{filtro}/{status}")
+    @ResponseBody
+    public ResponseEntity<List<Pet>> consultarDadosPetPorFiltro(@PathVariable String filtro, @PathVariable String status){
+        logger.info("Buscando pets com filtro " + filtro);
+        List<Pet> pets = new ArrayList<>();
+        try {
+            pets = petRepository.consultarDadosPetPorFiltro(filtro, status);
+        }catch (Exception e){
+            e.printStackTrace();
+            logger.info("erro ao buscar pets com filtro " + filtro);
+        }
+        return ResponseEntity.ok(pets);
+    }
 }
 
 
