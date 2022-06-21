@@ -20,19 +20,7 @@ import {
     const window = useWindowDimensions();
     
     const [adocao, setAdocao] = useState([]);
-    const 
-    
-    buscarAdocaoAberta = () => {
-        {
-            fetch(host_api + '/adocao/aberto/pet/25')
-              .then(response => response.json())
-              .then(json => {
-                setAdocao(json)
-              })
-              .catch(error => console.log(error))
-          }
-    }
-    
+     
     const labelBotao = () => {
         if(ds_status == 'Aguardando aprovação agendamento'){
             return 'Confirmar Agendamento'
@@ -51,6 +39,9 @@ import {
         } 
         if(ds_status == 'Aguardando visita'){
             telaAprovarAdocao()
+        }
+        if(ds_status == 'Aguardando retirada'){
+            telaFinalizarAdocao()
         }
     };            
 
@@ -98,14 +89,7 @@ import {
     const telaPerfilPet = () => navigation.navigate('PerfilPet', {id_pet: id_pet, id_cliente: id_cliente, tipo_cliente: tipo_cliente, id_ong: id_ong})
     const telaConfirmarAgendamento = () => navigation.navigate('ConfirmarAgendamento', {id_pet: id_pet})
     const telaAprovarAdocao = () => navigation.navigate('AprovarAdocao', {id_pet: id_pet, id_cliente})
-
-
-    useEffect(() => {
-        // Atualiza o título do documento usando a API do browser
-        buscarAdocaoAberta();
-    
-      }, []);
-
+    const telaFinalizarAdocao = () => navigation.navigate('FinalizarAdocao',{id_pet: id_pet, id_cliente: id_cliente})
     return(
         <View style={styles.container}>
             <View style={styles.item}>
@@ -117,10 +101,10 @@ import {
                     <Text style={styles.fontdados}>Nome: {ds_nome}</Text>
                     <Text style={styles.fontdados}>Raça: {ds_raca}</Text>
                     <Text style={styles.fontdados}>Nome ONG: {ds_nome_ong}</Text>
-                    <Text style={styles.fontdados}>Status: {adocao.ds_ciclo}</Text>
+                    <Text style={styles.fontdados}>Status: {ds_status}</Text>
                 </View>
             </View>
-            {(tipo_cliente == 'ONG' && ds_status != 'Disponivel') &&
+            {(tipo_cliente == 'ONG' && (ds_status != 'Disponive0ol' && ds_status != 'Adotado')) &&
             <TouchableWithoutFeedback 
                     style={{marginTop: window.height * 0.590}}
                     onPress={() => proximaTela()}>

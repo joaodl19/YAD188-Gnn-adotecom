@@ -3,7 +3,7 @@ import {StyleSheet, useWindowDimensions, Image, FlatList,Text,TextInput,Picker, 
 import QuestionarioCliente from './components/QuestionarioCliente';
 import { API_URL } from '@env';
 
-export default function ConfirmarAgendamento({route, navigation}) {
+export default function AprovarAdocao({route, navigation}) {
   const host_api = API_URL;
   const window = useWindowDimensions();
   const [refreshing, setRefreshing] = useState(false); 

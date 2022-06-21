@@ -8,12 +8,12 @@ import { API_URL } from '@env';
 
 export default function Home({ navigation }) {
 
-  const host_api = API_URL
+  const host_api = API_URL;
   const window = useWindowDimensions();
   const [pets, setPets] = useState([]);
-  const [cliente, setCliente] = useState([])
-  const [ong, setOng] = useState([])
-  const [isLoading, setIsLoading] = useState(false)
+  const [cliente, setCliente] = useState([]);
+  const [ong, setOng] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = () => {
@@ -76,6 +76,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     backgroundColor: 'white',
+    marginTop:40
   }
 
 });

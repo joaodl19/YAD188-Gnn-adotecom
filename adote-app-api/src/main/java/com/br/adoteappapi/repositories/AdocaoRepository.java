@@ -13,4 +13,6 @@ public interface AdocaoRepository {
     void alterarCiclo(int idAdocao, String ciclo);
 
     Adocao buscarAdocaoPorPet(Long id_pet);
+
+    void encerrarAdocao(Long id_adocao);
 }

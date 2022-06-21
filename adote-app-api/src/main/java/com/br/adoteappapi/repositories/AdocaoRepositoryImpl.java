@@ -18,6 +18,7 @@ public class AdocaoRepositoryImpl implements AdocaoRepository {
     private String QUERY_BUSCAR_ID_POR_CLIENTE;
     private String QUERY_ALTERAR_CICLO;
     private String QUERY_BUSCAR_ADOCAO_ABERTO_POR_PET;
+    private String QUERY_ENCERRAR_ADOCAO;
 
     public AdocaoRepositoryImpl(JdbcTemplate jdbcTemplate, PetRepositoryImpl petRepository) {
 
@@ -29,6 +30,7 @@ public class AdocaoRepositoryImpl implements AdocaoRepository {
         this.QUERY_BUSCAR_ID_POR_CLIENTE = "SELECT ID_ADOCAO FROM public.adocao WHERE id_cliente = ? AND ds_status = 'Aberto'";
         this.QUERY_ALTERAR_CICLO = "UPDATE public.adocao SET ds_ciclo = ? WHERE id_adocao = ?";
         this.QUERY_BUSCAR_ADOCAO_ABERTO_POR_PET = "SELECT * FROM public.adocao WHERE id_pet = ? AND ds_status =  'Aberto'";
+        this.QUERY_ENCERRAR_ADOCAO = "UPDATE public.adocao SET ds_status = 'Encerrado' WHERE id_adocao = ?";
     }
 
     @Override
@@ -80,5 +82,10 @@ public class AdocaoRepositoryImpl implements AdocaoRepository {
             adocao.setDs_obs(rs.getString("ds_obs"));
         },id_pet);
         return adocao;
+    }
+
+    @Override
+    public void encerrarAdocao(Long id_adocao) {
+        jdbcTemplate.update(QUERY_ENCERRAR_ADOCAO, id_adocao);
     }
 }
