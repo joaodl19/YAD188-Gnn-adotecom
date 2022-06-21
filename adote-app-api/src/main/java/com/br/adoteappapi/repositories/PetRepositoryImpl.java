@@ -24,6 +24,7 @@ public class PetRepositoryImpl implements PetRepository {
     private String QUERY_CONSULTAR_PET_FILTRO;
     private String QUERY_CONSULTAR_DADOS_PET_ONG;
     private String QUERY_ATUALIZAR_STATUS_PET;
+    private String QUERY_CONSULTAR_DADOS_PET_STATUS_UF;
 
     public PetRepositoryImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
@@ -47,6 +48,11 @@ public class PetRepositoryImpl implements PetRepository {
                 " WHERE p.id_ong = ?";
         this.QUERY_ALTERAR_STATUS_PET = "UPDATE public.pet SET ds_status=? WHERE id_pet = ?";
         this.QUERY_CONSULTAR_PET_FILTRO ="SELECT * FROM public.pet WHERE ds_raca LIKE '%?%'";
+        this.QUERY_CONSULTAR_DADOS_PET_STATUS_UF =  "SELECT c.ds_nome as ds_nome_ong, p.id_pet, p.ds_nome, p.dt_nascimento, p.ds_raca, p.ds_genero, p.id_ong, p.ds_status, p.ds_obs, p.tx_foto, p.ds_visita\n" +
+                "FROM public.pet p\n" +
+                "JOIN public.cliente c\n" +
+                "ON p.id_ong = c.id_cliente\n" +
+                " WHERE ds_status = ? AND c.ds_uf = ?";
     }
 
     @Override
@@ -190,5 +196,25 @@ public class PetRepositoryImpl implements PetRepository {
     @Override
     public void atualizarStatusPet(Long id, String status) {
 
+    }
+
+    @Override
+    public List<Pet> consultarDadosPetStatusUf(String statusPet, String uf) {
+        System.out.println("UF: " + uf.toUpperCase());
+        List<Pet> pets;
+        pets = jdbcTemplate.query(QUERY_CONSULTAR_DADOS_PET_STATUS_UF, (rs, rowNumber) ->
+                        new Pet(
+                                rs.getLong("id_pet"),
+                                rs.getString("ds_nome"),
+                                rs.getString("ds_genero"),
+                                rs.getString("ds_raca"),
+                                rs.getString("ds_status"),
+                                rs.getString("dt_nascimento"),
+                                rs.getLong("id_ong"),
+                                rs.getBytes("tx_foto"),
+                                rs.getString("ds_nome_ong"),
+                                rs.getString("ds_obs"))
+                , statusPet, uf.toUpperCase());
+        return pets;
     }
 }

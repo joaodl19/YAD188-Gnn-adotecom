@@ -18,7 +18,7 @@ export default function Home({ navigation }) {
 
   const onRefresh = () => {
     setRefreshing(true);
-    (cliente.ds_tipo_cliente == 'ONG') ? buscaPetsOng(cliente.id_cliente) : buscaPets();
+    (cliente.ds_tipo_cliente == 'ONG') ? buscaPetsOng(cliente.id_cliente) : buscaPets(cliente.ds_uf);
     setRefreshing(false);
 
   };
@@ -34,8 +34,8 @@ export default function Home({ navigation }) {
     }
   }
 
-  const buscaPets = async () => {
-    fetch(host_api + '/pet/status/Disponivel')
+  const buscaPets = async (uf) => {
+    fetch(host_api + '/pet/statusUf/Disponivel/' + uf)
       .then(response => response.json())
       .then(json => {
         setPets(json);
@@ -57,7 +57,7 @@ export default function Home({ navigation }) {
     fetch(host_api + '/cliente/' + cpf)
       .then(response => response.json())
       .then(json => {
-        setCliente(json), (json.ds_tipo_cliente == 'ONG') ? buscaPetsOng(json.id_cliente) : buscaPets();
+        setCliente(json), (json.ds_tipo_cliente == 'ONG') ? buscaPetsOng(json.id_cliente) : buscaPets(json.ds_uf);
       })
 
       .catch(error => console.log(error))

@@ -22,4 +22,6 @@ public interface PetRepository {
     List<Pet> consultarDadosPetPorOng(long id_ong);
 
     void atualizarStatusPet(Long id, String status);
+
+    List<Pet> consultarDadosPetStatusUf(String statusPet, String uf);
 }

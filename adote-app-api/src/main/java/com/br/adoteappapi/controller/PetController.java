@@ -85,6 +85,20 @@ public class PetController {
         }
         return ResponseEntity.ok(pets);
     }
+
+    @GetMapping(value = "/statusUf/{statusPet}/{uf}")
+    @ResponseBody
+    public ResponseEntity<List<Pet>> consultarDadosPetPorUf(@PathVariable String statusPet, @PathVariable String uf){
+        logger.info("Buscando pets com status " + statusPet);
+        List<Pet> pets = new ArrayList<>();
+        try {
+            pets = petRepository.consultarDadosPetStatusUf(statusPet,uf);
+        }catch (Exception e){
+            e.printStackTrace();
+            logger.info("erro ao buscar pets com status " + statusPet);
+        }
+        return ResponseEntity.ok(pets);
+    }
 }
 
 
