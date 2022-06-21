@@ -114,7 +114,7 @@ export default function Perfil1({ route, navigation }) {
           "nr_telefone": telefone,
           "nr_cep": cep,
           "ds_logradouro": logradouro,
-          "nr_numero": numero,
+          "ds_uf": uf,
           "ds_bairro": bairro,
           "ds_cidade": cidade,
           "ds_deficiencia": deficiencia,
