@@ -31,4 +31,14 @@ public class AdocaoController {
         var response = adocaoRepository.buscarAdocaoPorPet(id_pet);
         return ResponseEntity.ok(response);
     }
+
+    @PutMapping("/{id_pet}/encerrar")
+    @ResponseBody
+    public ResponseEntity<?> encerrarAdocao(@PathVariable Long id_pet){
+        var adocao = adocaoRepository.buscarAdocaoPorPet(id_pet);
+        adocaoRepository.encerrarAdocao(adocao.getId_adocao());
+        var response = adocaoRepository.buscarAdocaoPorPet(id_pet);
+        return ResponseEntity.ok(response);
+    }
+
 }

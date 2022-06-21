@@ -60,7 +60,7 @@ public class PetRepositoryImpl implements PetRepository {
             ps.setLong(5, pet.getId_ong());
             ps.setString(6, pet.getDs_obs());
             ps.setBytes(7, pet.getTx_foto());
-            ps.setString(8, StatusPetEnum.DISPONIVEL.toString());
+            ps.setString(8, "Disponivel");
             return ps;
         });
     }
