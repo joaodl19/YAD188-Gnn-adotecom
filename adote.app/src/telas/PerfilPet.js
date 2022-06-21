@@ -237,7 +237,7 @@ export default function PerfilPet({ route, navigation }) {
                 mode="date"
                 format="DD-MM-YYYY"
                 minDate="01-05-1920"
-                maxDate="30-06-2022"
+                maxDate="01-05-2030"
                 confirmBtnText="Confirm"
                 cancelBtnText="Cancel"
                 customStyles={{

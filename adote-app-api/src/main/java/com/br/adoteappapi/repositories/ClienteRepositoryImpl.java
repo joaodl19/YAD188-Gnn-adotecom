@@ -80,11 +80,20 @@ public class ClienteRepositoryImpl implements ClienteRepository{
 
     @Override
     public void atualizarDadosCliente(String cpf, Cliente cliente) {
+        SimpleDateFormat dateIn = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat dateOut = new SimpleDateFormat("yyyy-MM-dd");
+        Date dtNascimento = new Date();
+        try {
+            dtNascimento = dateIn.parse(cliente.getDt_nascimento_fundacao());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        var dtNascimentoFinal = dateOut.format(dtNascimento);
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection
                     .prepareStatement(QUERY_ATUALIZAR_DADOS_CLIENTE);
             ps.setString(1, cliente.getDs_nome());
-            ps.setDate(2, java.sql.Date.valueOf(cliente.getDt_nascimento_fundacao()));
+            ps.setDate(2, java.sql.Date.valueOf(dtNascimentoFinal));
             ps.setString(3, cliente.getDs_genero());
             ps.setBigDecimal(4, cliente.getNr_telefone());
             ps.setString(5, cliente.getNr_cep());
@@ -105,6 +114,10 @@ public class ClienteRepositoryImpl implements ClienteRepository{
 
     @Override
     public Cliente consultarDadosCliente(String cpf) {
+        SimpleDateFormat dateOut = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat dateIn = new SimpleDateFormat("yyyy-MM-dd");
+        Date dtNascimento = new Date();
+
         Cliente cliente = new Cliente();
         jdbcTemplate.query(QUERY_CONSULTAR_DADOS_CLIENTE, rs -> {
             cliente.setId_cliente(rs.getLong("id_cliente"));
@@ -126,6 +139,13 @@ public class ClienteRepositoryImpl implements ClienteRepository{
             cliente.setDs_tipo_cliente(rs.getString("ds_tipo_cliente"));
             cliente.setDs_senha("*******");
         },cpf, Long.parseLong(cpf));
+
+        try {
+            dtNascimento = dateIn.parse(cliente.getDt_nascimento_fundacao());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        cliente.setDt_nascimento_fundacao(dateOut.format(dtNascimento));
         return cliente;
     }
 }

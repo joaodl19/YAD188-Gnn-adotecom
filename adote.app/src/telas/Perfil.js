@@ -36,9 +36,9 @@ export default function Perfil1({ route, navigation }) {
   const [errorTelefone, setErrorTelefone] = useState(null)
   const [errorGenero, setErrorGenero] = useState(null)
 
-  const telaHome = () => navigation.navigate('Home')
-  const telaCadastroPet = () => navigation.navigate('CadastroPet', cliente.id_cliente)
-  const telaAgendamentos = () => navigation.navigate('AgendamentosOng', cliente.id_cliente)
+  const telaHome = () => navigation.navigate('Home', cliente.id_cliente);
+  const telaCadastroPet = () => navigation.navigate('CadastroPet', cliente.id_cliente);
+  const telaAgendamentos = () => navigation.navigate('AgendamentosOng', cliente.id_cliente);
 
   const getImageSource = () => {
     return `data:image/jpeg;base64,${cliente.tx_foto}`
@@ -123,6 +123,7 @@ export default function Perfil1({ route, navigation }) {
         })
       }
 
+
       )
         //.then(response => response.json())
         .then(Alert.alert("Cadastro Atualizado Com Sucesso!"),
@@ -145,7 +146,7 @@ export default function Perfil1({ route, navigation }) {
       backgroundColor: '#c0c0c0',
       height: window.height * 0.059,
       width: window.width * 0.670,
-      marginLeft: window.width * 0.280,
+      marginLeft: window.width * 0.310,
       marginTop: window.width * 0.005,
       flexDirection: 'row',
       borderRadius: window.height * 0.017,
@@ -157,6 +158,7 @@ export default function Perfil1({ route, navigation }) {
     botao: {
       height: window.height * 0.069,
       width: window.width * 0.700,
+      marginStart: window.width * 0.2,
       marginTop: window.height * 0.029,
       borderRadius: window.height * 0.039,
       backgroundColor: 'blue',
@@ -164,7 +166,7 @@ export default function Perfil1({ route, navigation }) {
       marginBottom: window.height * 0.039
     },
     botao2: {
-      marginLeft: window.height * 0.215,
+      marginLeft: window.height * 0.315,
       height: window.height * 0.050,
       width: window.width * 0.500,
       borderRadius: window.height * 0.039,
@@ -196,7 +198,7 @@ export default function Perfil1({ route, navigation }) {
     logo: {
       height: window.height * 0.052,
       width: window.width * 0.548,
-      marginStart: window.width * 0.045,
+      marginStart: window.width * 0.185,
       marginTop: window.height * 0.07,
       marginBottom: window.height * 0.02
     },
@@ -217,6 +219,7 @@ export default function Perfil1({ route, navigation }) {
     botaoResponder: {
       marginTop: window.height * 0.018,
       marginBottom: window.height * 0.018,
+      marginStart: window.width * 0.2,
       justifyContent: 'center',
       textAlign: 'center',
       height: window.height * 0.066,
@@ -237,369 +240,370 @@ export default function Perfil1({ route, navigation }) {
   }, []);
 
   return (
-
-    <ScrollView>
+    <View style={styles.container}>
       <KeyboardAvoidingView
         //behavior={Platform.OS == "android" ? "padding" : "height"}
         keyboardVerticalOffset={80}>
         <SafeAreaView style={styles.container}>
+          <View>
+            <Image style={styles.logo} source={require('../../assets/LogoT.png')} />
 
-          <Image style={styles.logo} source={require('../../assets/LogoT.png')} />
-
-          <Image style={styles.perfil} source={{ uri: getImageSource() }} />
-          {(tipoCliente == 'ONG') &&
-            <TouchableOpacity style={styles.botao2} onPress={() => telaCadastroPet()}>
-              <Text style={styles.responderText}>Cadastrar Pet</Text>
+            <Image style={styles.perfil} source={{ uri: getImageSource() }} />
+            {(tipoCliente == 'ONG') &&
+              <TouchableOpacity style={styles.botao2} onPress={() => telaCadastroPet()}>
+                <Text style={styles.responderText}>Cadastrar Pet</Text>
+              </TouchableOpacity>
+            }
+            <TouchableOpacity style={styles.botao3} onPress={() => telaAgendamentos()}>
+              <Text style={styles.responderText}>Agendamentos</Text>
             </TouchableOpacity>
-          }
-          <TouchableOpacity style={styles.botao3} onPress={() => telaAgendamentos()}>
-            <Text style={styles.responderText}>Agendamentos</Text>
-          </TouchableOpacity>
-
-
-          <Text style={styles.saudacoes}>Dados do cliente</Text>
-
-
-          <View style={styles.item} >
-            <Text style={{ marginLeft: window.width * -0.314, fontSize: window.width * 0.050, fontWeight: 'bold', }}>Nome: </Text>
-            <TextInput
-              value={nome}
-              onChangeText={(nome) => {
-                setNome(nome)
-                setErrorNome('')
-              }}
-              errorMessage={errorNome}
-              style={{
-                fontSize: window.width * 0.045,
-                width: window.width * 1,
-                fontWeight: 'bold',
-                marginLeft: window.width * 0.170,
-                color: 'black'
-              }} />
           </View>
-          <Text style={styles.errorMessage}>{errorNome}</Text>
+          <View style={{height: window.height * 0.7, width: window.width * 1}}>
+            <ScrollView>
+              <Text style={styles.saudacoes}>Dados do cliente</Text>
 
-          {tipoCliente == 'PF' &&
-            <View style={styles.item} >
-              <Text style={{ marginLeft: window.width * -0.314, fontSize: window.width * 0.050, fontWeight: 'bold', }}>CPF: </Text>
-              <TextInputMask
-                type={'cpf'}
-                value={cpfCnpj}
-                onChangeText={(cpfCnpj) => {
-                  setCpfCnpj(cpfCnpj)
-                  setErrorCpf('')
-                }}
-                errorMessage={errorCpf}
-                style={{
-                  fontSize: window.width * 0.045,
-                  width: window.width * 1,
-                  fontWeight: 'bold',
-                  marginLeft: window.width * 0.215,
-                  color: 'black'
-                }}
 
-                keyboardType="phone-pad"
-                returnKeyType="done"
+              <View style={styles.item} >
+                <Text style={{ marginLeft: window.width * -0.314, fontSize: window.width * 0.050, fontWeight: 'bold', }}>Nome: </Text>
+                <TextInput
+                  value={nome}
+                  onChangeText={(nome) => {
+                    setNome(nome)
+                    setErrorNome('')
+                  }}
+                  errorMessage={errorNome}
+                  style={{
+                    fontSize: window.width * 0.045,
+                    width: window.width * 1,
+                    fontWeight: 'bold',
+                    marginLeft: window.width * 0.170,
+                    color: 'black'
+                  }} />
+              </View>
+              <Text style={styles.errorMessage}>{errorNome}</Text>
 
-              />
+              {tipoCliente == 'PF' &&
+                <View style={styles.item} >
+                  <Text style={{ marginLeft: window.width * -0.314, fontSize: window.width * 0.050, fontWeight: 'bold', }}>CPF: </Text>
+                  <TextInputMask
+                    type={'cpf'}
+                    value={cpfCnpj}
+                    onChangeText={(cpfCnpj) => {
+                      setCpfCnpj(cpfCnpj)
+                      setErrorCpf('')
+                    }}
+                    errorMessage={errorCpf}
+                    style={{
+                      fontSize: window.width * 0.045,
+                      width: window.width * 1,
+                      fontWeight: 'bold',
+                      marginLeft: window.width * 0.215,
+                      color: 'black'
+                    }}
 
-            </View>
-          }
-          {tipoCliente == 'PF' && <Text style={styles.errorMessage}>{errorCpf}</Text>}
+                    keyboardType="phone-pad"
+                    returnKeyType="done"
 
-          {tipoCliente == 'ONG' &&
-            <View style={styles.item} >
-              <Text style={{ marginLeft: window.width * -0.314, fontSize: window.width * 0.050, fontWeight: 'bold', }}>CNPJ: </Text>
-              <TextInputMask
-                type={'cnpj'}
-                value={cpfCnpj}
-                onChangeText={(cpfCnpj) => {
-                  setCpfCnpj(cpfCnpj)
-                  setErrorCpf('')
-                }}
-                errorMessage={errorCpf}
-                style={{
-                  fontSize: window.width * 0.045,
-                  width: window.width * 1,
-                  fontWeight: 'bold',
-                  marginLeft: window.width * 0.185,
-                  color: 'black'
-                }}
+                  />
 
-                keyboardType="phone-pad"
-                returnKeyType="done"
-              />
-            </View>
-          }
-          {tipoCliente == 'ONG' && <Text style={styles.errorMessage}>{errorCpf}</Text>}
+                </View>
+              }
+              {tipoCliente == 'PF' && <Text style={styles.errorMessage}>{errorCpf}</Text>}
 
-          {tipoCliente == 'PF' &&
-            <View style={styles.item} >
-              <Text style={{ marginLeft: window.width * -0.314, fontSize: window.width * 0.050, fontWeight: 'bold', }}>Nascimento: </Text>
+              {tipoCliente == 'ONG' &&
+                <View style={styles.item} >
+                  <Text style={{ marginLeft: window.width * -0.314, fontSize: window.width * 0.050, fontWeight: 'bold', }}>CNPJ: </Text>
+                  <TextInputMask
+                    type={'cnpj'}
+                    value={cpfCnpj}
+                    onChangeText={(cpfCnpj) => {
+                      setCpfCnpj(cpfCnpj)
+                      setErrorCpf('')
+                    }}
+                    errorMessage={errorCpf}
+                    style={{
+                      fontSize: window.width * 0.045,
+                      width: window.width * 1,
+                      fontWeight: 'bold',
+                      marginLeft: window.width * 0.185,
+                      color: 'black'
+                    }}
 
-              <DatePicker
-                date={dtNascimento}
-                mode="date"
-                format="DD-MM-YYYY"
-                minDate="01-05-1920"
-                maxDate="30-06-2022"
-                confirmBtnText="Confirm"
-                cancelBtnText="Cancel"
-                customStyles={{
-                  dateIcon: {
-                    position: 'absolute',
-                    left: 0,
-                    top: window.width * 0.005,
-                    marginLeft: window.width * 0.540
-                  },
-                  dateInput: {
+                    keyboardType="phone-pad"
+                    returnKeyType="done"
+                  />
+                </View>
+              }
+              {tipoCliente == 'ONG' && <Text style={styles.errorMessage}>{errorCpf}</Text>}
+
+              {tipoCliente == 'PF' &&
+                <View style={styles.item} >
+                  <Text style={{ marginLeft: window.width * -0.314, fontSize: window.width * 0.050, fontWeight: 'bold', }}>Nascimento: </Text>
+
+                  <DatePicker
+                    date={dtNascimento}
+                    mode="date"
+                    format="DD-MM-YYYY"
+                    minDate="01-05-1920"
+                    maxDate="30-06-2030"
+                    confirmBtnText="Confirm"
+                    cancelBtnText="Cancel"
+                    customStyles={{
+                      dateIcon: {
+                        position: 'absolute',
+                        left: 0,
+                        top: window.width * 0.005,
+                        marginLeft: window.width * 0.540
+                      },
+                      dateInput: {
+                        marginLeft: window.width * 0.105,
+                        fontWeight: 'bold',
+                        fontSize: window.width * 0.045,
+                        fontcolor: 'black',
+                        color: 'black',
+                        borderColor: 'transparent',
+                      },
+                      dateText: {
+                        fontSize: window.width * 0.045,
+                        fontWeight: 'bold',
+                        color: "black",
+                        textAlign: "left",
+                        marginStart: window.width * -0.099
+                      }
+                      // ... You
+
+                    }}
+                    onDateChange={(dtNascimento) => {
+                      setDtNascimento(dtNascimento)
+                      setErrordtNascimento('')
+                    }}
+                    errorMessage={errordtNascimento}
+                  />
+                </View>}
+
+              {tipoCliente == 'PF' && <Text style={styles.errorMessage}>{errordtNascimento}</Text>}
+
+              {tipoCliente == 'ONG' &&
+                <View style={styles.item} >
+                  <Text style={{ marginLeft: window.width * -0.308, fontSize: window.width * 0.050, fontWeight: 'bold', }}>Fundação:   </Text>
+
+                  <DatePicker
+                    date={dtNascimento}
+                    mode="date"
+                    format="DD-MM-YYYY"
+                    minDate="01-05-1920"
+                    maxDate="30-06-2022"
+                    confirmBtnText="Confirm"
+                    cancelBtnText="Cancel"
+                    customStyles={{
+                      dateIcon: {
+                        position: 'absolute',
+                        left: 0,
+                        top: window.width * 0.005,
+                        marginLeft: window.width * 0.61
+                      },
+                      dateInput: {
+                        marginLeft: window.width * 0.105,
+                        fontWeight: 'bold',
+                        fontSize: window.width * 0.045,
+                        fontcolor: 'black',
+                        color: 'black',
+                        borderColor: 'transparent',
+                      },
+                      dateText: {
+                        fontSize: window.width * 0.045,
+                        fontWeight: 'bold',
+                        color: "black",
+                        textAlign: "right",
+                        marginStart: window.width * - 0.06
+                      }
+                      // ... You can check the source to find the other keys.
+                    }}
+                    onDateChange={(dtNascimento) => {
+                      setDtNascimento(dtNascimento)
+                      setErrordtNascimento('')
+                    }}
+                    errorMessage={errordtNascimento}
+
+                  />
+
+                </View>}
+              {tipoCliente == 'ONG' && <Text style={styles.errorMessage}>{errordtNascimento}</Text>}
+
+              {tipoCliente == 'PF' &&
+                <View style={styles.item} >
+                  <Text style={{ marginLeft: window.width * -0.314, fontSize: window.width * 0.050, fontWeight: 'bold', }}>Gênero: </Text>
+                  <TextInput
+                    value={genero}
+                    onValueChange={(genero) => {
+                      setGenero(genero)
+                      setErrorGenero('')
+                    }}
+                    errorMessage={errorGenero}
+                    style={{
+                      fontSize: window.width * 0.045,
+                      width: window.width * 1,
+                      fontWeight: 'bold',
+                      marginLeft: window.width * 0.145,
+                      color: 'black'
+                    }} />
+
+                  <Picker
+
+                    style={{ height: window.width * 0.270, width: window.width * 0.870, marginStart: window.width * 0.105, color: 'transparent' }}
+                    onValueChange={(genero) => {
+                      setGenero(genero)
+                      setErrorGenero('')
+                    }}
+                    errorMessage={errorGenero}
+                  >
+                    <Picker.Item label="Alterar" />
+                    <Picker.Item label="Masculino" value="Masculino" />
+                    <Picker.Item label="Feminino" value="Feminino" />
+                  </Picker>
+                </View>}
+
+              {tipoCliente == 'PF' && <Text style={styles.errorMessage}>{errorGenero}</Text>}
+
+
+              <View style={styles.item} >
+                <Text style={{ marginLeft: window.width * -0.314, fontSize: window.width * 0.050, fontWeight: 'bold', }}>Telefone: </Text>
+                <TextInput
+                  type='number'
+                  value={telefone.toString()}
+                  onChangeText={(telefone) => {
+                    setTelefone(telefone)
+                    setErrorTelefone('')
+                  }}
+                  errorMessage={errorTelefone}
+                  keyboardType="phone-pad"
+                  returnKeyType="done"
+                  style={{
+                    fontSize: window.width * 0.045,
+                    width: window.width * 1,
+                    fontWeight: 'bold',
                     marginLeft: window.width * 0.105,
-                    fontWeight: 'bold',
+                    color: 'black'
+                  }} />
+              </View>
+
+              <Text style={styles.errorMessage}>{errorTelefone}</Text>
+
+
+              <View style={styles.item} >
+                <Text style={{ marginLeft: window.width * -0.314, fontSize: window.width * 0.050, fontWeight: 'bold', }}>Cep: </Text>
+                <TextInputMask
+                  type='zip-code'
+                  value={cep}
+                  onChangeText={(cep) => {
+                    setCep(cep)
+                    setErrorCep('')
+                  }}
+                  errorMessage={errorCep}
+                  style={{
                     fontSize: window.width * 0.045,
-                    fontcolor: 'black',
-                    color: 'black',
-                    borderColor: 'transparent',
-                  },
-                  dateText: {
-                    fontSize: window.width * 0.045,
+                    width: window.width * 1,
                     fontWeight: 'bold',
-                    color: "black",
-                    textAlign: "left",
-                    marginStart: window.width * -0.099
-                  }
-                  // ... You
+                    marginLeft: window.width * 0.215,
+                    color: 'black'
+                  }}
 
-                }}
-                onDateChange={(dtNascimento) => {
-                  setDtNascimento(dtNascimento)
-                  setErrordtNascimento('')
-                }}
-                errorMessage={errordtNascimento}
-              />
-            </View>}
+                />
+              </View>
 
-          {tipoCliente == 'PF' && <Text style={styles.errorMessage}>{errordtNascimento}</Text>}
+              <Text style={styles.errorMessage}>{errorCep}</Text>
 
-          {tipoCliente == 'ONG' &&
-            <View style={styles.item} >
-              <Text style={{ marginLeft: window.width * -0.308, fontSize: window.width * 0.050, fontWeight: 'bold', }}>Fundação:   </Text>
+              <View style={styles.item} >
+                <Text style={{ marginLeft: window.width * -0.314, fontSize: window.width * 0.050, fontWeight: 'bold', }}>Endereço: </Text>
+                <TextInput
 
-              <DatePicker
-                date={dtNascimento}
-                mode="date"
-                format="DD-MM-YYYY"
-                minDate="01-05-1920"
-                maxDate="30-06-2022"
-                confirmBtnText="Confirm"
-                cancelBtnText="Cancel"
-                customStyles={{
-                  dateIcon: {
-                    position: 'absolute',
-                    left: 0,
-                    top: window.width * 0.005,
-                    marginLeft: window.width * 0.61
-                  },
-                  dateInput: {
-                    marginLeft: window.width * 0.105,
-                    fontWeight: 'bold',
+                  value={logradouro}
+                  onChangeText={(logradouro) => { setLogradouro(logradouro) }}
+                  style={{
                     fontSize: window.width * 0.045,
-                    fontcolor: 'black',
-                    color: 'black',
-                    borderColor: 'transparent',
-                  },
-                  dateText: {
-                    fontSize: window.width * 0.045,
+                    width: window.width * 1,
                     fontWeight: 'bold',
-                    color: "black",
-                    textAlign: "right",
-                    marginStart: window.width * - 0.06
-                  }
-                  // ... You can check the source to find the other keys.
-                }}
-                onDateChange={(dtNascimento) => {
-                  setDtNascimento(dtNascimento)
-                  setErrordtNascimento('')
-                }}
-                errorMessage={errordtNascimento}
+                    marginLeft: window.width * 0.095,
+                    color: 'black'
+                  }} />
 
-              />
+              </View>
 
-            </View>}
-          {tipoCliente == 'ONG' && <Text style={styles.errorMessage}>{errordtNascimento}</Text>}
+              <Text style={styles.errorMessage}></Text>
 
-          {tipoCliente == 'PF' &&
-            <View style={styles.item} >
-              <Text style={{ marginLeft: window.width * -0.314, fontSize: window.width * 0.050, fontWeight: 'bold', }}>Gênero: </Text>
-              <TextInput
-                value={genero}
-                onValueChange={(genero) => {
-                  setGenero(genero)
-                  setErrorGenero('')
-                }}
-                errorMessage={errorGenero}
-                style={{
-                  fontSize: window.width * 0.045,
-                  width: window.width * 1,
-                  fontWeight: 'bold',
-                  marginLeft: window.width * 0.145,
-                  color: 'black'
-                }} />
+              <View style={styles.item} >
+                <Text style={{ marginLeft: window.width * -0.314, fontSize: window.width * 0.050, fontWeight: 'bold', }}>UF: </Text>
+                <TextInput
+                  value={uf}
+                  onChangeText={(uf) => {
+                    setUf(uf)
+                    setErrorUf('')
+                  }}
+                  keyboardType="email-address"
+                  errorMessage={errorUf}
+                  style={{
+                    fontSize: window.width * 0.045,
+                    width: window.width * 1,
+                    fontWeight: 'bold',
+                    marginLeft: window.width * 0.25,
+                    color: 'black'
+                  }} />
+              </View>
 
-              <Picker
+              <Text style={styles.errorMessage}>{errorUf}</Text>
 
-                style={{ height: window.width * 0.270, width: window.width * 0.870, marginStart: window.width * 0.105, color: 'transparent' }}
-                onValueChange={(genero) => {
-                  setGenero(genero)
-                  setErrorGenero('')
-                }}
-                errorMessage={errorGenero}
-              >
-                <Picker.Item label="Alterar" />
-                <Picker.Item label="Masculino" value="Masculino" />
-                <Picker.Item label="Feminino" value="Feminino" />
-              </Picker>
-            </View>}
+              <View style={styles.item} >
+                <Text style={{ marginLeft: window.width * -0.315, fontSize: window.width * 0.047, fontWeight: 'bold', }}>Observações: </Text>
+                <TextInput
+                  value={observacoes}
+                  onChangeText={(observacoes) => { setObservacoes(observacoes) }}
+                  style={{
+                    fontSize: window.width * 0.045,
+                    width: window.width * 1,
+                    fontWeight: 'bold',
+                    marginLeft: window.width * 0.048,
+                    color: 'black'
+                  }} />
+              </View>
+              <Text style={styles.errorMessage}></Text>
 
-          {tipoCliente == 'PF' && <Text style={styles.errorMessage}>{errorGenero}</Text>}
+              <View style={styles.item} >
+                <Text style={{ marginLeft: window.width * -0.314, fontSize: window.width * 0.050, fontWeight: 'bold', }}>E-mail: </Text>
+                <TextInput
+                  value={email}
+                  onChangeText={(email) => {
+                    setEmail(email)
+                    setErrorEmail('')
+                  }}
+                  keyboardType="email-address"
+                  errorMessage={errorEmail}
+                  style={{
+                    fontSize: window.width * 0.045,
+                    width: window.width * 1,
+                    fontWeight: 'bold',
+                    marginLeft: window.width * 0.180,
+                    color: 'black'
+                  }} />
+              </View>
 
+              <Text style={styles.errorMessage}>{errorEmail}</Text>
 
-          <View style={styles.item} >
-            <Text style={{ marginLeft: window.width * -0.314, fontSize: window.width * 0.050, fontWeight: 'bold', }}>Telefone: </Text>
-            <TextInput
-              type='number'
-              value={telefone.toString()}
-              onChangeText={(telefone) => {
-                setTelefone(telefone)
-                setErrorTelefone('')
-              }}
-              errorMessage={errorTelefone}
-              keyboardType="phone-pad"
-              returnKeyType="done"
-              style={{
-                fontSize: window.width * 0.045,
-                width: window.width * 1,
-                fontWeight: 'bold',
-                marginLeft: window.width * 0.105,
-                color: 'black'
-              }} />
+              <TouchableOpacity
+                style={{ marginBottom: window.height * 0.002, marginTop: window.height * 0.006 }}
+                onPress={() => atualizar(cpfCnpj)}>
+                <View style={styles.botaoResponder}>
+                  <Text style={styles.responderText}>Atualizar Dados</Text>
+                </View>
+              </TouchableOpacity>
+
+              <TouchableOpacity style={styles.botao} onPress={() => telaHome()}>
+                <Text style={styles.responderText}>Retornar ao Menu</Text>
+              </TouchableOpacity>
+            </ScrollView>
           </View>
-
-          <Text style={styles.errorMessage}>{errorTelefone}</Text>
-
-
-          <View style={styles.item} >
-            <Text style={{ marginLeft: window.width * -0.314, fontSize: window.width * 0.050, fontWeight: 'bold', }}>Cep: </Text>
-            <TextInputMask
-              type='zip-code'
-              value={cep}
-              onChangeText={(cep) => {
-                setCep(cep)
-                setErrorCep('')
-              }}
-              errorMessage={errorCep}
-              style={{
-                fontSize: window.width * 0.045,
-                width: window.width * 1,
-                fontWeight: 'bold',
-                marginLeft: window.width * 0.215,
-                color: 'black'
-              }}
-
-            />
-          </View>
-
-          <Text style={styles.errorMessage}>{errorCep}</Text>
-
-          <View style={styles.item} >
-            <Text style={{ marginLeft: window.width * -0.314, fontSize: window.width * 0.050, fontWeight: 'bold', }}>Endereço: </Text>
-            <TextInput
-
-              value={logradouro}
-              onChangeText={(logradouro) => { setLogradouro(logradouro) }}
-              style={{
-                fontSize: window.width * 0.045,
-                width: window.width * 1,
-                fontWeight: 'bold',
-                marginLeft: window.width * 0.095,
-                color: 'black'
-              }} />
-
-          </View>
-
-          <Text style={styles.errorMessage}></Text>
-
-          <View style={styles.item} >
-            <Text style={{ marginLeft: window.width * -0.314, fontSize: window.width * 0.050, fontWeight: 'bold', }}>UF: </Text>
-            <TextInput
-              value={uf}
-              onChangeText={(uf) => {
-                setUf(uf)
-                setErrorUf('')
-              }}
-              keyboardType="email-address"
-              errorMessage={errorUf}
-              style={{
-                fontSize: window.width * 0.045,
-                width: window.width * 1,
-                fontWeight: 'bold',
-                marginLeft: window.width * 0.25,
-                color: 'black'
-              }} />
-          </View>
-
-          <Text style={styles.errorMessage}>{errorUf}</Text>
-
-          <View style={styles.item} >
-            <Text style={{ marginLeft: window.width * -0.315, fontSize: window.width * 0.047, fontWeight: 'bold', }}>Observações: </Text>
-            <TextInput
-              value={observacoes}
-              onChangeText={(observacoes) => { setObservacoes(observacoes) }}
-              style={{
-                fontSize: window.width * 0.045,
-                width: window.width * 1,
-                fontWeight: 'bold',
-                marginLeft: window.width * 0.048,
-                color: 'black'
-              }} />
-          </View>
-          <Text style={styles.errorMessage}></Text>
-
-          <View style={styles.item} >
-            <Text style={{ marginLeft: window.width * -0.314, fontSize: window.width * 0.050, fontWeight: 'bold', }}>E-mail: </Text>
-            <TextInput
-              value={email}
-              onChangeText={(email) => {
-                setEmail(email)
-                setErrorEmail('')
-              }}
-              keyboardType="email-address"
-              errorMessage={errorEmail}
-              style={{
-                fontSize: window.width * 0.045,
-                width: window.width * 1,
-                fontWeight: 'bold',
-                marginLeft: window.width * 0.180,
-                color: 'black'
-              }} />
-          </View>
-
-          <Text style={styles.errorMessage}>{errorEmail}</Text>
-
-          <TouchableOpacity
-            style={{ marginBottom: window.height * 0.002, marginTop: window.height * 0.006 }}
-            onPress={() => atualizar(cpfCnpj)}>
-            <View style={styles.botaoResponder}>
-              <Text style={styles.responderText}>Atualizar Dados</Text>
-            </View>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.botao} onPress={() => telaHome()}>
-            <Text style={styles.responderText}>Retornar ao Menu</Text>
-          </TouchableOpacity>
-
         </SafeAreaView>
       </KeyboardAvoidingView>
-    </ScrollView>
+    </View>
 
   )
 };

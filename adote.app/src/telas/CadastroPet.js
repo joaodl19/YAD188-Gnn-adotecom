@@ -182,7 +182,7 @@ export default function CadastroPet({ route, navigation }) {
             placeholderTextColor="white"
             format="DD-MM-YYYY"
             minDate="01-05-1920"
-            maxDate="30-06-2022"
+            maxDate="01-06-2030"
             confirmBtnText="Confirm"
             cancelBtnText="Cancel"
             customStyles={{

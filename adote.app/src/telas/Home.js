@@ -53,7 +53,7 @@ export default function Home({ navigation }) {
       .catch(error => console.log(error))
   }
 
-  const buscaDadosCliente = async (cpf) => {
+  const buscaDadosCliente = (cpf) => {
     fetch(host_api + '/cliente/' + cpf)
       .then(response => response.json())
       .then(json => {
@@ -81,7 +81,6 @@ const styles = StyleSheet.create({
 });
 
   useEffect(() => {
-    // Atualiza o título do documento usando a API do browser
     _getData();
 
   }, []);

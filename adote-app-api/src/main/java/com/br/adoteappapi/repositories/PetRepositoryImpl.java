@@ -1,13 +1,14 @@
 package com.br.adoteappapi.repositories;
 
 import com.br.adoteappapi.model.Pet;
-import com.br.adoteappapi.enums.StatusPetEnum;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -50,11 +51,21 @@ public class PetRepositoryImpl implements PetRepository {
 
     @Override
     public void cadastrarPet(Pet pet) {
+        SimpleDateFormat dateIn = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat dateOut = new SimpleDateFormat("yyyy-MM-dd");
+        java.util.Date dtNascimento = new java.util.Date();
+        try {
+            dtNascimento = dateIn.parse(pet.getDt_nascimento());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        var dtNascimentoFinal = dateOut.format(dtNascimento);
+
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection
                     .prepareStatement(QUERY_CADASTRAR_PET);
             ps.setString(1, pet.getDs_nome());
-            ps.setDate(2, Date.valueOf(pet.getDt_nascimento()));
+            ps.setDate(2, java.sql.Date.valueOf(dtNascimentoFinal));
             ps.setString(3, pet.getDs_genero());
             ps.setString(4, pet.getDs_raca());
             ps.setLong(5, pet.getId_ong());
@@ -67,11 +78,20 @@ public class PetRepositoryImpl implements PetRepository {
 
     @Override
     public void atualizarDadosPet(Long id, Pet pet) {
+        SimpleDateFormat dateIn = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat dateOut = new SimpleDateFormat("yyyy-MM-dd");
+        java.util.Date dtNascimento = new java.util.Date();
+        try {
+            dtNascimento = dateIn.parse(pet.getDt_nascimento());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        var dtNascimentoFinal = dateOut.format(dtNascimento);
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection
                             .prepareStatement(QUERY_ATUALIZAR_DADOS_PET);
         ps.setString(1, pet.getDs_nome());
-        ps.setDate(3, Date.valueOf(pet.getDt_nascimento()));
+        ps.setDate(2, java.sql.Date.valueOf(dtNascimentoFinal));
         ps.setString(4, pet.getDs_genero());
         ps.setString(5, pet.getDs_raca());
         ps.setString(7, pet.getDs_obs());
@@ -98,6 +118,10 @@ public class PetRepositoryImpl implements PetRepository {
 
     @Override
     public Pet consultarDadosPet(Long id) {
+        SimpleDateFormat dateOut = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat dateIn = new SimpleDateFormat("yyyy-MM-dd");
+        Date dtNascimento = new Date();
+
         Pet pet = new Pet();
         jdbcTemplate.query(QUERY_CONSULTAR_DADOS_PET, rs -> {
             pet.setId_pet(rs.getLong("id_pet"));
@@ -111,6 +135,12 @@ public class PetRepositoryImpl implements PetRepository {
             pet.setDs_nome_ong(rs.getString("ds_nome_ong"));
             pet.setDs_obs(rs.getString("ds_obs"));
         }, id);
+        try {
+            dtNascimento = dateIn.parse(pet.getDt_nascimento());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        pet.setDt_nascimento(dateOut.format(dtNascimento));
         return pet;
     }
 
