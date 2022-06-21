@@ -1,6 +1,7 @@
 import React, {useState,useEffect} from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { LogBox } from 'react-native';
 import Home from './src/telas/Home';
 import Login from './src/telas/login';
 import Questionario from './src/telas/Questionario'
@@ -13,7 +14,7 @@ import CadastroPet from './src/telas/CadastroPet'
 import PerfilPet from './src/telas/PerfilPet'
 import AprovarAdocao from './src/telas/AprovarAdocao'
 
-
+LogBox.ignoreAllLogs();
 CadastroPet
 export default function App() {
 

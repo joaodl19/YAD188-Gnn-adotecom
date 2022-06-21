@@ -53,6 +53,7 @@ export default function Perfil1({ route, navigation }) {
     setErrorNome('')
     setErrorCep('')
     setErrorGenero('')
+    setErrorUf('')
 
 
     const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -525,8 +526,8 @@ export default function Perfil1({ route, navigation }) {
               }} />
 
           </View>
-          
-          {tipoCliente == 'PF' && <Text style={styles.errorMessage}></Text>}
+         
+          <Text style={styles.errorMessage}></Text>
 
           <View style={styles.item} >
             <Text style={{ marginLeft: window.width * -0.314, fontSize: window.width * 0.050, fontWeight: 'bold', }}>UF: </Text>
@@ -550,7 +551,7 @@ export default function Perfil1({ route, navigation }) {
           <Text style={styles.errorMessage}>{errorUf}</Text>
 
           <View style={styles.item} >
-            <Text style={{ marginLeft: -120, fontSize: 18, fontWeight: 'bold', }}>Observações: </Text>
+            <Text style={{ marginLeft: window.width * -0.315, fontSize: window.width * 0.047, fontWeight: 'bold', }}>Observações: </Text>
             <TextInput
               value={observacoes}
               onChangeText={(observacoes) => { setObservacoes(observacoes) }}

@@ -12,10 +12,13 @@ import {
         KeyboardAvoidingView,
         TouchableWithoutFeedback
 } from 'react-native';
+import _ from 'lodash';
 import { API_URL } from '@env';
 import UploadImage from './components/UploadImage'
 import { TextInputMask } from 'react-native-masked-text';
 import DatePicker from 'react-native-datepicker'
+
+
 
 export default function Cadastro({ navigation }) {
 

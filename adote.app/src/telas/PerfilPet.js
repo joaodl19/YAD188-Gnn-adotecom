@@ -202,7 +202,7 @@ const styles = StyleSheet.create({
                 fontSize: window.width * 0.043,
                 width: window.width * 1,
                 fontWeight: 'bold',
-                marginLeft: window.width * 0.165,
+                marginLeft: window.width * 0.175,
                 color: 'black'
               }}
               onChangeText={(value) => { setNome(value); setErrorNome('') }}
@@ -219,7 +219,7 @@ const styles = StyleSheet.create({
                 fontSize: window.width * 0.043,
                 width: window.width * 1,
                 fontWeight: 'bold',
-                marginLeft: window.width * 0.174,
+                marginLeft: window.width * 0.184,
                 color: 'black'
               }}
               onChangeText={(value) => { setRaca(value); setErrorRaca('') }}
@@ -257,7 +257,7 @@ const styles = StyleSheet.create({
                   fontWeight: 'bold',
                   color: "black",
                   textAlign: "left",
-                  marginStart: window.width * -0.220
+                  marginStart: window.width * -0.200
                 }
               }}
               onDateChange={(date) => {
@@ -283,7 +283,7 @@ const styles = StyleSheet.create({
                 fontSize: window.width * 0.043,
                 width: window.width * 1,
                 fontWeight: 'bold',
-                marginLeft: window.width * 0.130,
+                marginLeft: window.width * 0.140,
                 color: 'black'
               }} />
             <Picker
@@ -315,7 +315,7 @@ const styles = StyleSheet.create({
               fontSize: window.width * 0.043,
               width: window.width * 1,
               fontWeight: 'bold',
-              marginLeft: window.width * 0.039,
+              marginLeft: window.width * 0.030,
               color: 'black'
             }} value={pet.ds_obs} onChangeText={(value) => setObs(value)} /></View>
 
