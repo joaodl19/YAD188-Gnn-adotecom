@@ -15,9 +15,9 @@ import { API_URL} from '@env';
 
 export default function Login({ navigation }) {
 
-  const host_api = API_URL
-  const [cpf, setCpf] = useState('')
-  const [senha, setSenha] = useState('')
+  const host_api = API_URL;
+  const [cpf, setCpf] = useState('');
+  const [senha, setSenha] = useState('');
 
   const telaHome = () => navigation.navigate('Home', { cpf: cpf });
   const telaCadastro = () => navigation.navigate('Cadastro');
