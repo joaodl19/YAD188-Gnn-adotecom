@@ -43,6 +43,7 @@ export default function Cadastro({ navigation }) {
         const [errorCep, setErrorCep] = useState(null)
         const [errorCpf, setErrorCpf] = useState(null)
         const [errorSenha, setErrorSenha] = useState('')
+        const [errorUf, setErrorUf] = useState('')
         const [errorTelefone, setErrorTelefone] = useState(null)
         const [errorGenero, setErrorGenero] = useState(null)
         const window = useWindowDimensions();
@@ -60,7 +61,8 @@ export default function Cadastro({ navigation }) {
                 setErrordtNascimento('')
                 setErrorNome('')
                 setErrorCep('')
-                setErrorGenero(null)
+                setErrorUf('')
+                setErrorGenero('')
 
 
                 const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -93,17 +95,26 @@ export default function Cadastro({ navigation }) {
                         setErrorNome("Preencha seu nome")
                         error = true
                 }
+                const senhareg = /^([A-Z][a-zA-Z0-9]{5,29})$/
+                if (!senhareg.test(String(senha))) {
+                        setErrorSenha("Preencha a senha corretamente")
+                        error = true
+                }
                 if (senha == '') {
                         setErrorSenha("Preencha a senha")
                         error = true
                 }
-                if (genero == null) {
+                if (genero == '') {
                         setErrorGenero("Preencha seu sexo")
                         error = true
                 }
 
                 if (cep == '') {
                         setErrorCep("Preencha seu CEP")
+                        error = true
+                }
+                if (uf == '') {
+                        setErrorUf("Preencha sua UF")
                         error = true
                 }
                 return !error
@@ -442,12 +453,13 @@ export default function Cadastro({ navigation }) {
                                                 <Text style={styles.errorMessage}></Text>
                                                 <TextInput
                                                         value={uf}
-                                                        onChangeText={(uf) => { setCidade(uf) }}
+                                                        onChangeText={(uf) => { setUf(uf)
+                                                                setErrorUf('') }}
                                                         style={styles.input}
                                                         placeholder='UF'
                                                         placeholderTextColor="white"
                                                 />
-                                                <Text style={styles.errorMessage}></Text>
+                                                <Text style={styles.errorMessage}>{errorUf}</Text>
 
                                                 {tipoCliente == 'PF' &&
                                                         <View style={styles.input} >

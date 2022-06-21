@@ -75,6 +75,21 @@ const buscaQuestionarioCliente = async (id_cliente) =>{
     buscarDadosPet(id_pet);
     setQuestionario(true);
   }
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: '#fff',
+      backgroundColor: 'white',
+    },
+  
+    fontdados:{
+      fontSize: window.height * 0.027,
+      fontWeight: 'bold',
+      color: 'black',
+      marginStart: window.height * 0.040
+  }
+  });
+  
 
   useEffect(() => {
     buscarDadosAgendamento(id_pet);
@@ -82,41 +97,41 @@ const buscaQuestionarioCliente = async (id_cliente) =>{
   },[]);
   return (
     <SafeAreaView style={styles.container}>
-        <Text style={{textAlign: 'center', fontSize: 30, fontWeight: 'bold'}}>Aprovar Adoção</Text>
-        <View style={{backgroundColor:'white', height:window.height * 0.26, width:window.width, marginTop:10, marginLeft:30}}>
-            <View style={{backgroundColor:'#c0c0c0', marginTop:10, marginLeft:-35}}>
+        <Text style={{textAlign: 'center', fontSize: window.height * 0.043, fontWeight: 'bold'}}>Aprovar Adoção</Text>
+        <View style={{backgroundColor:'white', height:window.height * 0.350, width:window.width * 0.999, marginTop:window.width * 0.020, marginLeft:window.width * 0.085}}>
+            <View style={{backgroundColor:'#c0c0c0', marginTop:window.width * 0.025, marginLeft:window.width * -0.085}}>
                 <Text style={styles.fontdados}>Nome Pet: {dadosAgendamento.ds_nome_pet}</Text>
                 <Text style={styles.fontdados}>Nome Cliente: {dadosAgendamento.ds_nome_cliente}</Text>
                 <Text style={styles.fontdados}>Data Visita: {dadosAgendamento.dt_visita}</Text>
                 <Text style={styles.fontdados}>Status: {pet.ds_status}</Text>
             </View>
-            <View style={{marginTop: 15, flexDirection:'row'}}>
+            <View style={{marginTop: window.height * 0.043, flexDirection:'row'}}>
                 {(pet.ds_status == 'Visita Realizada')?
                  <TouchableWithoutFeedback style={{}}
                     onPress={() => aprovarAdocao()}>
-                    <View style={{marginLeft:50, backgroundColor:'green', height:50, width:110, borderRadius:30, justifyContent:'center'}}>
-                        <Text style={{textAlign:'center', fontSize:19, color:'white',fontWeight: 'bold'}}>Aprovar Adocao</Text>
+                    <View style={{marginTop:window.width * -0.025,marginLeft:window.width * 0.110, backgroundColor:'green', height:window.width * 0.180, width:window.width * 0.310, borderRadius:window.width * 0.060, justifyContent:'center'}}>
+                        <Text style={{textAlign:'center', fontSize:window.width * 0.050, color:'white',fontWeight: 'bold'}}>Aprovar Adocao</Text>
                     </View>
                 </TouchableWithoutFeedback>
                 :
                 <TouchableWithoutFeedback style={{}}
                     onPress={() => aprovar(dadosAgendamento.id_agendamento)}>
-                    <View style={{marginLeft:-25, backgroundColor:'green', height:50, width:105, borderRadius:30, justifyContent:'center'}}>
-                        <Text style={{textAlign:'center', fontSize:19, color:'white',fontWeight: 'bold'}}>Reagendar</Text>
+                     <View style={{marginLeft:window.width * -0.050, backgroundColor:'green', height:window.width * 0.130, width:window.width * 0.260, borderRadius:window.width * 0.060, justifyContent:'center'}}>
+                        <Text style={{textAlign:'center', fontSize:window.width * 0.050, color:'white',fontWeight: 'bold'}}>Reagendar</Text>
                     </View>
                 </TouchableWithoutFeedback>
                 }
                 <TouchableWithoutFeedback style={{}}
                     onPress={() => telaConfirmarAgendamento()}>
-                    <View style={{marginLeft:20, backgroundColor:'red', height:50, width:90, borderRadius:30, justifyContent:'center'}}>
-                        <Text style={{textAlign:'center', fontSize:19, color:'white',fontWeight: 'bold'}}>Cancelar</Text>
+                      <View style={{marginLeft:window.width * 0.050, backgroundColor:'red', height:window.width * 0.130, width:window.width * 0.240, borderRadius:window.width * 0.060, justifyContent:'center'}}>
+                        <Text style={{textAlign:'center', fontSize:window.width * 0.050, color:'white',fontWeight: 'bold'}}>Cancelar</Text>
                     </View>
                 </TouchableWithoutFeedback>
                 {(pet.ds_status == 'Aguardando visita')?
                  <TouchableWithoutFeedback style={{}}
                  onPress={() => finalizarVisita()}>
-                 <View style={{marginLeft:20, backgroundColor:'blue', height:50, width:140, borderRadius:30, justifyContent:'center'}}>
-                     <Text style={{textAlign:'center', fontSize:19, color:'white',fontWeight: 'bold'}}>Finalizar visita</Text>
+                 <View style={{marginLeft:window.width * 0.040, backgroundColor:'blue', height:window.width * 0.130, width:window.width * 0.360, borderRadius:window.width * 0.060, justifyContent:'center'}}>
+                     <Text style={{textAlign:'center', fontSize:window.width * 0.05019, color:'white',fontWeight: 'bold'}}>Finalizar visita</Text>
                  </View>
              </TouchableWithoutFeedback>
              :<Text></Text>}
@@ -124,14 +139,14 @@ const buscaQuestionarioCliente = async (id_cliente) =>{
             </View>         
         </View>
         {(questionario == true)?
-         <View style={{marginTop:20, marginStart:70, height: window.height * 0.05}}>
-            <Text style={{fontSize:25, fontWeight:'bold'}}>Questionario Cliente</Text>        
+         <View style={{marginTop:window.width * 0.040, marginStart:window.width * 0.195, height: window.height * 0.027}}>
+            <Text style={{fontSize:window.width * 0.068, marginBottom:window.width * -0.060, fontWeight:'bold'}}>Questionario Cliente</Text>        
          </View>
          :<Text></Text>
 
         }
         {(questionario == true)?
-        <View style={{backgroundColor:'white', height: window.height * 0.45, width:500, marginTop:20, marginLeft:-30}}>
+        <View style={{backgroundColor:'white', height: window.height * 0.430, width:window.height * 0.600, marginTop:window.height * 0.030, marginLeft:window.height * -0.035}}>
             <FlatList 
               refreshControl={
                 <RefreshControl
@@ -140,7 +155,8 @@ const buscaQuestionarioCliente = async (id_cliente) =>{
                 />
               }
               data={dadosQuestionario}
-              renderItem={({ item }) => <QuestionarioCliente {...item}/>}/>
+              renderItem={({ item }) => <QuestionarioCliente {...item}
+              keyExtractor={(item, index) => index.toString()}/>}/>
             
         </View>
         :
@@ -151,58 +167,6 @@ const buscaQuestionarioCliente = async (id_cliente) =>{
       
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    height:window.height,
-    width: window.width,
-    flex: 1,
-    backgroundColor: '#fff',
-    backgroundColor: 'white',
-  },
-  input: {
-    borderWidth: 1,
-    backgroundColor: 'white',
-    height: 40,
-    width: 250,
-    marginStart: 20,
-    marginTop: 10,
-    borderRadius: 5,
-    fontSize: 15,
-    paddingStart: 10,
-  },
-  logo: {
-    height: 120,
-    width: 300
-  },
-  botao: {
-    height: 500,
-    width: 200,
-    marginTop: 200,
-    color: '#008000',
-  },
-  fontdados:{
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: 'black',
-    marginStart: 40
-},
-responderText:{
-  fontSize: 18,
-  marginTop: 5,
-  color: 'white',
-  marginLeft: 10 
-},
-botaoResponder:{
-  marginTop:10,   
-  marginLeft: 20,
-  height: 40,
-  width: 95,
-  borderRadius: 15,
-  backgroundColor: '#000080'
-},
-
-});
 
 
 

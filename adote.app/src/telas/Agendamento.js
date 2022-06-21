@@ -1,5 +1,5 @@
 import React, {useState,useEffect} from 'react';
-import {StyleSheet,Text,TextInput,Picker, SafeAreaView, View, TouchableWithoutFeedback, Alert} from 'react-native';
+import {StyleSheet,Text,TextInput,useWindowDimensions, SafeAreaView, View, TouchableWithoutFeedback, Alert} from 'react-native';
 import {Calendar, CalendarList, Agenda} from 'react-native-calendars'
 import {LocaleConfig} from 'react-native-calendars';
 import { API_URL } from '@env';
@@ -7,6 +7,7 @@ import { API_URL } from '@env';
 export default function Agendamento({route, navigation}) {
   
   const host_api = API_URL;
+  const window = useWindowDimensions();
   const {id_cliente, id_pet, id_ong} = route.params;
   LocaleConfig.locales['br'] = {
     monthNames: [
@@ -58,6 +59,42 @@ export default function Agendamento({route, navigation}) {
  }
 
   const telaHome = () => navigation.navigate('Home', {cpf: "1231456"});
+
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: '#fff',
+      backgroundColor: '#c0c0c0',
+    },
+    input: {
+      borderWidth: window.width * 0.002,
+      backgroundColor: 'white',
+      height: window.width * 0.110,
+      width: window.width * 0.640,
+      marginStart: window.width * 0.065,
+      marginTop: window.width * 0.024,
+      borderRadius: window.width * 0.020,
+      fontSize: window.width * 0.050,
+      paddingStart: window.width * 0.040
+    },  
+  responderText:{
+    fontSize: window.width * 0.052,
+    marginTop: window.width * 0.010,
+    color: 'white',
+    marginLeft: window.width * 0.025 
+  },
+  botaoResponder:{
+    marginTop:window.width * 0.027,   
+    marginLeft: window.width * 0.025,
+    height: window.width * 0.105,
+    width: window.width * 0.250,
+    borderRadius: window.width * 0.040,
+    backgroundColor: '#000080'
+  }
+  
+  });
+  
+
   useEffect(() => {
   },[]);
   return (
@@ -68,15 +105,15 @@ export default function Agendamento({route, navigation}) {
           onDayPress={day => {montaData(day)
           }}
         ></Calendar>
-        <Text style={{marginStart: 0, 
-          fontSize: 21,
+        <Text style={{ 
+          fontSize: window.width * 0.054,
           fontWeight: 'bold',
           textAlign: 'center',
-          marginTop:30 , 
-          marginBottom:30}}>Agende uma data em que você esteja disponivel,
+          marginTop:window.width * 0.100 , 
+          marginBottom:window.width * 0.080}}>Agende uma data em que você esteja disponivel,
            para que um agente da ONG possa visitar sua residência</Text>
 
-        <Text style={{marginStart: 25, fontSize: 16, marginTop:20}}>Data escolhida</Text>
+        <Text style={{marginStart: window.width * 0.080, fontSize: window.width * 0.043, marginTop:window.width * 0.060}}>Data escolhida</Text>
         <View style={{flexDirection: 'row'}}>
           <TextInput style={styles.input} value={dataSelecionada}></TextInput>
           <TouchableWithoutFeedback style={{marginBottom: 1}}
@@ -90,51 +127,6 @@ export default function Agendamento({route, navigation}) {
       
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    backgroundColor: '#c0c0c0',
-  },
-  input: {
-    borderWidth: 1,
-    backgroundColor: 'white',
-    height: 40,
-    width: 250,
-    marginStart: 20,
-    marginTop: 10,
-    borderRadius: 5,
-    fontSize: 15,
-    paddingStart: 10,
-  },
-  logo: {
-    height: 120,
-    width: 300
-  },
-  botao: {
-    height: 500,
-    width: 200,
-    marginTop: 200,
-    color: '#008000',
-  },
-  
-responderText:{
-  fontSize: 20,
-  marginTop: 5,
-  color: 'white',
-  marginLeft: 10 
-},
-botaoResponder:{
-  marginTop:10,   
-  marginLeft: 10,
-  height: 40,
-  width: 95,
-  borderRadius: 15,
-  backgroundColor: '#000080'
-},
-
-});
 
 
 

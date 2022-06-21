@@ -1,7 +1,8 @@
 import React, {useState,useEffect} from 'react';
-import {Alert,Image, Text,TouchableWithoutFeedback, StyleSheet,FlatList, SafeAreaView, View} from 'react-native';
+import {Alert,Image, Text,TouchableWithoutFeedback, useWindowDimensions , StyleSheet,FlatList, SafeAreaView, View} from 'react-native';
 import Questao from './components/Questao';
 import { API_URL } from '@env';
+
 
 export default function Questionario({navigation, route}) {
  
@@ -9,7 +10,7 @@ export default function Questionario({navigation, route}) {
   const {id_cliente, id_ong, id_pet} = route.params;
   const [questionario, setQuetionario] = useState([])
   const [cliente, setCliente] = useState([])
-  
+  const window = useWindowDimensions();
   const telaAgendamento = () => navigation.navigate('Agendamento', {id_cliente: id_cliente,
      id_pet: id_pet,
       id_ong: id_ong})
@@ -62,6 +63,45 @@ const getImageSource = () => {
   return `data:image/jpeg;base64,${cliente.tx_foto}`
 }
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: 'blue',
+    alignItems: 'center',
+    backgroundColor: 'white'  
+  },
+  botaoResponder:{
+    marginTop:window.width * 0.140,   
+    height: window.width * 0.140,
+    width: window.width * 0.440,
+    borderRadius: window.width * 0.040,
+    backgroundColor: '#000080'
+},
+saudacoes:{
+    fontSize:  window.width * 0.055 ,
+    marginTop: window.width * 0.020,
+    marginLeft: window.width * 0.010,
+    fontWeight: 'bold',
+    justifyContent: 'center',
+    textAlign: 'center'
+},
+responderText:{
+    fontSize: window.width * 0.060,
+    marginTop: window.width * 0.020,
+    color: 'white',
+    justifyContent: 'center',
+    textAlign: 'center'
+},
+    logo: {
+        height: window.width * 0.200,
+        width: window.width * 0.550,
+        resizeMode: 'center',
+        marginBottom: window.width * 0.200,
+        marginLeft: window.width * 0.050
+      }    
+});
+
+
   useEffect(() => {
     buscaQuestionario(),
     buscaDadosCliente(id_cliente)
@@ -72,12 +112,13 @@ const getImageSource = () => {
         <View style={{flexDirection: 'row'}}> 
           <Image style={styles.logo} source={require('../../assets/LogoT.png')}/>
         </View>   
-        <View style={{backgroundColor: 'white', marginTop: -60, height: 490}}>
+        <View style={{backgroundColor: 'white', marginTop: window.width * -0.170, height:  window.width * 1.260}}>
             <Text style={styles.saudacoes}>Olá! Responda o questionário abaixo para ajudarmos a escolher o Pet ideal para o seu lar.</Text>        
-            <View style={{marginTop: 50, height: 350, backgroundColor: '#c0c0c0'}}> 
+            <View style={{marginTop:  window.width * 0.100, height:  window.width * 0.940, backgroundColor: '#c0c0c0'}}> 
               <FlatList                 
                 data={questionario}
-                renderItem={({ item }) => <Questao {...item} setProps={gravaResposta} value={respostas}/>}
+                renderItem={({ item }) => <Questao {...item} setProps={gravaResposta} value={respostas}
+                keyExtractor={(item, index) => index.toString()}/>}
               />
             </View>
         </View>
@@ -91,77 +132,4 @@ const getImageSource = () => {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'blue',
-    alignItems: 'center',
-    backgroundColor: 'white',
-  },
-  input: {
-    borderWidth: 2,
-    backgroundColor: 'white',
-    height: 40,
-    width: 250,
-    marginTop: 10,
-    borderRadius: 5,
-    fontSize: 15,
-    paddingStart: 10,
-    borderColor: '#000080',
-  },
-  logo: {
-    height: 120,
-    width: 300,
-    marginLeft: 30
-  },
-  botao: {
-    marginTop: 10,
-    height: 500,
-    width: 200,
-    marginTop: 200,
-    color: '#008000',
-  },
-  botaoResponder:{
-    marginTop:40,   
-    marginRight:0,
-    height: 50,
-    width: 200,
-    borderRadius: 15,
-    backgroundColor: '#000080'
-},
-saudacoes:{
-    fontSize: 21,
-    marginTop: 10,
-    marginLeft: 7,
-    fontWeight: 'bold',
-    justifyContent: 'center',
-    textAlign: 'center'
-},
-responderText:{
-    fontSize: 25,
-    marginTop: 5,
-    color: 'white',
-    marginLeft: 0,
-    justifyContent: 'center',
-    textAlign: 'center'
-},
-    logo: {
-        height: 60,
-        width: 200,
-        resizeMode: 'center',
-        marginBottom: 100,
-        marginLeft: 20
-      },
-      perfil: {
-        marginTop: 60,
-        height: 90,
-        width: 90,
-        marginLeft: -20,
-        borderRadius: 45
-      },
-      topo: {
-        height: 100,
-        marginTop: 20
-      }    
-});
 

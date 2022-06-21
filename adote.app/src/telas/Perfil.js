@@ -20,7 +20,7 @@ export default function Perfil1({ route, navigation }) {
   const [telefone, setTelefone] = useState(cliente.nr_telefone)
   const [cep, setCep] = useState(cliente.nr_cep)
   const [logradouro, setLogradouro] = useState(cliente.ds_logradouro)
-  const [numero, setNumero] = useState(cliente.ds_numero)
+  const [uf, setUf] = useState(cliente.ds_uf)
   const [bairro, setBairro] = useState(cliente.ds_bairro)
   const [cidade, setCidade] = useState(cliente.ds_cidade)
   const [tipoCliente, setTipoCliente] = useState(cliente.ds_tipo_cliente)
@@ -31,6 +31,7 @@ export default function Perfil1({ route, navigation }) {
   const [errorEmail, setErrorEmail] = useState(null)
   const [errordtNascimento, setErrordtNascimento] = useState('')
   const [errorCep, setErrorCep] = useState(null)
+  const [errorUf, setErrorUf] = useState('')
   const [errorCpf, setErrorCpf] = useState(null)
   const [errorTelefone, setErrorTelefone] = useState(null)
   const [errorGenero, setErrorGenero] = useState(null)
@@ -92,6 +93,10 @@ export default function Perfil1({ route, navigation }) {
       setErrorCep("Preencha seu cep")
       error = true
     }
+    if (uf == '') {
+      setErrorUf("Preencha sua UF")
+      error = true
+}
     return !error
   }
 
@@ -522,6 +527,27 @@ export default function Perfil1({ route, navigation }) {
           </View>
           
           {tipoCliente == 'PF' && <Text style={styles.errorMessage}></Text>}
+
+          <View style={styles.item} >
+            <Text style={{ marginLeft: window.width * -0.314, fontSize: window.width * 0.050, fontWeight: 'bold', }}>UF: </Text>
+            <TextInput
+              value={uf}
+              onChangeText={(uf) => {
+                setUf(uf)
+                setErrorUf('')
+              }}
+              keyboardType="email-address"
+              errorMessage={errorUf}
+              style={{
+                fontSize: window.width * 0.045,
+                width: window.width * 1,
+                fontWeight: 'bold',
+                marginLeft: window.width * 0.265,
+                color: 'black'
+              }} />
+          </View>
+
+          <Text style={styles.errorMessage}>{errorUf}</Text>
 
           <View style={styles.item} >
             <Text style={{ marginLeft: -120, fontSize: 18, fontWeight: 'bold', }}>Observações: </Text>

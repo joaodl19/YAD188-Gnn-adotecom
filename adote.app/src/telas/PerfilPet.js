@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, ActivityIndicator, TextInput, SafeAreaView, useWindowDimensions, View, Image, Alert, Picker } from 'react-native';
+import { StyleSheet, Text, ActivityIndicator, TextInput, SafeAreaView, View, Image, Alert, Picker, useWindowDimensions } from 'react-native';
 import { TouchableOpacity } from 'react-native';
 import { API_URL } from '@env';
 import DatePicker from 'react-native-datepicker'
@@ -22,6 +22,7 @@ export default function PerfilPet({ route, navigation }) {
   const [errorNome, setErrorNome] = useState('')
   const [errorGenero, setErrorGenero] = useState('')
   const [errorDtnascimento, setErrordtNascimento] = useState('')
+  
   const telaHome = () => navigation.navigate('Home')
   const telaQuestionario = () => navigation.navigate('Questionario', { id_cliente: id_cliente, id_ong: id_ong, id_pet: id_pet })
   
@@ -109,6 +110,70 @@ export default function PerfilPet({ route, navigation }) {
 
   }
 
+  
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: 'blue',
+    alignItems: 'center',
+    backgroundColor: 'white',
+  },
+  item: {
+    alignItems: 'center',
+      backgroundColor: '#c0c0c0',
+      height: window.height * 0.059,
+      width: window.width * 0.670,
+      marginLeft: window.width * 0.290,
+      marginTop: window.width * 0.005,
+      flexDirection: 'row',
+      borderRadius: window.height * 0.017,
+      paddingStart: window.height * 0.010,
+      borderColor: 'black',
+      borderWidth: 1,
+      borderColor: 'transparent'
+  },
+  botao: {
+    height: window.height * 0.059,
+    width: window.width * 0.70,
+    marginTop: window.height * 0.030,
+    borderRadius: window.height * 0.059,
+    backgroundColor: 'blue',
+    justifyContent: 'center'
+  },
+  botao2: {
+    marginLeft: window.height * 0.220,
+    height: window.height * 0.042,
+    width: window.width * 0.50,
+    marginTop: window.width * 0.005,
+    borderRadius: window.width * 0.042,
+    backgroundColor: 'green',
+    justifyContent: 'center',
+    marginBottom: window.width * 0.015
+  },
+  saudacoes: {
+    fontSize: window.width * 0.068,
+    marginTop: window.width * 0.010,
+    marginBottom: window.width * 0.008,
+    fontWeight: 'bold',
+    justifyContent: 'center',
+    textAlign: 'center'
+  
+  },
+  logo: {
+    height: window.height * 0.087,
+      width: window.width * 0.637,
+      resizeMode: 'center',
+      marginBottom: window.height * 0.007,
+      marginLeft: window.width * 0.037
+  },
+  perfil: {
+    height: window.height * 0.137,
+    width: window.width * 0.287,
+    marginLeft: window.width * -0.567,
+    borderRadius: window.width * 0.107
+  }
+});
+
   useEffect(() => {
     perfis()
   }, []);
@@ -117,7 +182,7 @@ export default function PerfilPet({ route, navigation }) {
     <View style={{ width: window.width, height: window.height }}>
       {(isLoading == false)
         ?
-        <View style={{ marginTop: 300 }}>
+        <View style={{ marginTop: window.width * 0.314 }}>
           <ActivityIndicator size="large" color="blue" />
         </View>
         :
@@ -125,19 +190,19 @@ export default function PerfilPet({ route, navigation }) {
           <Image style={styles.logo} source={require('../../assets/LogoT.png')} />
           <Image style={styles.perfil} source={{ uri: getImageSource() }} />
           <TouchableOpacity style={styles.botao2} onPress={() => adotar(id_pet, id_cliente)}>
-            <Text style={{ color: 'white', textAlign: 'center', fontSize: 22 }}>Adotar</Text>
+            <Text style={{ color: 'white', textAlign: 'center', fontSize: window.width * 0.060 }}>Adotar</Text>
           </TouchableOpacity>
           <Text style={styles.saudacoes}>Dados do Pet:</Text>
 
           <View style={styles.item}>
-            <Text style={{ marginLeft: -120, fontSize: 17, fontWeight: 'bold', }}>Nome:</Text>
+            <Text style={{marginLeft: window.width * -0.314, fontSize: window.width * 0.046, fontWeight: 'bold', }}>Nome:</Text>
             <TextInput
               value={pet.ds_nome}
               style={{
-                fontSize: 16,
-                width: '100%',
+                fontSize: window.width * 0.043,
+                width: window.width * 1,
                 fontWeight: 'bold',
-                marginLeft: 68,
+                marginLeft: window.width * 0.165,
                 color: 'black'
               }}
               onChangeText={(value) => { setNome(value); setErrorNome('') }}
@@ -147,14 +212,14 @@ export default function PerfilPet({ route, navigation }) {
           <Text style={styles.errorMessage}>{errorNome}</Text>
 
           <View style={styles.item}>
-            <Text style={{ marginLeft: -120, fontSize: 17, fontWeight: 'bold', }}>Raca: </Text>
+            <Text style={{ marginLeft: window.width * -0.314, fontSize: window.width * 0.046, fontWeight: 'bold', }}>Raca: </Text>
             <TextInput
               value={pet.ds_raca}
               style={{
-                fontSize: 16,
-                width: '100%',
+                fontSize: window.width * 0.043,
+                width: window.width * 1,
                 fontWeight: 'bold',
-                marginLeft: 68,
+                marginLeft: window.width * 0.174,
                 color: 'black'
               }}
               onChangeText={(value) => { setRaca(value); setErrorRaca('') }}
@@ -163,7 +228,7 @@ export default function PerfilPet({ route, navigation }) {
 
           <Text style={styles.errorMessage}>{errorRaca}</Text>
 
-          <View style={styles.item}><Text style={{ marginLeft: -120, fontSize: 17, fontWeight: 'bold', }}>Nascimento: </Text>
+          <View style={styles.item}><Text style={{ marginLeft: window.width * -0.314, fontSize: window.width * 0.046, fontWeight: 'bold', }}>Nascimento: </Text>
             <DatePicker
               date={pet.dt_nascimento}
               mode="date"
@@ -176,20 +241,23 @@ export default function PerfilPet({ route, navigation }) {
                 dateIcon: {
                   position: 'absolute',
                   left: 0,
-                  top: 4,
-                  marginLeft: 210
+                  top: window.width * 0.005,
+                  marginLeft: window.width * 0.580
                 },
                 dateInput: {
-                  marginLeft: 20,
+                  marginLeft: window.width * 0.150,
+                  fontWeight: 'bold',
+                  fontSize: window.width * 0.045,
                   fontcolor: 'black',
+                  color: 'black',
                   borderColor: 'transparent',
                 },
                 dateText: {
-                  fontSize: 17,
+                  fontSize: window.width * 0.045,
                   fontWeight: 'bold',
                   color: "black",
                   textAlign: "left",
-                  marginStart: -39
+                  marginStart: window.width * -0.220
                 }
               }}
               onDateChange={(date) => {
@@ -203,7 +271,7 @@ export default function PerfilPet({ route, navigation }) {
           <Text style={styles.errorMessage}>{errorDtnascimento}</Text>
 
           <View style={styles.item}>
-            <Text style={{ marginLeft: -120, fontSize: 17, fontWeight: 'bold', }}>Gênero: </Text>
+            <Text style={{ marginLeft: window.width * -0.314, fontSize: window.width * 0.046, fontWeight: 'bold', }}>Gênero: </Text>
             <TextInput
               value={pet.ds_genero}
               onValueChange={(value) => {
@@ -212,23 +280,17 @@ export default function PerfilPet({ route, navigation }) {
               }}
               errorMessage={errorGenero}
               style={{
-                fontSize: 16,
-                width: '100%',
+                fontSize: window.width * 0.043,
+                width: window.width * 1,
                 fontWeight: 'bold',
-                marginLeft: 52,
+                marginLeft: window.width * 0.130,
                 color: 'black'
               }} />
             <Picker
-              selectedValue={pet.ds_genero}
-              style={{
-                fontSize: 16,
-                width: '100%',
-                fontWeight: 'bold',
-                marginLeft: 60,
-                color: 'black'
-              }}
-              onValueChange={(selectedValue) => {
-                setGenero(selectedValue)
+              
+              style={{height: window.width * 0.270, width: window.width * 1.870, marginStart: window.width * -1.250, color: 'transparent' }}
+              onValueChange={(value) => {
+                setGenero(value)
                 setErrorGenero(null)
               }}
               errorMessage={errorGenero}>
@@ -241,131 +303,32 @@ export default function PerfilPet({ route, navigation }) {
           <Text style={styles.errorMessage}>{errorGenero}</Text>
 
           <View style={styles.item}>
-            <Text style={{ marginLeft: -120, fontSize: 16, fontWeight: 'bold', }}>Status:                {pet.ds_status}
+            <Text style={{ marginLeft: window.width * -0.314, fontSize: window.width * 0.046, fontWeight: 'bold', }}>Status:               {pet.ds_status}
             </Text>
           </View>
 
           <Text style={styles.errorMessage}>{errorGenero}</Text>
 
           <View style={styles.item}>
-            <Text style={{ marginLeft: -120, fontSize: 17, fontWeight: 'bold', }}>Observações:</Text>
+            <Text style={{ marginLeft: window.width * -0.314, fontSize: window.width * 0.046, fontWeight: 'bold', }}>Observações:</Text>
             <TextInput style={{
-              fontSize: 16,
-              width: '100%',
+              fontSize: window.width * 0.043,
+              width: window.width * 1,
               fontWeight: 'bold',
-              marginLeft: 13,
+              marginLeft: window.width * 0.039,
               color: 'black'
             }} value={pet.ds_obs} onChangeText={(value) => setObs(value)} /></View>
 
           {(cliente.ds_tipo_cliente == 'ONG') &&
             <TouchableOpacity style={styles.botao} onPress={() => atualizar()}>
-              <Text style={{ color: 'white', textAlign: 'center', fontSize: 19 }}>Atualizar Dados</Text>
+              <Text style={{ color: 'white', textAlign: 'center', fontSize: window.width * 0.055 }}>Atualizar Dados</Text>
             </TouchableOpacity>}
 
           <TouchableOpacity style={styles.botao} onPress={() => telaHome()}>
-            <Text style={{ color: 'white', textAlign: 'center', fontSize: 23 }}>Retornar para Home</Text>
+            <Text style={{ color: 'white', textAlign: 'center', fontSize: window.width * 0.068 }}>Retornar para Home</Text>
           </TouchableOpacity>
         </SafeAreaView>
       }
     </View>
   )
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'blue',
-    alignItems: 'center',
-    backgroundColor: 'white',
-  },
-  item: {
-    alignItems: 'center',
-    backgroundColor: 'white',
-    borderRadius: 20,
-    height: 46,
-    width: 250,
-    marginLeft: 110,
-    marginTop: 3,
-    flexDirection: 'row',
-    backgroundColor: '#c0c0c0',
-    borderRadius: 5,
-    paddingStart: 10,
-    borderColor: 'black',
-    borderWidth: 0
-  },
-  dados: {
-    marginLeft: 15,
-    fontSize: 18,
-    backgroundColor: 'black'
-  },
-  botao: {
-    height: 45,
-    width: '70%',
-    marginTop: 25,
-    borderRadius: 30,
-    backgroundColor: 'blue',
-    justifyContent: 'center'
-  },
-  botao2: {
-    marginLeft: 180,
-    height: 30,
-    width: '50%',
-    marginTop: 1,
-    borderRadius: 30,
-    backgroundColor: 'green',
-    justifyContent: 'center',
-    marginBottom: 5
-  },
-  botao3: {
-    marginLeft: 180,
-    height: 20,
-    width: '40%',
-    marginTop: 1,
-    borderRadius: 30,
-    backgroundColor: 'red',
-    justifyContent: 'center',
-    marginBottom: 10
-  },
-  TextInput: {
-    paddingLeft: 15,
-    height: 25,
-    width: '70%',
-    marginTop: 10,
-    borderRadius: 30,
-    backgroundColor: 'white'
-
-  },
-  saudacoes: {
-    fontSize: 26,
-    marginTop: 2,
-    marginBottom: 5,
-    fontWeight: 'bold',
-    justifyContent: 'center',
-    textAlign: 'center'
-  },
-  fontdados: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginLeft: 20,
-    color: 'black'
-  },
-  logo: {
-    height: 60,
-    width: 250,
-    resizeMode: 'center',
-    marginBottom: 15,
-    marginLeft: 20
-  },
-  perfil: {
-    marginTop: 0,
-    height: 110,
-    width: 110,
-    marginLeft: -220,
-    borderRadius: 45
-  },
-  topo: {
-    height: 100,
-    marginTop: 20
-  },
-
-});

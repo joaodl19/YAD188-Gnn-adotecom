@@ -65,11 +65,11 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
     botao: {
-    height: 45,
-    width: '70%',
-    marginTop: 25,
-    marginStart:50,
-    borderRadius: 30,
+    height:  window.height * 0.065,
+    width: window.width * 0.705,
+    marginTop: window.width * 0.115,
+    marginStart:window.width * 0.155,
+    borderRadius: window.width * 0.065,
     backgroundColor: 'blue',
     justifyContent: 'center'
   },
@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
   return (
     <SafeAreaView style={styles.container}>
         <Text style={{textAlign: 'center', marginTop: window.height * 0.050, fontSize: window.height * 0.040, fontWeight: 'bold', color:'black'}}>Dados Agendamento</Text>
-            <View style={{backgroundColor:'#808080', marginTop:window.height * 0.030, marginStart:window.height * 0.050, height:window.height * 0.170, width:window.width * 1.150}}>
+            <View style={{backgroundColor:'#808080', marginTop:window.height * 0.030, marginStart:window.height * -0.001, height:window.height * 0.170, width:window.width * 1.150}}>
               <View style={{backgroundColor:'#808080', marginTop:window.height * 0.015, marginLeft:window.height * 0.025}}>
                   <Text style={styles.fontdados}>Nome Pet: {dadosAgendamento.ds_nome_pet}</Text>
                   <Text style={styles.fontdados}>Nome Cliente: {dadosAgendamento.ds_nome_cliente}</Text>
@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
                   <Text style={styles.fontdados}>Status: {dadosAgendamento.ds_status}</Text>
               </View>
             </View>
-            <View style={{backgroundColor:'#808080', marginTop:window.height * 0.030, marginStart:window.height * 0.050, height:window.height * 0.170, width:window.width * 1.150}}>
+            <View style={{backgroundColor:'#808080', marginTop:window.height * 0.030, marginStart:window.height * -0.001, height:window.height * 0.170, width:window.width * 1.150}}>
               <View style={{backgroundColor:'#808080', marginTop:window.height * 0.015, marginLeft:window.height * 0.025}}>
                   <Text style={styles.fontdados}>Endereco: {cliente.ds_logradouro} {cliente.nr_numero}</Text>
                   <Text style={styles.fontdados}>Bairro: {cliente.ds_bairro}</Text>
@@ -109,21 +109,21 @@ const styles = StyleSheet.create({
                 {(dadosAgendamento.ds_status == 'Pendente')?
                  <TouchableWithoutFeedback style={{}}
                     onPress={() => aprovar(dadosAgendamento.id_agendamento)}>
-                    <View style={{marginLeft:window.height * 0.015, backgroundColor:'green', height:window.height * 0.055, width:window.width * 0.340 , borderRadius: window.width * 0.060,justifyContent: 'center'}}>
+                    <View style={{marginLeft:window.height * 0.025, backgroundColor:'green', height:window.height * 0.055, width:window.width * 0.340 , borderRadius: window.width * 0.060,justifyContent: 'center'}}>
                         <Text style={{textAlign:'center', fontSize:window.height * 0.028, color:'white',fontWeight: 'bold'}}>Confirmar</Text>
                     </View>
                 </TouchableWithoutFeedback>
                 :
                 <TouchableWithoutFeedback style={{}}
                     onPress={() => aprovar(dadosAgendamento.id_agendamento)}>
-                    <View style={{marginLeft:window.height * 0.015, backgroundColor:'green', height:window.height * 0.055, width:window.width * 0.340 , borderRadius: window.width * 0.060,justifyContent: 'center'}}>
+                    <View style={{marginLeft:window.height * 0.025, backgroundColor:'green', height:window.height * 0.055, width:window.width * 0.340 , borderRadius: window.width * 0.060,justifyContent: 'center'}}>
                         <Text style={{textAlign:'center', fontSize:window.height * 0.028, color:'white',fontWeight: 'bold'}}>Reagendar</Text>
                     </View>
                 </TouchableWithoutFeedback>
                 }
                 <TouchableWithoutFeedback style={{}}
                     onPress={() => telaConfirmarAgendamento()}>
-                    <View style={{marginLeft:window.height * 0.015, backgroundColor:'red', height:window.height * 0.055, width:window.width * 0.340 , borderRadius: window.width * 0.060,justifyContent: 'center'}}>
+                    <View style={{marginLeft:window.height * 0.105, backgroundColor:'red', height:window.height * 0.055, width:window.width * 0.340 , borderRadius: window.width * 0.060,justifyContent: 'center'}}>
                         <Text style={{textAlign:'center', fontSize:window.height * 0.028, color:'white',fontWeight: 'bold'}}>Cancelar</Text>
                     </View>
                 </TouchableWithoutFeedback>
