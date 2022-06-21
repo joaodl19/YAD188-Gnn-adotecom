@@ -36,11 +36,22 @@ export default function PerfilPet({ route, navigation }) {
       .then(response => response.json())
       .then(json => {
         setPet(json),
-          setLoading(true)
+        buscaDadosCliente(id_cliente)
       })
       .catch(error => console.log(error))
 
   }
+
+  const buscaDadosCliente = (cpf) => {
+    fetch(host_api + '/cliente/' + cpf)
+      .then(response => response.json())
+      .then(json => {
+        setCliente(json),setLoading(true);
+      })
+
+      .catch(error => console.log(error))
+  }
+
   const adotar = async (id_pet, id_cliente) => {
     fetch((host_api + '/adocao'), {
       method: 'POST',
@@ -192,9 +203,14 @@ export default function PerfilPet({ route, navigation }) {
         <SafeAreaView style={styles.container}>
           <Image style={styles.logo} source={require('../../assets/LogoT.png')} />
           <Image style={styles.perfil} source={{ uri: getImageSource() }} />
-          <TouchableOpacity style={styles.botao2} onPress={() => adotar(id_pet, id_cliente)}>
-            <Text style={{ color: 'white', textAlign: 'center', fontSize: window.width * 0.060 }}>Adotar</Text>
-          </TouchableOpacity>
+            {(cliente.ds_tipo_cliente == 'PF')?
+              <TouchableOpacity style={styles.botao2} onPress={() => adotar(id_pet, id_cliente)}>
+              <Text style={{ color: 'white', textAlign: 'center', fontSize: window.width * 0.060 }}>Adotar</Text>
+            </TouchableOpacity>
+            :
+            <Text></Text>
+            }
+      
           <View>
             <Text style={styles.saudacoes}>Dados do Pet:</Text>
             <View style={styles.item}>
