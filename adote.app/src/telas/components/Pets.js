@@ -104,7 +104,7 @@ import {
                     <Text style={styles.fontdados}>Status: {ds_status}</Text>
                 </View>
             </View>
-            {(tipo_cliente == 'ONG' && (ds_status != 'Disponive0ol' && ds_status != 'Adotado')) &&
+            {(tipo_cliente == 'ONG' && (ds_status != 'Disponivel' && ds_status != 'Adotado')) &&
             <TouchableWithoutFeedback 
                     style={{marginTop: window.height * 0.590}}
                     onPress={() => proximaTela()}>

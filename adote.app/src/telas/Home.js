@@ -75,9 +75,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    backgroundColor: 'white',
-    marginTop:40
-  }
+    backgroundColor: 'white'
+    }
 
 });
 
@@ -90,7 +89,7 @@ const styles = StyleSheet.create({
   return (
     <SafeAreaView style={styles.container}>
       {(isLoading == false) ?
-        <View style={{ marginTop: window.height * 0.650 }}>
+        <View style={{ marginTop: window.height * 0.5 }}>
           <ActivityIndicator size="large" color="blue" />
         </View>
         :

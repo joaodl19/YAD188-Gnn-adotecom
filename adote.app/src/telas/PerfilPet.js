@@ -134,6 +134,7 @@ export default function PerfilPet({ route, navigation }) {
       borderColor: 'transparent'
     },
     botao: {
+      marginStart:  window.width * 0.15,
       height: window.height * 0.059,
       width: window.width * 0.70,
       marginTop: window.height * 0.030,
@@ -161,11 +162,11 @@ export default function PerfilPet({ route, navigation }) {
 
     },
     logo: {
-      height: window.height * 0.087,
-      width: window.width * 0.637,
-      resizeMode: 'center',
-      marginBottom: window.height * 0.007,
-      marginLeft: window.width * 0.037
+      height: window.height * 0.052,
+      width: window.width * 0.548,
+      marginStart: window.width * 0.045,
+      marginTop: window.height * 0.07,
+      marginBottom: window.height * 0.02
     },
     perfil: {
       height: window.height * 0.137,
@@ -184,7 +185,7 @@ export default function PerfilPet({ route, navigation }) {
     <View style={{ width: window.width, height: window.height }}>
       {(isLoading == false)
         ?
-        <View style={{ marginTop: window.width * 0.314 }}>
+        <View style={{ marginTop: window.height * 0.5 }}>
           <ActivityIndicator size="large" color="blue" />
         </View>
         :
@@ -247,7 +248,7 @@ export default function PerfilPet({ route, navigation }) {
                     marginLeft: window.width * 0.580
                   },
                   dateInput: {
-                    marginLeft: window.width * 0.150,
+                    marginLeft: window.width * 0.210,
                     fontWeight: 'bold',
                     fontSize: window.width * 0.045,
                     fontcolor: 'black',

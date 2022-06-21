@@ -184,7 +184,8 @@ export default function Cadastro({ navigation }) {
                 container: {
                         flex: 1,
                         alignItems: 'center',
-                        backgroundColor: 'white'
+                        backgroundColor: 'white',
+                        height: window.height
                 },
                 input: {
                         backgroundColor: '#c0c0c0',
@@ -236,7 +237,7 @@ export default function Cadastro({ navigation }) {
 
                 <SafeAreaView style={styles.container}>
 
-                        <Text style={{ fontSize: window.height * 0.054, fontWeight: 'bold', marginStart: window.width * 0.024, color: '#0b3a5c' }}>Registro</Text>
+                        <Text style={{ fontSize: window.height * 0.054, fontWeight: 'bold', marginStart: window.width * 0.024, color: '#0b3a5c', marginTop: window.height * 0.07 }}>Registro</Text>
                         <View style={{ flexDirection: 'row', marginTop: window.height * 0.014, height: window.height * 0.060 }}>
                                 <TouchableWithoutFeedback
                                         style={{ marginBottom: 1 }}
@@ -267,7 +268,7 @@ export default function Cadastro({ navigation }) {
                         </View>
 
 
-                        <ScrollView style={{marginTop:10}}>
+                        <ScrollView style={{ marginTop: 10 }}>
                                 <KeyboardAvoidingView
                                         //behavior={Platform.OS == "android" ? "padding" : "height"}
                                         //style={[styles.container]}
@@ -456,8 +457,10 @@ export default function Cadastro({ navigation }) {
                                                 <Text style={styles.errorMessage}></Text>
                                                 <TextInput
                                                         value={uf}
-                                                        onChangeText={(uf) => { setUf(uf)
-                                                                setErrorUf('') }}
+                                                        onChangeText={(uf) => {
+                                                                setUf(uf)
+                                                                setErrorUf('')
+                                                        }}
                                                         style={styles.input}
                                                         placeholder='UF'
                                                         placeholderTextColor="white"
@@ -516,10 +519,12 @@ export default function Cadastro({ navigation }) {
                                                 />
                                                 <Text style={styles.errorMessage}>{errorSenha}</Text>
 
-                                                <View style={{ marginLeft: window.width * 0.184, height: window.height * 0.100, width: window.width * 0.614, marginBottom: window.height * 0.008 }}><UploadImage setProps={setTxFoto}></UploadImage></View>
+                                                <View style={{ marginLeft: window.width * 0.184, height: window.height * 0.08, width: window.width * 0.614, marginBottom: window.height * 0.008 }}>
+                                                        <UploadImage setProps={setTxFoto}>
+                                                        </UploadImage>
+                                                </View>
 
                                                 <TouchableWithoutFeedback
-                                                        style={{ marginBottom: window.height * 0.004 }}
                                                         onPress={() => cadastrar()}>
                                                         <View style={styles.botaoResponder}>
                                                                 <Text style={styles.responderText}>Cadastrar</Text>

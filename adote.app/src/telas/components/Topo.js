@@ -13,7 +13,7 @@ export default function Topo( {navigation, cliente}) {
   
 const styles = StyleSheet.create({
   logo: {
-    height: window.height * 0.048,
+    height: window.height * 0.052,
     width: window.width * 0.548,
     marginStart: window.width * 0.248,
     marginTop: window.height * 0.015
@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
   },
   topo: {
     height: window.height * 0.350,
-    marginTop: window.height * 0.012,
+    marginTop: window.height * 0.06,
     },
 
 });
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
             <Text style={{fontWeight:'bold', marginTop:window.height * 0.013}}>Clique em sua foto para acessar o perfil</Text>
           </View>
           <TouchableWithoutFeedback onPress={() => telaLogin()}>
-            <Text style={{marginStart:window.width * -0.160, fontWeight:'bold', fontSize:window.width * 0.058}}>Sair</Text>
+            <Text style={{fontWeight:'bold', fontSize:window.width * 0.058}}>Sair</Text>
           </TouchableWithoutFeedback>
           </View>   
           <View style={{marginTop:window.width * 0.030,marginStart:window.width * 0.030}}>

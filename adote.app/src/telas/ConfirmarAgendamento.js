@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
   
   return (
     <SafeAreaView style={styles.container}>
-        <Text style={{textAlign: 'center', marginTop: window.height * 0.050, fontSize: window.height * 0.040, fontWeight: 'bold', color:'black'}}>Dados Agendamento</Text>
+        <Text style={{textAlign: 'center', marginTop: window.height * 0.060, fontSize: window.height * 0.040, fontWeight: 'bold', color:'black'}}>Dados Agendamento</Text>
             <View style={{backgroundColor:'#808080', marginTop:window.height * 0.030, marginStart:window.height * -0.001, height:window.height * 0.170, width:window.width * 1.150}}>
               <View style={{backgroundColor:'#808080', marginTop:window.height * 0.015, marginLeft:window.height * 0.025}}>
                   <Text style={styles.fontdados}>Nome Pet: {dadosAgendamento.ds_nome_pet}</Text>

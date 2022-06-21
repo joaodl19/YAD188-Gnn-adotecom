@@ -97,7 +97,7 @@ export default function Perfil1({ route, navigation }) {
     if (uf == '') {
       setErrorUf("Preencha sua UF")
       error = true
-}
+    }
     return !error
   }
 
@@ -194,11 +194,11 @@ export default function Perfil1({ route, navigation }) {
 
     },
     logo: {
-      height: window.height * 0.097,
-      width: window.width * 0.637,
-      resizeMode: 'center',
-      marginBottom: window.height * 0.017,
-      marginLeft: window.width * 0.037
+      height: window.height * 0.052,
+      width: window.width * 0.548,
+      marginStart: window.width * 0.045,
+      marginTop: window.height * 0.07,
+      marginBottom: window.height * 0.02
     },
     perfil: {
       height: window.height * 0.137,
@@ -353,7 +353,7 @@ export default function Perfil1({ route, navigation }) {
                     marginLeft: window.width * 0.540
                   },
                   dateInput: {
-                    marginLeft: window.width * 0.065,
+                    marginLeft: window.width * 0.105,
                     fontWeight: 'bold',
                     fontSize: window.width * 0.045,
                     fontcolor: 'black',
@@ -382,12 +382,11 @@ export default function Perfil1({ route, navigation }) {
 
           {tipoCliente == 'ONG' &&
             <View style={styles.item} >
-              <Text style={{ marginLeft: window.width * -0.308, fontSize: window.width * 0.050, fontWeight: 'bold', }}>Fundação: </Text>
+              <Text style={{ marginLeft: window.width * -0.308, fontSize: window.width * 0.050, fontWeight: 'bold', }}>Fundação:   </Text>
 
               <DatePicker
                 date={dtNascimento}
                 mode="date"
-                //placeholder={(tipoCliente == 'ONG') ? 'Data Fundação' : 'Data Nascimento'}
                 format="YYYY-MM-DD"
                 minDate="1920-05-01"
                 maxDate="2022-06-30"
@@ -398,10 +397,10 @@ export default function Perfil1({ route, navigation }) {
                     position: 'absolute',
                     left: 0,
                     top: window.width * 0.005,
-                    marginLeft: window.width * 0.570
+                    marginLeft: window.width * 0.61
                   },
                   dateInput: {
-                    marginLeft: window.width * 0.150,
+                    marginLeft: window.width * 0.105,
                     fontWeight: 'bold',
                     fontSize: window.width * 0.045,
                     fontcolor: 'black',
@@ -412,8 +411,8 @@ export default function Perfil1({ route, navigation }) {
                     fontSize: window.width * 0.045,
                     fontWeight: 'bold',
                     color: "black",
-                    textAlign: "left",
-                    marginStart: window.width * -0.090
+                    textAlign: "right",
+                    marginStart: window.width * - 0.06
                   }
                   // ... You can check the source to find the other keys.
                 }}
@@ -442,13 +441,13 @@ export default function Perfil1({ route, navigation }) {
                   fontSize: window.width * 0.045,
                   width: window.width * 1,
                   fontWeight: 'bold',
-                  marginLeft: window.width * 0.160,
+                  marginLeft: window.width * 0.145,
                   color: 'black'
                 }} />
 
               <Picker
 
-                style={{ height: window.width * 0.270, width: window.width * 0.870, marginStart: window.width * -1.250, color: 'transparent' }}
+                style={{ height: window.width * 0.270, width: window.width * 0.870, marginStart: window.width * 0.105, color: 'transparent' }}
                 onValueChange={(genero) => {
                   setGenero(genero)
                   setErrorGenero('')
@@ -480,7 +479,7 @@ export default function Perfil1({ route, navigation }) {
                 fontSize: window.width * 0.045,
                 width: window.width * 1,
                 fontWeight: 'bold',
-                marginLeft: window.width * 0.125,
+                marginLeft: window.width * 0.105,
                 color: 'black'
               }} />
           </View>
@@ -502,7 +501,7 @@ export default function Perfil1({ route, navigation }) {
                 fontSize: window.width * 0.045,
                 width: window.width * 1,
                 fontWeight: 'bold',
-                marginLeft: window.width * 0.235,
+                marginLeft: window.width * 0.215,
                 color: 'black'
               }}
 
@@ -521,12 +520,12 @@ export default function Perfil1({ route, navigation }) {
                 fontSize: window.width * 0.045,
                 width: window.width * 1,
                 fontWeight: 'bold',
-                marginLeft: window.width * 0.115,
+                marginLeft: window.width * 0.095,
                 color: 'black'
               }} />
 
           </View>
-         
+
           <Text style={styles.errorMessage}></Text>
 
           <View style={styles.item} >
@@ -543,7 +542,7 @@ export default function Perfil1({ route, navigation }) {
                 fontSize: window.width * 0.045,
                 width: window.width * 1,
                 fontWeight: 'bold',
-                marginLeft: window.width * 0.265,
+                marginLeft: window.width * 0.25,
                 color: 'black'
               }} />
           </View>

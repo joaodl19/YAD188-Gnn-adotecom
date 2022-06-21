@@ -63,7 +63,7 @@ export default function Login({ navigation }) {
       backgroundColor: 'white',
     },
     logo: {
-      height: window.height * 0.065,
+      height: window.height * 0.085,
       width: window.width * 0.785,
       marginBottom: window.height * 0.014,
     },
