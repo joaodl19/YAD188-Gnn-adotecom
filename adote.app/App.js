@@ -14,6 +14,8 @@ import CadastroPet from './src/telas/CadastroPet'
 import PerfilPet from './src/telas/PerfilPet'
 import AprovarAdocao from './src/telas/AprovarAdocao'
 import FinalizarAdocao from './src/telas/FinalizarAdocao'
+import Solicitacao from './src/telas/Solicitacao'
+
 
 LogBox.ignoreAllLogs();
 CadastroPet
@@ -39,6 +41,8 @@ export default function App() {
         <Stack.Screen name="Questionario" component={Questionario} />
         <Stack.Screen name="AprovarAdocao" component={AprovarAdocao} />
         <Stack.Screen name="FinalizarAdocao" component={FinalizarAdocao} />
+        <Stack.Screen name="Solicitacao" component={Solicitacao} />
+
       </Stack.Navigator>
     </NavigationContainer>
   );

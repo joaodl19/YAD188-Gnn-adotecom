@@ -38,7 +38,7 @@ export default function Perfil1({ route, navigation }) {
 
   const telaHome = () => navigation.navigate('Home', cliente.id_cliente);
   const telaCadastroPet = () => navigation.navigate('CadastroPet', cliente.id_cliente);
-  const telaAgendamentos = () => navigation.navigate('AgendamentosOng', cliente.id_cliente);
+  const telaSolicitacao = () => navigation.navigate('Solicitacao', cliente.id_cliente);
 
   const getImageSource = () => {
     return `data:image/jpeg;base64,${cliente.tx_foto}`
@@ -166,7 +166,7 @@ export default function Perfil1({ route, navigation }) {
       marginBottom: window.height * 0.039
     },
     botao2: {
-      marginLeft: window.height * 0.315,
+      marginLeft: window.height * 0.205,
       height: window.height * 0.050,
       width: window.width * 0.500,
       borderRadius: window.height * 0.039,
@@ -178,9 +178,9 @@ export default function Perfil1({ route, navigation }) {
     botao3: {
       marginLeft: window.height * 0.215,
       height: window.height * 0.050,
-      width: window.width * 0.500,
+      width: window.width * 0.550,
       borderRadius: window.height * 0.039,
-      backgroundColor: 'red',
+      backgroundColor: 'green',
       justifyContent: 'center',
       marginBottom: window.height * 0.012,
       alignItems: 'center'
@@ -254,11 +254,15 @@ export default function Perfil1({ route, navigation }) {
                 <Text style={styles.responderText}>Cadastrar Pet</Text>
               </TouchableOpacity>
             }
-            <TouchableOpacity style={styles.botao3} onPress={() => telaAgendamentos()}>
-              <Text style={styles.responderText}>Agendamentos</Text>
-            </TouchableOpacity>
+            {
+              (cliente.ds_tipo_cliente == 'PF') &&
+              <TouchableOpacity style={styles.botao3} onPress={() => telaSolicitacao()}>
+                <Text style={styles.responderText}>Minhas Solicitações</Text>
+              </TouchableOpacity>
+            }
+
           </View>
-          <View style={{height: window.height * 0.7, width: window.width * 1}}>
+          <View style={{ height: window.height * 0.7, width: window.width * 1 }}>
             <ScrollView>
               <Text style={styles.saudacoes}>Dados do cliente</Text>
 

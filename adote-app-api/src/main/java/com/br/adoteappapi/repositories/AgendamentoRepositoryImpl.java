@@ -85,6 +85,9 @@ public class AgendamentoRepositoryImpl implements AgendamentoRepository{
 
     @Override
     public AgendamentoResponse buscarAgendamentoPet(Long idPet) {
+        SimpleDateFormat dateOut = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat dateIn = new SimpleDateFormat("yyyy-MM-dd");
+
         AgendamentoResponse agendamento = new AgendamentoResponse();
         jdbcTemplate.query(QUERY_BUSCAR_AGENDAMENTOS_PET, rs -> {
             agendamento.setId_agendamento(rs.getLong("id_agendamento"));
@@ -94,6 +97,12 @@ public class AgendamentoRepositoryImpl implements AgendamentoRepository{
             agendamento.setDs_nome_pet(rs.getString("ds_nome_pet"));
             agendamento.setId_cliente(rs.getLong("id_cliente"));
             },idPet);
+        try{
+            var dtVisita = dateIn.parse(agendamento.getDt_visita());
+            agendamento.setDt_visita(dateOut.format(dtVisita));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         return agendamento;
     }
 }

@@ -5,7 +5,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.time.LocalDate;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Repository
@@ -30,7 +32,7 @@ public class AdocaoRepositoryImpl implements AdocaoRepository {
         this.QUERY_BUSCAR_ID_POR_CLIENTE = "SELECT ID_ADOCAO FROM public.adocao WHERE id_cliente = ? AND ds_status = 'Aberto'";
         this.QUERY_ALTERAR_CICLO = "UPDATE public.adocao SET ds_ciclo = ? WHERE id_adocao = ?";
         this.QUERY_BUSCAR_ADOCAO_ABERTO_POR_PET = "SELECT * FROM public.adocao WHERE id_pet = ? AND ds_status =  'Aberto'";
-        this.QUERY_ENCERRAR_ADOCAO = "UPDATE public.adocao SET ds_status = 'Encerrado' WHERE id_adocao = ?";
+        this.QUERY_ENCERRAR_ADOCAO = "UPDATE public.adocao SET ds_status = 'Encerrado', dt_adocao = ? WHERE id_adocao = ?";
     }
 
     @Override
@@ -86,6 +88,8 @@ public class AdocaoRepositoryImpl implements AdocaoRepository {
 
     @Override
     public void encerrarAdocao(Long id_adocao) {
-        jdbcTemplate.update(QUERY_ENCERRAR_ADOCAO, id_adocao);
+        System.out.println("ID: " + id_adocao);
+
+        jdbcTemplate.update(QUERY_ENCERRAR_ADOCAO, Date.valueOf(LocalDate.now().toString()), id_adocao);
     }
 }

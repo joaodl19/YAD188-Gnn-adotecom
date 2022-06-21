@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     borderRadius: window.width * 0.120
   },
   topo: {
-    height: window.height * 0.350,
+    height: window.height * 0.390,
     marginTop: window.height * 0.06,
     },
 
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
             <TextInputComIcone></TextInputComIcone>
           </View>
           {cliente.ds_tipo_cliente == 'ONG' &&
-          <Text style={{fontWeight:'bold', marginTop:window.height * 0.010, fontSize:window.height * 0.024,marginStart:window.width * 0.055}}>
+          <Text style={{fontWeight:'bold', marginTop:window.height * 0.020, fontSize:window.height * 0.024,marginStart:window.width * 0.055}}>
           Listagem dos seus Pets doados ao app</Text>}
           {cliente.ds_tipo_cliente == 'PF' &&
           <Text style={{fontWeight:'bold', marginTop:window.height * 0.010, fontSize:window.height * 0.024,marginStart:window.width * 0.055}}>
