@@ -65,7 +65,7 @@ export default function Cadastro({ navigation }) {
                 setErrorNome('')
                 setErrorCep('')
                 setErrorUf('')
-                setErrorGenero('')
+                //setErrorGenero('')
 
 
                 const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -107,10 +107,10 @@ export default function Cadastro({ navigation }) {
                         setErrorSenha("Preencha a senha")
                         error = true
                 }
-                if (genero == '') {
+                /*if (genero == '') {
                         setErrorGenero("Preencha seu sexo")
                         error = true
-                }
+                }*/
 
                 if (cep == '') {
                         setErrorCep("Preencha seu CEP")
@@ -309,8 +309,8 @@ export default function Cadastro({ navigation }) {
                                                         <TextInputMask
                                                                 type={'cnpj'}
                                                                 value={cpfCnpj}
-                                                                onChangeText={(cpfCnpj) => {
-                                                                        setCpfCnpj(cpfCnpj)
+                                                                onChangeText={(cnpj) => {
+                                                                        setCpfCnpj((cnpj.split(".").join("")).replace("-", "").replace("/", "")),
                                                                         setErrorCpf(null)
                                                                 }}
                                                                 style={styles.input}
@@ -352,7 +352,7 @@ export default function Cadastro({ navigation }) {
                                                         placeholder={(tipoCliente == 'ONG') ? 'Data Fundação' : 'Data Nascimento'}
                                                         format="DD-MM-YYYY"
                                                         minDate="01-05-1920"
-                                                        maxDate="2022-06-30"
+                                                        maxDate="30-06-2022"
                                                         confirmBtnText="Confirm"
                                                         cancelBtnText="Cancel"
                                                         customStyles={{

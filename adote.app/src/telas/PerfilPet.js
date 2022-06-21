@@ -235,9 +235,9 @@ export default function PerfilPet({ route, navigation }) {
               <DatePicker
                 date={pet.dt_nascimento}
                 mode="date"
-                format="YYYY-MM-DD"
-                minDate="1920-05-01"
-                maxDate="2022-06-30"
+                format="DD-MM-YYYY"
+                minDate="01-05-1920"
+                maxDate="30-06-2022"
                 confirmBtnText="Confirm"
                 cancelBtnText="Cancel"
                 customStyles={{

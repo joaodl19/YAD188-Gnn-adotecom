@@ -52,7 +52,7 @@ export default function Perfil1({ route, navigation }) {
     setErrordtNascimento('')
     setErrorNome('')
     setErrorCep('')
-    setErrorGenero('')
+    //setErrorGenero('')
     setErrorUf('')
 
 
@@ -86,10 +86,10 @@ export default function Perfil1({ route, navigation }) {
       setErrorNome("Preencha seu nome")
       error = true
     }
-    if (genero == '') {
+    /*if (genero == '') {
       setErrorGenero("Preencha seu genero")
       error = true
-    }
+    }*/
     if (cep == '') {
       setErrorCep("Preencha seu cep")
       error = true
@@ -340,9 +340,9 @@ export default function Perfil1({ route, navigation }) {
               <DatePicker
                 date={dtNascimento}
                 mode="date"
-                format="YYYY-MM-DD"
-                minDate="1920-05-01"
-                maxDate="2022-06-30"
+                format="DD-MM-YYYY"
+                minDate="01-05-1920"
+                maxDate="30-06-2022"
                 confirmBtnText="Confirm"
                 cancelBtnText="Cancel"
                 customStyles={{
@@ -387,9 +387,9 @@ export default function Perfil1({ route, navigation }) {
               <DatePicker
                 date={dtNascimento}
                 mode="date"
-                format="YYYY-MM-DD"
-                minDate="1920-05-01"
-                maxDate="2022-06-30"
+                format="DD-MM-YYYY"
+                minDate="01-05-1920"
+                maxDate="30-06-2022"
                 confirmBtnText="Confirm"
                 cancelBtnText="Cancel"
                 customStyles={{
